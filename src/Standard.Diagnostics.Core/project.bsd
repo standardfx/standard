@@ -1,0 +1,52 @@
+#include cslib,net462,netstandard1_3
+assemblyDescription = 'Commonly used diagnostics features, such as assertion.'
+#assemblyAlias
+#comGuid
+clsCompliant = true
+allowPartialTrust = true
+
+compiler {
+	allowUnsafe = true
+}
+
+dependencies {
+	'Standard.Extensions.Core' {
+		type = 'project'
+	}
+}
+
+frameworks {
+	net462 {
+		compiler {
+			configuration {
+				Release {
+					strongNameKey = ${strongNameKey.testsign}
+				}
+			}
+		}
+	}
+}
+
+internalsVisibleTo {
+	'Standard.Diagnostics.Core.Tests' {
+		'DEBUG' = null
+		'!DEBUG,NETFX' = 'PublicKey='${frameworks.net462.compiler.configuration.Release.strongNameKey.hash}
+		'!DEBUG,!NETFX' = null
+	}
+}
+
+package {
+	output {
+		nuget {
+			tags = ["standard", "diagnostics", "core"]
+			summary = ${assemblyDescription}
+		}
+	}
+}
+
+#scripts {
+#	preCompile = []
+#	postCompile = []
+#	prePublish = []
+#	postPublish = []
+#}
