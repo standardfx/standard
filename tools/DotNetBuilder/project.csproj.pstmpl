@@ -246,17 +246,17 @@
   <ItemGroup>
 {{ $package.output.nuget.files | Get-Member -MemberType NoteProperty | select -expand Name | % { }}
     <Content Include="{{ ($package.output.nuget.files."$_" -join ';') | xmlattrib }}">
-      <PackagePath>{{ $_ | xmltext }}</PackagePath>
+      <PackagePath>{{ if ($_ -eq '/') { '' } else { ($_ | xmltext) } }}</PackagePath>
       <Pack>true</Pack>
     </Content>
 {{ } }}
   </ItemGroup>
-  <Target Name="CopyStaticFiles" AfterTargets="Build">
+  <Target Name="CopyStaticFiles" AfterTargets="Build" Condition="'$(TargetDir)'!=''">
     <ItemGroup>
       <StaticOutputFiles0 Include="Static/**" Exclude="" />
     </ItemGroup>
     <Message Text="Copying static resource files to output directory..." Importance="High" />
-    <Copy SourceFiles="@(StaticOutputFiles0)" DestinationFolder="$(TargetDir)\%(RecursiveDir)" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="@(StaticOutputFiles0)" DestinationFolder="$(TargetDir)%(RecursiveDir)" SkipUnchangedFiles="true" />
   </Target>
 
   <!-- begin frameworks -->
