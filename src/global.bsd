@@ -1,6 +1,7 @@
 year = '2018'
 
 pkgDir = ${rootDir}'/packages/oneget'
+dotnetSdkDir = ${rootDir}'/packages/dotnetsdk'
 #credDir = ${rootDir}'/Credentials/standardfx'
 
 # ------------------
