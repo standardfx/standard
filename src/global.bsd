@@ -1,0 +1,130 @@
+year = '2018'
+
+# ------------------
+# Tooling
+# ------------------
+# .NET Core 2.0.5
+# https://github.com/dotnet/core/blob/master/release-notes/download-archives/2.0.5-download.md
+
+# these are win64 binaries
+dotnetSdkUrl = 'https://download.microsoft.com/download/1/1/5/115B762D-2B41-4AF3-9A63-92D9680B9409/dotnet-sdk-2.1.4-win-x64.zip'
+dotnetRuntimeUrl = 'https://download.microsoft.com/download/1/1/0/11046135-4207-40D3-A795-13ECEA741B32/dotnet-runtime-2.0.5-win-x64.zip'
+
+# use these linux binaries when compiling on linux
+#dotnetSdkUrl = 'https://download.microsoft.com/download/1/1/5/115B762D-2B41-4AF3-9A63-92D9680B9409/dotnet-sdk-2.1.4-linux-x64.tar.gz'
+#dotnetRuntimeUrl = 'https://download.microsoft.com/download/1/1/0/11046135-4207-40D3-A795-13ECEA741B32/dotnet-runtime-2.0.5-linux-x64.tar.gz'
+
+# ------------------
+# Git and CI
+# ------------------
+gitUser = 'lizoc'
+gitServerUrl = 'https://www.github.com'
+docServerUrl = 'http://'${gitUser}'.github.io'
+
+# ------------------
+# Version management
+# ------------------
+versioning {
+    major = 1
+    minor = 4
+    revision = 0
+    
+    # Default value is 'beta'. You should set it to '' or comment out when releasing a production build
+    suffix = 'beta'
+
+    # The 'build' property takes its value from either 'release-build' or 'debug-build', depending on the configuration.
+
+    # Build number to use when configuration is 'release'
+    # Use 'auto' to autoincrement with every build
+    release-build = 186
+
+    # Build number to use when configuration is 'debug'
+    # Use 'auto' to autoincrement with every build
+    #debug-build = auto
+}
+
+# ------------------
+# Branding
+# ------------------
+repoFullName = 'Standard Project'
+company = 'Lizoc Inc.'
+product = 'Lizoc Standard Framework'
+authors = [ 'Lizoc' ]
+trademark = 'Lizoc StandardFX'
+
+# ------------------
+# Security
+# ------------------
+strongNameKey {
+    testsign {
+        path = ${credDir}'/testsign.snk'
+        token = '4f8b4d6b7de87e34'
+        hash = '0024000004800000940000000602000000240000525341310004000001000100bd215f1ff1ac4aa2795fb7d7ef3fe4926b7cc4f316b87f7d0ef1b1923c05712454de1a7584918960464143bb0e081c55d832b9cd24116924281360b5a8356d15ca91298a952dfb48e58aa9dfbad79a17f6f68d97288d02abeff5644d150854395a91287419a2a18787513c92a7fe17ea1ed87d140114cfc38da2c8176064d4b5'
+    }
+}
+
+# ------------------
+# Nuget
+# ------------------
+package {
+    source {
+        'nuget.org' {
+            url = 'https://api.nuget.org/v3/index.json'
+            apiSchema = 'oneget'
+            apiVersion = 3
+
+            #disabled = false
+            #apikey = ''
+            #username = ''
+            #password = ''
+        }
+    }
+    output {
+        nuget {
+            tags = ['lizoc']
+            owners = ['lizoc']
+            sourceCodeUrl = ${gitServerUrl}'/'${gitUser}'/'${repoName}
+            projectUrl = ${docServerUrl}'/'${repoName}
+            licenseUrl = ${package.output.nuget.projectUrl}'/license'
+            releaseNotesUrl = ${package.output.nuget.projectUrl}'/releasenotes'
+            iconUrl = ${package.output.nuget.projectUrl}'/icon.png'
+            requireLicenseAcceptance = false
+            files {
+                '/' = [
+                    ${repoDir}'/LICENSE'
+                    ${repoDir}'/THIRD-PARTY-LICENSE.txt'
+                    ${repoDir}'/README.md'
+                    ${repoDir}'/icon.png'
+                ]
+            }
+        }
+    }
+    publish {
+        'nuget.org' {
+            apiSchema = 'oneget'
+            url = 'https://www.nuget.org/api/v2/package'
+            symbols = true
+            #symbolsUrl = ''
+            timeout = 60
+            #disabled = false
+        }
+    }
+}
+
+# ------------------
+# Global templates
+# ------------------
+#templateHelperScriptFile = ${toolsDir}'/template_helpers.ps1'
+templates {
+    'nuget.config' {
+        path = ${toolsDir}'/DotNetBuilder/nuget.config.pstmpl'
+        outputPath = 'nuget.config'
+        outputBasePath = 'workingSourceDir'
+        global = true
+    }
+    'Message.resx' {
+        path = ${toolsDir}'/DotNetBuilder/Message.resx.pstmpl'
+        outputPath = 'Resource/Message.resx'
+        outputBasePath = 'projectDir'
+    }
+}
