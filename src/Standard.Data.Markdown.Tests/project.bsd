@@ -1,0 +1,23 @@
+#include cslib,net462,xunit,xunit-net462,xunit-netcoreapp2
+clsCompliant = false
+allowPartialTrust = false
+dependencies {
+	'Standard.Data.Markdown' {
+		type = 'project'
+	}
+	'System.Collections.Immutable' {
+		type = 'package'
+		version = '1.3.1'
+	}
+	#'Microsoft.Composition' {
+	#	type = 'package'
+	#	version = '1.0.30'
+	#}
+}
+frameworks {
+	'netcoreapp2.0' {
+		compiler {
+			constants = ['NETSTANDARD']
+		}
+	}
+}

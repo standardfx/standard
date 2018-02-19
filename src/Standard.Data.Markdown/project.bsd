@@ -1,0 +1,53 @@
+#include cslib,net462,netstandard1_3
+assemblyDescription = 'Markdown parsing, rendering and rewriting engine.'
+#assemblyAlias
+#comGuid
+clsCompliant = true
+allowPartialTrust = true
+
+compiler {
+	cslang = 7
+}
+
+dependencies {
+	'System.Collections.Immutable' {
+		type = 'package'
+		version = '1.3.1'
+	}
+}
+
+frameworks {
+	net462 {
+		compiler {
+			configuration {
+				Release {
+					strongNameKey = ${strongNameKey.testsign}
+				}
+			}
+		}
+	}
+}
+
+internalsVisibleTo {
+	'Standard.Data.Markdown.Tests' {
+		'DEBUG' = null
+		'!DEBUG,NETFX' = 'PublicKey='${frameworks.net462.compiler.configuration.Release.strongNameKey.hash}
+		'!DEBUG,!NETFX' = null
+	}
+}
+
+package {
+	output {
+		nuget {
+			tags = ["standard", "data", "markdown"]
+			summary = ${assemblyDescription}
+		}
+	}
+}
+
+#scripts {
+#	preCompile = []
+#	postCompile = []
+#	prePublish = []
+#	postPublish = []
+#}
