@@ -163,6 +163,7 @@
 
   <!-- compiler options -->
   <PropertyGroup>
+    <LangVersion>{{ $compiler.cslang | replace -null '6' | xmltext }}</LangVersion>
     <OutputType>{{ $compiler.outputType | replace -null 'Library' | xmltext }}</OutputType>
     {{ if ($compiler.noWarn) { }}<NoWarn>$(NoWarn);{{ ($compiler.noWarn -join ';') | xmltext }}</NoWarn>{{ } }}
     {{ if ($compiler.constants) { }}<DefineConstants>$(DefineConstants);{{ ($compiler.constants -join ';') | xmltext }}</DefineConstants>{{ } }}
