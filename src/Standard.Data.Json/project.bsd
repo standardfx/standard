@@ -1,0 +1,92 @@
+#include cslib,net462,netstandard1_3
+assemblyDescription = 'JSON serialization that is designed for optimal performance and demanding workload.'
+#assemblyAlias
+#comGuid
+clsCompliant = true
+allowPartialTrust = false
+
+dependencies {
+	'Standard.Extensions.Core' {
+		type = 'project'
+	}
+	'Standard.Data.Serialization' {
+		type = 'project'
+	}
+}
+
+compiler {
+	allowUnsafe = true
+
+	# Suppress compiler warnings
+	# - JsonConvert.ILGen.cs(158,20): error CS0618: 'SecurityAction.RequestMinimum' is obsolete
+	nowarn = ['CS0618']
+}
+
+frameworks {
+	net462 {
+		compiler {
+			configuration {
+				Release {
+					strongNameKey = ${strongNameKey.testsign}
+				}
+			}
+		}
+	}
+	'netstandard1.3' {
+		dependencies {
+			'System.Reflection.Emit' {
+				type = 'package'
+				version = '4.3.0'
+			}
+	    	'System.Reflection.Emit.Lightweight' {
+				type = 'package'
+				version = '4.3.0'
+			}
+	    	'System.Reflection.TypeExtensions' {
+				type = 'package'
+				version = '4.3.0'
+			}
+	    	'System.Collections.Concurrent' {
+				type = 'package'
+				version = '4.3.0'
+			}
+	    	'System.Xml.XmlSerializer' {
+	    		type = 'package'
+	    		version = '4.3.0'
+	    	}
+	    }
+
+	    # for netstandard1.5, use the same, but add in:
+	    # (auto resolve loaded assemblies)
+	    #
+		# 'Microsoft.Extensions.DependencyModel' {
+		#	type = 'package'
+		#	version = '1.1.2'
+		#}
+
+	}
+}
+
+internalsVisibleTo {
+	'Standard.Data.Json.Tests' {
+		'DEBUG' = null
+		'!DEBUG,NETFX' = 'PublicKey='${frameworks.net462.compiler.configuration.Release.strongNameKey.hash}
+		'!DEBUG,!NETFX' = null
+	}
+}
+
+package {
+	output {
+		nuget {
+			tags = ["standard", "data", "json"]
+			summary = ${assemblyDescription}
+		}
+	}
+}
+
+#scripts {
+#	preCompile = []
+#	postCompile = []
+#	prePublish = []
+#	postPublish = []
+#}
