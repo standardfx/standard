@@ -95,16 +95,16 @@ namespace Standard.Data.Parsing
         public override string ToString()
         {
             if (WasSuccessful)
-                return string.Format("Successful parsing of {0}.", Value);
+                return string.Format(RS.ParseSuccessful, Value);
 
             string expMsg = string.Empty;
 
             if (Expectations.Any())
-                expMsg = " expected " + Expectations.Aggregate((e1, e2) => e1 + " or " + e2);
+                expMsg = RS.Expected + " " + Expectations.Aggregate((e1, e2) => e1 + " " + RS.Or + " " + e2);
 
             string recentlyConsumed = CalculateRecentlyConsumed();
 
-            return string.Format("Parsing failure: {0};{1} ({2}); recently consumed: {3}", Message, expMsg, Remainder, recentlyConsumed);
+            return string.Format(RS.ParseFailureInfo, Message, expMsg, Remainder, recentlyConsumed);
         }
 
         private string CalculateRecentlyConsumed()

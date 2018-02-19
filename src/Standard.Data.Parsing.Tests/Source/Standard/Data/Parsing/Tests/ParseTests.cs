@@ -2,11 +2,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
+using Xunit.Abstractions;
+using TRS = Standard.Data.Parsing.RS;
 
 namespace Standard.Data.Parsing.Tests
 {
     public class ParseTests
     {
+
+        private readonly ITestOutputHelper output;
+
+        public ParseTests(ITestOutputHelper output)
+        {
+            this.output = output;
+        }
+
         [Fact]
         public void Parser_OfChar_AcceptsThatChar()
         {
@@ -395,7 +405,11 @@ namespace Standard.Data.Parsing.Tests
         {
             var repeated = Parse.Char('a').Repeat(4, 5);
 
-            var expectedMessage = "Parsing failure: Unexpected 'end of input'; expected 'a' between 4 and 5 times, but found 3";
+            var expectedMessage = string.Format(TRS.ParseFailureInfo, 
+                string.Format(TRS.UnexpectedToken, TRS.EndOfInput),
+                TRS.Expected + " " + string.Format(TRS.RepeatCountExpectation, "a", "4", "5", "3"), 
+                "Line 1, Column 1", 
+                "");
 
             try
             {
@@ -403,6 +417,7 @@ namespace Standard.Data.Parsing.Tests
             }
             catch(ParseException ex)
             {
+                output.WriteLine(ex.Message);
                 Assert.StartsWith(expectedMessage, ex.Message);
             }
         }
@@ -422,7 +437,7 @@ namespace Standard.Data.Parsing.Tests
             var sequence = Parse.Char('a').XDelimitedBy(Parse.Char(','));
             AssertParser.FailsWith(sequence, "a,a,b", result =>
             {
-                Assert.Contains("unexpected 'b'", result.Message);
+                Assert.Contains(string.Format(TRS.UnexpectedToken, "b"), result.Message);
                 Assert.Contains("a", result.Expectations);
             });
         }

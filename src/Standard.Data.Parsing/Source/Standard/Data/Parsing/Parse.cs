@@ -28,12 +28,12 @@ namespace Standard.Data.Parsing
                         return Result.Success(i.Current, i.Advance());
 
                     return Result.Failure<char>(i,
-                        $"unexpected '{i.Current}'",
+                        string.Format(RS.UnexpectedToken, i.Current),
                         new[] { description });
                 }
 
                 return Result.Failure<char>(i,
-                    "Unexpected end of input reached",
+                    RS.UnexpectedEndOfInput,
                     new[] { description });
             };
         }
@@ -201,7 +201,7 @@ namespace Standard.Data.Parsing
 
                 if (result.WasSuccessful)
                 {
-                    string msg = $"`{StringHelper.Join(", ", result.Expectations)}' was not expected";
+                    string msg = string.Format(RS.UnexpectedToken, StringHelper.Join(", ", result.Expectations));
                     return Result.Failure<object>(i, msg, new string[0]);
                 }
 
@@ -313,8 +313,8 @@ namespace Standard.Data.Parsing
                     ? s
                     : Result.Failure<T>(
                         s.Remainder,
-                        string.Format("unexpected '{0}'", s.Remainder.Current),
-                        new[] { "end of input" }));
+                        string.Format(RS.UnexpectedToken, s.Remainder.Current),
+                        new[] { RS.EndOfInput }));
         }
 
         /// <summary>
@@ -364,7 +364,7 @@ namespace Standard.Data.Parsing
                     throw new ParseException(i.Memos[p].ToString());
 
                 i.Memos[p] = Result.Failure<T>(i,
-                    "Left recursion in the grammar.",
+                    RS.LeftGrammerRecursion,
                     new string[0]);
                
                 var result = p(i);
@@ -529,7 +529,7 @@ namespace Standard.Data.Parsing
             {
                 var r = except(i);
                 if (r.WasSuccessful)
-                    return Result.Failure<T>(i, "Excepted parser succeeded.", new[] { "other than the excepted input" });
+                    return Result.Failure<T>(i, RS.ExceptedParserSucceeded, new[] { RS.OtherThanExceptedInput });
                 return parser(i);
             };
         }

@@ -82,11 +82,11 @@ namespace Standard.Data.Parsing
                     if (!r.WasSuccessful && n < minimumCount)
                     {
                         string what = r.Remainder.AtEnd
-                            ? "end of input"
+                            ? RS.EndOfInput
                             : r.Remainder.Current.ToString();
 
-                        string msg = $"Unexpected '{what}'";
-                        string exp = $"'{StringHelper.Join(", ", r.Expectations)}' between {minimumCount} and {maximumCount} times, but found {n}";
+                        string msg = string.Format(RS.UnexpectedToken, what);
+                        string exp = string.Format(RS.RepeatCountExpectation, StringHelper.Join(", ", r.Expectations), minimumCount, maximumCount, n);
 
                         return Result.Failure<IEnumerable<T>>(i, msg, new[] { exp });
                     }

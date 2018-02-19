@@ -83,16 +83,16 @@ namespace Standard.Data.Parsing
                     }
 
                     string found = match.Index == input.Length
-                        ? "end of source"
+                        ? RS.EndOfSource
                         : string.Format("`{0}'", input[match.Index]);
                     
                     return Result.Failure<Match>(
                         remainder,
-                        "string matching regex `" + regex + "' expected but " + found + " found",
+                        string.Format(RS.RegexMismatch, regex, found),
                         expectations);
                 }
 
-                return Result.Failure<Match>(i, "Unexpected end of input", expectations);
+                return Result.Failure<Match>(i, RS.UnexpectedEndOfInput, expectations);
             };
         }
 
