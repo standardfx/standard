@@ -1,0 +1,4 @@
+root {
+   some-property1 = 123
+   some-property2 = 234  
+}

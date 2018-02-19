@@ -1,0 +1,4 @@
+root {
+  some-value = ""Hello""
+  simple-string = ${root.some-value} ""world""  
+}
