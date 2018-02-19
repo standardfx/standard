@@ -1,0 +1,6 @@
+InputAlreadyAtEndOfSource = The input is already at the end of the source.
+CannotGetValueFromNone = Unable to obtain the value because the result is of type "None".
+NoComputableValue = No value can be computed.
+SingleLineCommentDisabled = Single-line comments are not allowed because the property "Single" is null (or "Nothing" in Visual Basic).
+MultiLineCommentDisabled = Multi-line comments are not allowed because the property "{0}" is null (or "Nothing" in Visual Basic).
+ParseCommentFailure = Unable to parse comment. Check the values of the following properties: MultiOpen, MultiClose
