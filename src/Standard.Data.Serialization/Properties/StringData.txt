@@ -1,0 +1,16 @@
+BadBase16Length = String representation of hexadecimal value must have an even number of digits.
+GuidEmptyString = GUID cannot be an empty string.
+InvalidGuidFormatChar = Format string accepts the following values only: "D", "d", "N", "n", "P", "p", "B", "b", "X" and "x".
+BadBase85LineLength = Expects a positive integer, or specify 0 for an unbroken line.
+BadBase85PrefixSuffix = ASCII85 encoded data should begin with "{0}" and end with "{1}".
+Base85CannotHaveZ = The character "z" is invalid inside an ASCII85 block.
+BadBase85Char = Illegal character "{0}" found. ASCII85 only allows characters "!" to "u" on the ASCII chart.
+BadBase85EndBlock = The last block of ASCII85 data cannot be a single byte.
+UnsupportedFormatSpecifier = The requested standard format specifier is not supported on the current platform: {0}
+ArgumentIsEmptyString = Parameter value cannot be an empty string: {0}
+InvalidDateTimeStylesCombo = The "DateTimeStyles" enum has an invalid flag combination: "{0}" and "{1}" are mutually exclusive and should not be specified together.
+EpochTimeCannotStartWithPlus = An Unix epoch time format cannot start with the "+" character.
+IsoDateExpectNumberAfterDot = ISO8601 time format express milliseconds as integers after a dot character (e.g. 2015-07-31T12:43.124Z). The value specified did not have any integers after the dot character: {0}
+IsoDateExpectContainPlusMinus = ISO8601 time format express local time by ending with the plus ("+") or minus ("-") character followed by 4 digits representing the time zone. The value specified did not contain any "+" or "-" character: {0}
+IsoDateExpectEndWithZ = ISO8601 time format express UTC time by ending with the "Z" character. The value specified did not end with the "Z" character: {0}
+IsoDateExpectNotBothPlusMinus = ISO8601 time format express local time by ending with the plus ("+") or minus ("-") character followed by 4 digits representing the time zone. The value specified contains both the "+" and "-" characters: {0}
