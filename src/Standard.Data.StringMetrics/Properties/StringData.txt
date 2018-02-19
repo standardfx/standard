@@ -1,0 +1,3 @@
+TokenizerNotReady = The tokenizer has not received words for tokenizing yet: {0}
+QgramTokenizerOnHold = The tokenizer "{0}" is using a QGram length of {2} and currently holding: {1}
+QgramTokenizerWithCharCombinatorOnHold = The tokenizer "{0}" is using a character combination index of {2} and QGram length of {3}. It is currently holding: {1}
