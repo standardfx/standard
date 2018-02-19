@@ -1,0 +1,21 @@
+#include cslib,net462,xunit,xunit-net462
+clsCompliant = false
+allowPartialTrust = false
+dependencies {
+	'Standard.Data.Confon' {
+		type = 'project'
+	}
+	'Standard.Configuration.Confon' {
+		type = 'project'
+	}
+}
+frameworks {
+	net462 {
+		dependencies {
+			'System.Configuration' {
+				version = '4.0.0'
+				type = 'gac'
+			}
+		}
+	}
+}
