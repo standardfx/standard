@@ -61,6 +61,7 @@ namespace Standard.Data.Json
 		/// </summary>
 		/// <param name="asmName"></param>
 		public JsonAssemblyGeneratorException(string asmName)
+			: base(string.Format(RS.GenerateAssemblyError, asmName))
 		{ }
 	}
 }
