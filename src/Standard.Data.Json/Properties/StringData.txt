@@ -1,0 +1,10 @@
+Argument_InvalidEnum = The enum specified is invalid.
+MustBeEnum = Argument must be an enum.
+UnexpectedMemberType = Unexpected member type.
+InvalidJson = The input contains invalid JSON.
+BadJsonProperty = Class cannot contain any JSON with null or blank space character.
+GenerateAssemblyError = Unable to generate an assembly with name "{0}". The list of types to be included in the generated assembly may be null (or "Nothing" in Visual Basic).
+ResolveWithValueError = Unable to resolve "{0}" with the required value: {1}
+ExpectGenericIDictionaryType = Type "{0}" must be a dictionary type such as IDictionary<Key,Value>.
+InvalidUnicodeEscape = The JSON parser has encountered an invalid unicode escape sequence.
+ExpectPublicStaticMethod = A public and static method is required.

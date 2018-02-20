@@ -171,7 +171,7 @@ namespace Standard.Data.Json
 				{
 					var type = Type.GetType(typeName, throwOnError: false);
 					if (type == null)
-						throw new InvalidOperationException(string.Format("Unable to resolve {0} with value = {1}", TypeIdentifier, typeName));
+						throw new InvalidOperationException(string.Format(RS.ResolveWithValueError, TypeIdentifier, typeName));
 
 					var ctor = type.GetConstructor(Type.EmptyTypes);
 

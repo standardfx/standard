@@ -11,7 +11,7 @@ namespace Standard.Data.Json
 		/// Initializes a new instance of the <see cref="InvalidJsonException"/> class.
 		/// </summary>
 		public InvalidJsonException()
-			: base("Input is not a valid JSON.")
+			: base(RS.InvalidJson)
 		{ }
 
 		/// <summary>
@@ -47,7 +47,7 @@ namespace Standard.Data.Json
 		/// Initializes a new instance of the <see cref="InvalidJsonPropertyException"/> class.
 		/// </summary>
 		public InvalidJsonPropertyException()
-			: base("Class cannot contain any JSON with null or blank space character.")
+			: base(RS.BadJsonProperty)
 		{ }
 	}
 
@@ -61,7 +61,6 @@ namespace Standard.Data.Json
 		/// </summary>
 		/// <param name="asmName"></param>
 		public JsonAssemblyGeneratorException(string asmName)
-			: base(string.Format("Could not generate assembly with name [{0}] due to empty list of types to include", asmName))
 		{ }
 	}
 }

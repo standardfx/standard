@@ -715,12 +715,12 @@ namespace Standard.Data.Json
 					baseType = type.GetInterface(IEnumerableStr);
 					if (baseType == null)
 					{
-						throw new InvalidOperationException(String.Format("Type {0} must be a validate dictionary type such as IDictionary<Key,Value>", type.FullName));
+						throw new InvalidOperationException(string.Format(RS.ExpectGenericIDictionaryType, type.FullName));
 					}
 				}
 
 				if (baseType.Name != IEnumerableStr && !baseType.IsDictionaryType())
-					throw new InvalidOperationException(String.Format("Type {0} must be a validate dictionary type such as IDictionary<Key,Value>", type.FullName));
+					throw new InvalidOperationException(string.Format(RS.ExpectGenericIDictionaryType, type.FullName));
 
 				arguments = baseType.GetGenericArguments();
 				keyType = arguments[0];

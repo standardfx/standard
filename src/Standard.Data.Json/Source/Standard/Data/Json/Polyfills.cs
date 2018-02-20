@@ -114,7 +114,7 @@ namespace Standard.Data.Json
 			else if (member is PropertyInfo)
 				return TestAccessibility((PropertyInfo)member, bindingFlags);
 
-			throw new Exception("Unexpected member type.");
+			throw new ArgumentException(RS.UnexpectedMemberType);
 		}
 
 		private static bool TestAccessibility(FieldInfo member, BindingFlags bindingFlags)
@@ -142,11 +142,11 @@ namespace Standard.Data.Json
 		public static Type GetEnumUnderlyingType(this Type type)
 		{
 			if (!type.GetTypeInfo().IsEnum)
-				throw new ArgumentException("MustBeEnum");
+				throw new ArgumentException(RS.MustBeEnum);
 
 			FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).ToArray();
 			if (fields == null || fields.Length != 1)
-				throw new ArgumentException("Argument_InvalidEnum");
+				throw new ArgumentException(RS.Argument_InvalidEnum);
 
 			return fields[0].FieldType;
 		}

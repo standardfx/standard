@@ -768,7 +768,7 @@ namespace Standard.Data.Json
 								else if (c >= 'A' && c <= 'F')
 									unicode = (unicode <<= 4) + c - ('A' - 10); 
 								else
-									throw new InvalidJsonException("Invalid Unicode escape sequence", (int)(ptr - startPtr)); 
+									throw new InvalidJsonException(RS.InvalidUnicodeEscape, (int)(ptr - startPtr)); 
 							}
 
 							sb.Append((char)unicode); 
@@ -1176,7 +1176,7 @@ EXIT_DECODE_JSON_STRING_LOOP:
 			var type = typeof(T);
 
 			if (serializeFunc == null)
-				throw new InvalidOperationException("serializeFunc cannot be null");
+				throw new ArgumentNullException(nameof(serializeFunc));
 
 #if !NETSTANDARD
 			var method = serializeFunc.Method;
@@ -1185,7 +1185,7 @@ EXIT_DECODE_JSON_STRING_LOOP:
 #endif
 
 			if (!(method.IsPublic && method.IsStatic))
-				throw new InvalidOperationException("serializeFun must be a public and static method");
+				throw new ArgumentException(RS.ExpectPublicStaticMethod, nameof(serializeFunc));
 
 			_registeredSerializerMethods[type] = method;
 		}
