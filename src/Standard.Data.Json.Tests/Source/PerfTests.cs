@@ -27,7 +27,7 @@ namespace Standard.Data.Json.Tests
             }
             sw.Stop();
 
-			output.WriteLine("[UTOUT/] Perf: {0}", sw.Elapsed);
+			output.WriteLine("[UTOUT] Perf: {0}", sw.Elapsed);
 			Assert.True(true);
 		}
 	}
