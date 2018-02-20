@@ -106,6 +106,9 @@ namespace Standard.Data.Json
 			}
 		}
 
+		/// <summary>
+		/// Controls case sensitivity.
+		/// </summary>
 		public bool IgnoreCase
 		{
 			get
@@ -135,8 +138,17 @@ namespace Standard.Data.Json
 			}
 		}
 
-		public bool HasOverrideQuoteChar { get; internal set; }
+		/// <summary>
+		/// Returns whether an overriding quote character exists.
+		/// </summary>
+		public bool HasOverrideQuoteChar 
+		{ 
+			get; internal set; 
+		}
 
+		/// <summary>
+		/// Enables string optimization algorithm.
+		/// </summary>
 		public bool OptimizeString { get; set; }
 
 		private StringComparison CaseComparison
@@ -213,115 +225,106 @@ namespace Standard.Data.Json
         MicrosoftJsonDate = 8
 	}
 
-	//<#
-	// 	.SYNOPSIS
-	//		Option for determining timezone formatting.
-	//#>
+	/// <summary>
+	/// Option for determining timezone formatting.
+	/// </summary>
 	public enum JsonTimeZoneHandling
 	{
-		//<#
-		//	.INHERIT JsonTimeZoneHandling.UtcAsLocalStrict
-		//#>
+		/// <summary>
+		///	See <c>UtcAsLocalStrict</c>.
+		/// </summary>
 		Default = UtcAsLocalStrict,
 
-		//<#
-		//	.SYNOPSIS
-		// 		When parsing JSON text, assumes that the JSON source formats time in UTC. All deserialized @DateTime/@DateTimeOffset objects are 
-		// 		in UTC. 
-		//
-		//		When serializing to JSON, will convert to UTC formats where applicable. When serializing a @DateTime object, will assume that it 
-		// 		is referring to UTC time, unless the @"DateTime.Kind" property is set to @"DateTimeKind.Local", in which case it is assumed to be 
-		// 		in the time zone set by the operating system.
-		//
-		// 		The parser expects exact formatting, and will raise an exception if unexpected characters are encountered (such as whitespaces).
-		//#>
+		/// <summary>
+		/// When parsing JSON text, assumes that the JSON source formats time in UTC. All deserialized @DateTime/@DateTimeOffset objects are 
+		/// in UTC. 
+		///
+		/// When serializing to JSON, will convert to UTC formats where applicable. When serializing a @DateTime object, will assume that it 
+		/// is referring to UTC time, unless the @"DateTime.Kind" property is set to @"DateTimeKind.Local", in which case it is assumed to be 
+		/// in the time zone set by the operating system.
+		///
+		/// The parser expects exact formatting, and will raise an exception if unexpected characters are encountered (such as whitespaces).
+		/// </summary>
 		UtcStrict = 2,
 
-		//<#
-		//	.SYNOPSIS
-		// 		When parsing JSON text, assumes that the JSON source formats time in UTC. All deserialized @DateTime/@DateTimeOffset objects are 
-		// 		in UTC. 
-		//
-		//		When serializing to JSON, will convert to UTC formats where applicable. When serializing a @DateTime object, will assume that it 
-		// 		is referring to UTC time, unless the @"DateTime.Kind" property is set to @"DateTimeKind.Local", in which case it is assumed to be 
-		// 		in the time zone set by the operating system.
-		//
-		// 		The parser can handle minor deviations in formatting (such as whitespaces), but at the expense of efficiency.
-		//#>
+		/// <summary>
+		/// When parsing JSON text, assumes that the JSON source formats time in UTC. All deserialized @DateTime/@DateTimeOffset objects are 
+		/// in UTC. 
+		///
+		/// When serializing to JSON, will convert to UTC formats where applicable. When serializing a @DateTime object, will assume that it 
+		/// is referring to UTC time, unless the @"DateTime.Kind" property is set to @"DateTimeKind.Local", in which case it is assumed to be 
+		/// in the time zone set by the operating system.
+		///
+		/// The parser can handle minor deviations in formatting (such as whitespaces), but at the expense of efficiency.
+		/// </summary>
 		Utc = 4,
 
-		//<#
-		//	.SYNOPSIS
-		// 		When parsing JSON text, assumes that the JSON source formats time with time zone specifiers. All deserialized @DateTime/@DateTimeOffset 
-		// 		objects are converted to local time in accordance with the time zone of the operating system.
-		//
-		//		When serializing to JSON, will convert to formats with time zone specifiers where applicable. When serializing a @DateTime object, 
-		//		will assume that it is referring to the operating system time zone, unless the @"DateTime.Kind" property is set to @"DateTimeKind.Utc".
-		//
-		// 		The parser expects exact formatting, and will raise an exception if unexpected characters are encountered (such as whitespaces).
-		//#>	
+		/// <summary>
+		/// When parsing JSON text, assumes that the JSON source formats time with time zone specifiers. All deserialized @DateTime/@DateTimeOffset 
+		/// objects are converted to local time in accordance with the time zone of the operating system.
+		///
+		/// When serializing to JSON, will convert to formats with time zone specifiers where applicable. When serializing a @DateTime object, 
+		/// will assume that it is referring to the operating system time zone, unless the @"DateTime.Kind" property is set to @"DateTimeKind.Utc".
+		///
+		/// The parser expects exact formatting, and will raise an exception if unexpected characters are encountered (such as whitespaces).
+		/// </summary>
 		LocalStrict = 6,
 
-		//<#
-		//	.SYNOPSIS
-		// 		When parsing JSON text, assumes that the JSON source formats time with time zone specifiers. All deserialized @DateTime/@DateTimeOffset 
-		// 		objects are converted to local time in accordance with the time zone of the operating system.
-		//
-		//		When serializing to JSON, will convert to formats with time zone specifiers where applicable. When serializing a @DateTime object, 
-		//		will assume that it is referring to the operating system time zone, unless the @"DateTime.Kind" property is set to @"DateTimeKind.Utc".
-		//
-		// 		The parser can handle minor deviations in formatting (such as whitespaces), but at the expense of efficiency.
-		//#>	
+		/// <summary>
+		/// When parsing JSON text, assumes that the JSON source formats time with time zone specifiers. All deserialized @DateTime/@DateTimeOffset 
+		/// objects are converted to local time in accordance with the time zone of the operating system.
+		///
+		/// When serializing to JSON, will convert to formats with time zone specifiers where applicable. When serializing a @DateTime object, 
+		/// will assume that it is referring to the operating system time zone, unless the @"DateTime.Kind" property is set to @"DateTimeKind.Utc".
+		///
+		/// The parser can handle minor deviations in formatting (such as whitespaces), but at the expense of efficiency.
+		/// </summary>
 		Local = 8,
 
-		//<#
-		//	.SYNOPSIS
-		// 		When parsing JSON text, assumes that the JSON source formats time in UTC. All deserialized @DateTime/@DateTimeOffset 
-		// 		objects are converted to local time in accordance with the time zone of the operating system.
-		//
-		//		When serializing to JSON, will convert to UTC formats where applicable. When serializing a @DateTime object, 
-		//		will assume that it is referring to the operating system time zone, unless the @"DateTime.Kind" property is set to @"DateTimeKind.Utc".
-		//
-		// 		The parser expects exact formatting, and will raise an exception if unexpected characters are encountered (such as whitespaces).
-		//#>
+		/// <summary>
+		/// When parsing JSON text, assumes that the JSON source formats time in UTC. All deserialized @DateTime/@DateTimeOffset 
+		/// objects are converted to local time in accordance with the time zone of the operating system.
+		///
+		/// When serializing to JSON, will convert to UTC formats where applicable. When serializing a @DateTime object, 
+		/// will assume that it is referring to the operating system time zone, unless the @"DateTime.Kind" property is set to @"DateTimeKind.Utc".
+		///
+		/// The parser expects exact formatting, and will raise an exception if unexpected characters are encountered (such as whitespaces).
+		/// </summary>
 		UtcAsLocalStrict = 10,
 
-		//<#
-		//	.SYNOPSIS
-		// 		When parsing JSON text, assumes that the JSON source formats time in UTC. All deserialized @DateTime/@DateTimeOffset 
-		// 		objects are converted to local time in accordance with the time zone of the operating system.
-		//
-		//		When serializing to JSON, will convert to UTC formats where applicable. When serializing a @DateTime object, 
-		//		will assume that it is referring to the operating system time zone, unless the @"DateTime.Kind" property is set to @"DateTimeKind.Utc".
-		//
-		// 		The parser can handle minor deviations in formatting (such as whitespaces), but at the expense of efficiency.
-		//#>
+		/// <summary>
+		/// When parsing JSON text, assumes that the JSON source formats time in UTC. All deserialized @DateTime/@DateTimeOffset 
+		/// objects are converted to local time in accordance with the time zone of the operating system.
+		///
+		/// When serializing to JSON, will convert to UTC formats where applicable. When serializing a @DateTime object, 
+		/// will assume that it is referring to the operating system time zone, unless the @"DateTime.Kind" property is set to @"DateTimeKind.Utc".
+		///
+		/// The parser can handle minor deviations in formatting (such as whitespaces), but at the expense of efficiency.
+		/// </summary>
 		UtcAsLocal = 12,
 
-		//<#
-		//	.SYNOPSIS
-		// 		When parsing JSON text, assumes that the JSON source formats time with time zone specifiers. All deserialized @DateTime/@DateTimeOffset 
-		// 		objects are converted to UTC time.
-		//
-		//		When serializing to JSON, will convert to formats with time zone specifiers where applicable. When serializing a @DateTime object, 
-		//		will assume that it is referring to UTC time, unless the @"DateTime.Kind" property is set to @"DateTimeKind.Local", in which case it is 
-		// 		assumed to be in the time zone of the operating system. 
-		//
-		// 		The parser expects exact formatting, and will raise an exception if unexpected characters are encountered (such as whitespaces).
-		//#>
+		/// <summary>
+		/// When parsing JSON text, assumes that the JSON source formats time with time zone specifiers. All deserialized @DateTime/@DateTimeOffset 
+		/// objects are converted to UTC time.
+		///
+		/// When serializing to JSON, will convert to formats with time zone specifiers where applicable. When serializing a @DateTime object, 
+		/// will assume that it is referring to UTC time, unless the @"DateTime.Kind" property is set to @"DateTimeKind.Local", in which case it is 
+		/// assumed to be in the time zone of the operating system. 
+		///
+		/// The parser expects exact formatting, and will raise an exception if unexpected characters are encountered (such as whitespaces).
+		/// </summary>
 		LocalAsUtcStrict = 14,
 
-		//<#
-		//	.SYNOPSIS
-		// 		When parsing JSON text, assumes that the JSON source formats time with time zone specifiers. All deserialized @DateTime/@DateTimeOffset 
-		// 		objects are converted to UTC time.
-		//
-		//		When serializing to JSON, will convert to formats with time zone specifiers where applicable. When serializing a @DateTime object, 
-		//		will assume that it is referring to UTC time, unless the @"DateTime.Kind" property is set to @"DateTimeKind.Local", in which case it is 
-		// 		assumed to be in the time zone of the operating system. 
-		//
-		// 		The parser can handle minor deviations in formatting (such as whitespaces), but at the expense of efficiency.
-		//#>
+		/// <summary>
+		/// <para>When parsing JSON text, assumes that the JSON source formats time with time zone specifiers. All deserialized @DateTime/@DateTimeOffset 
+		/// objects are converted to UTC time.</para>
+		///
+		/// When serializing to JSON, will convert to formats with time zone specifiers where applicable. When serializing a @DateTime object, 
+		/// will assume that it is referring to UTC time, unless the @"DateTime.Kind" property is set to @"DateTimeKind.Local", in which case it is 
+		/// assumed to be in the time zone of the operating system. 
+		///
+		/// The parser can handle minor deviations in formatting (such as whitespaces), but at the expense of efficiency.
+		/// </summary>
 		LocalAsUtc = 16
 	}
 

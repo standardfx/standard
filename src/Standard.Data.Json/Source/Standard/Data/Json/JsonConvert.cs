@@ -26,6 +26,9 @@ using Microsoft.Extensions.DependencyModel;
 
 namespace Standard.Data.Json
 {
+	/// <summary>
+	/// A general utility class for JSON serialization.
+	/// </summary>
 	public static partial class JsonConvert
 	{
 		#region Private fields
@@ -674,17 +677,18 @@ namespace Standard.Data.Json
             if ((IntPtr)ptr == IntPtr.Zero)
                 return null;
 
-			while (true)
+            ptr += index; 
+            var startPtr = ptr; 
+
+			while (*ptr != '\0')
 			{
-				current = ptr[index];
-				if (current == '\0')
-					break;
+				current = *ptr; 
 
 				if (isJustString || hasQuote)
 				{
 					if (!isJustString && current == settings._quoteChar)
 					{
-						next = ptr[index + 1];
+						next = *(++ptr);
 						if (next != ',' && 
 							next != ' ' && 
 							next != ':' && 
@@ -698,71 +702,75 @@ namespace Standard.Data.Json
 							throw new InvalidJsonException();
 						}
 
-						++index;
 						break;
 					}
-					else
+
+					if (current != '\\')
 					{
-						if (current != '\\')
-						{
-							sb.Append(current);
-						}
-						else
-						{
-							next = ptr[++index];
-							switch (next)
+						sb.Append(current);
+						prev = current; 
+						++ptr; 
+						continue;
+					}
+
+					next = *(++ptr); 
+
+					switch (next)
+					{
+						case '\0': 
+							// string ends with '\' 
+							goto EXIT_DECODE_JSON_STRING_LOOP; 
+
+						case 'r':
+							sb.Append('\r');
+							break;
+
+						case 'n':
+							sb.Append('\n');
+							break;
+
+						case 't':
+							sb.Append('\t');
+							break;
+
+						case 'f':
+							sb.Append('\f');
+							break;
+
+						case '\\':
+							sb.Append('\\');
+							break;
+
+						case '/':
+							sb.Append('/');
+							break;
+
+						case 'b':
+							sb.Append('\b');
+							break;
+
+						case 'u':
+							int unicode = 0; 
+							for (int i = 0; i < 4; i++) 
 							{
-								case 'r':
-									sb.Append('\r');
-									break;
-
-								case 'n':
-									sb.Append('\n');
-									break;
-
-								case 't':
-									sb.Append('\t');
-									break;
-
-								case 'f':
-									sb.Append('\f');
-									break;
-
-								case '\\':
-									sb.Append('\\');
-									break;
-
-								case '/':
-									sb.Append('/');
-									break;
-
-								case 'b':
-									sb.Append('\b');
-									break;
-
-								case 'u':
-									const int offset = 0x10000;
-									var str = new string(ptr, index + 1, 4);
-									var uu = Int32.Parse(str, NumberStyles.HexNumber);
-
-									if (uu < offset)
-									{
-										sb.Append((char)uu);
-									}
-									else
-									{
-										sb.Append((char)(((uu - offset) >> 10) + 0xD800)).Append((char)((uu - offset) % 0x0400 + 0xDC00));
-									}
-
-									index += 4;
-									break;
-
-								default:
-									if (next == settings._quoteChar)
-										sb.Append(next);
-									break;
+								var c = *(++ptr); 
+								if (c >= '0' && c <= '9')
+									unicode = (unicode <<= 4) + (c - '0'); 
+								else if (c >= 'a' && c <= 'f')
+									unicode = (unicode <<= 4) + c - ('a' - 10); 
+								else if (c >= 'A' && c <= 'F')
+									unicode = (unicode <<= 4) + c - ('A' - 10); 
+								else
+									throw new InvalidJsonException("Invalid Unicode escape sequence", (int)(ptr - startPtr)); 
 							}
-						}
+
+							sb.Append((char)unicode); 
+							break;
+
+						default:
+							if (next == settings._quoteChar)
+								sb.Append(next);
+							break;
 					}
 				}
 				else
@@ -773,15 +781,19 @@ namespace Standard.Data.Json
 					}
 					else if (current == 'n')
 					{
-						index += 3;
+						ptr += 3;
+						index += (int)(ptr - startPtr); 
 						return null;
 					}
 				}
+
 				prev = current;
-				++index;
+				++ptr;
 			}
 
 			// return
+EXIT_DECODE_JSON_STRING_LOOP:
+			index += (int)(ptr - startPtr); 
 			return sb.ToString();
 		}
 
@@ -1171,6 +1183,9 @@ namespace Standard.Data.Json
 			_registeredSerializerMethods[type] = method;
 		}
 
+		/// <summary>
+		/// Emit an assembly containing the specified types at runtime.
+		/// </summary>
 		public static void GenerateTypesInto(string asmName, params Type[] types)
 		{
 			if (!types.Any())

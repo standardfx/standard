@@ -1,5 +1,3 @@
-//#define SUPPORT_STRUCT
-
 //using DeepEqual.Syntax;
 using System;
 using System.Collections;
@@ -28,7 +26,7 @@ namespace Standard.Data.Json.Tests
 
     public class SerializerTests 
     {
-#if NETSTANDARD && !(NETSTANDARD1_5 || NETSTANDARD1_6)
+#if NETSTANDARD1_3
         public SerializerTests()
         {
             JsonConvert.EntryAssembly = typeof(SerializerTests).GetTypeInfo().Assembly;
@@ -69,20 +67,24 @@ namespace Standard.Data.Json.Tests
 
             Assert.True(obj.Thing6.IsDeepEqual(obj2.Thing6));
         }
+
+        [Fact]
+        public void TestRootObjectWithInfiniteLoop() 
+        {
+            //JsonConvert.GenerateAssembly = true;
+            //var json = TestHelper.GetEmbedFileContent("json_test.txt");
+            //var root = JsonConvert.Deserialize<Root2>(json);
+        }
         */
 
-		[Fact]
-        public void CanSerializeMccUserDataObject() 
+        [Fact]
+        public void InvalidUnicodeEscapeSequenceShouldThrowException()
         {
-            var obj = new MccUserData() { arr = new int?[] { 10, null, 20 } };
-
-            //var json = JsonConvert.Serialize(obj, new JsonSerializerSettings { IncludeFields = true });
-            //var mjson = JsonConvert.Deserialize<MccUserData>(json);
-            //var r = mjson.arr.Length;
+            Assert.Throws<InvalidJsonException>(() => JsonConvert.Deserialize<string>("abc\\u00A"));
         }
 
         [Fact]
-        public void TestEnumInDictionaryObject() 
+        public void SerializeEnumInDictionaryObject() 
         {
             var dict = new Dictionary<string, object>();
             dict["Test"] = MyEnumTest.Test2;
@@ -92,7 +94,7 @@ namespace Standard.Data.Json.Tests
         }
 
         [Fact]
-        public void TestAutoDetectQuotes() 
+        public void AutoDetectQuotes() 
         {
             var dict = new Dictionary<string, string>();
             dict["Test"] = "Test2";
@@ -120,6 +122,20 @@ namespace Standard.Data.Json.Tests
             var result3 = JsonConvert.Deserialize<string>(jsonStrWithDouble);
         }
 
+
+
+
+
+
+		[Fact]
+        public void CanSerializeMccUserDataObject() 
+        {
+            var obj = new MccUserData() { arr = new int?[] { 10, null, 20 } };
+
+            //var json = JsonConvert.Serialize(obj, new JsonSerializerSettings { IncludeFields = true });
+            //var mjson = JsonConvert.Deserialize<MccUserData>(json);
+            //var r = mjson.arr.Length;
+        }
 
         [Fact]
         public void TestSkippingProperty() 
@@ -590,28 +606,6 @@ namespace Standard.Data.Json.Tests
             Assert.True(tracker3.SortBy == "Relevance", tracker3.SortBy);
         }
 
-#if SUPPORT_STRUCT
-        [Fact]
-        public void TestStructWithProperties() 
-        {
-            var data = new StructWithProperties { x = 10, y = 2 };
-            var json = JsonConvert.Serialize(data);
-            var data2 = JsonConvert.Deserialize<StructWithProperties>(json);
-            Assert.Equal(data.x, data.x);
-            Assert.Equal(data.y, data.y);
-        }
-
-        [Fact]
-        public void TestStructWithFields() 
-        {
-            var data = new StructWithFields { x = 10, y = 2 };
-            var json = JsonConvert.Serialize(data);
-            var data2 = JsonConvert.Deserialize<StructWithFields>(json);
-            Assert.Equal(data.x, data.x);
-            Assert.Equal(data.y, data.y);
-        }
-#endif
-
         [Fact]
         public void TestSerializePrimitiveTypes() 
         {
@@ -758,14 +752,6 @@ namespace Standard.Data.Json.Tests
             Assert.True(count > 1);
         }
 
-        //[Fact]
-        //public void TestRootObjectWithInfiniteLoop() 
-        //{
-            //JsonConvert.GenerateAssembly = true;
-            //var json = TestHelper.GetEmbedFileContent("json_test.txt");
-            //var root = JsonConvert.Deserialize<Root2>(json);
-        //}
-
         [Fact]
         public void TestFailedDeserializeOfNullableList() 
         {
@@ -790,27 +776,6 @@ namespace Standard.Data.Json.Tests
             //var obj = new TestNullableNullClass { ID  = 1, Name = "Hello" };
             var json = "{\"ID\": 2, \"Name\": \"Hello world\"}";
             var obj = JsonConvert.Deserialize<TestNullableNullClass>(json);
-        }
-
-        [Fact]
-        public void SerializePolyObjects() 
-        {            
-            var graph = new Graph { name = "my graph" };
-            graph.nodes = new List<Node>();
-            graph.nodes.Add(new NodeA { number = 10f });
-            graph.nodes.Add(new NodeB { text = "hello" });
-
-            JsonConvert.IncludeTypeInfo = true;
-            var json = JsonConvert.Serialize(graph);
-            var jgraph = JsonConvert.Deserialize<Graph>(json);
-
-            var nodeA = jgraph.nodes[0] as NodeA;
-            var nodeB = jgraph.nodes[1] as NodeB;
-
-            Assert.True(nodeA != null && nodeA.number == 10, json);
-            Assert.True(nodeB != null && nodeB.text == "hello", json);
-
-            JsonConvert.IncludeTypeInfo = false;
         }
 
         [Fact]
@@ -1102,13 +1067,5 @@ namespace Standard.Data.Json.Tests
 			Assert.Equal(obj.EnumVal, foob.EnumVal);
 
 		}
-
-		[Fact]
-        public void TestInvalidUnicodeEscapingSequence()
-        {
-            Assert.Equal("abc\u00a0", JsonConvert.Deserialize<string>("abc\\u00A"));
-        }
-
-
     }
 }

@@ -10,7 +10,7 @@ dependencies {
 frameworks {
 	'netcoreapp2.0' {
 		compiler {
-			constants = ['NETSTANDARD']
+			constants = ['NETSTANDARD', 'NETSTANDARD1_3']
 		}
 		dependencies {
 			'Microsoft.Extensions.DependencyModel' {
