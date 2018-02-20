@@ -1,4 +1,4 @@
-// this currently doesn't work for netfx in release mode (due to strong signing)
+// this currently doesn't work in release mode
 // Test lives in SerializePolyTests.cs
 //
 //#define FEAT_POLY_SERIALIZATION

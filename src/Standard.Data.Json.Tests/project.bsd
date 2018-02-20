@@ -21,7 +21,7 @@ frameworks {
 	}
 }
 files {
-  'Resource/**/*.json' {
-    type = 'embeddedResource'
-  }
+	'Resource/**/*.json' {
+    	type = 'embeddedResource'
+	}
 }
