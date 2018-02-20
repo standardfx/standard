@@ -15,7 +15,7 @@ time, everything falls into place, and StandardFX is born.
 
 
 ## Installation
-- [Latest Binary](https://get.lizoc.com/standard.library.zip)
+- [Latest Binary](https://github.com/standardfx/standard/releases)
 
 ## Official documentation
 - [Official Docs](http://standardfx.github.io/standard)
