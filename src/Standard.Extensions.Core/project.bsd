@@ -1,4 +1,4 @@
-#include cslib,net462,netstandard1_3
+#include cslib,net462,netstandard1_3,netstandard1_5,netstandard1_6,netstandard2_0
 assemblyDescription = 'Extension methods and utility classes for primitive types and some commonly used types in the system core library.'
 #assemblyAlias
 #comGuid
@@ -26,6 +26,22 @@ frameworks {
 		}
 	}
     'netstandard1.3' {
+        dependencies {
+            'System.Security.SecureString' {
+                type = 'package'
+                version = '4.3.0'
+            }
+        }
+    }
+    'netstandard1.5' {
+        dependencies {
+            'System.Security.SecureString' {
+                type = 'package'
+                version = '4.3.0'
+            }
+        }
+    }
+    'netstandard1.6' {
         dependencies {
             'System.Security.SecureString' {
                 type = 'package'
