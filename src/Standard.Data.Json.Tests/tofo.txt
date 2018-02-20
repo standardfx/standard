@@ -1,0 +1,29 @@
+TestResultGettingEmptyValueWhenUsingSettings
+TestUsingAttributeOfXmlForName
+TestUsingCustomIgnoreAttribute
+TestNotThrowingInvalidJSONForNullPrimitiveTypes
+TestNotThrowingInvalidJSONForPrimitiveTypes
+TestDeserializeValueWithDoubleQuotes
+TestSerializeInterfaceType
+TestSerializeAbstractClass
+TestDeserializeForNullErrorJsonString
+TestDictionaryWithEncodedStringParsingWithDictionaryStringObject
+TestUsingTypeAndSettings
+
+CanSerialize
+CoinResults
+IPerson 
+PersonAbstract 
+PersonX 
+PersonX2 
+Test 
+ TestClassWithIgnoreAttr 
+ TestIgnoreAttribute 
+ XmlTestClass 
+ CustomerResult 
+ Result
+API_ImportResult 
+PersonEx 
+User 
+AccountType 
+UserStatus 

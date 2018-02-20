@@ -1,0 +1,27 @@
+#include cslib,net462,xunit,xunit-net462,xunit-netcoreapp2
+projectType = 'dotnet'
+clsCompliant = false
+allowPartialTrust = false
+dependencies {
+  	'Standard.Data.Json' {
+    	type = 'project'
+  	}
+}
+frameworks {
+	'netcoreapp2.0' {
+		compiler {
+			constants = ['NETSTANDARD', 'NETSTANDARD1_3']
+		}
+		dependencies {
+			'Microsoft.Extensions.DependencyModel' {
+				type = 'package'
+				version = '1.1.2'
+			}
+		}
+	}
+}
+files {
+	'Resource/**/*.json' {
+    	type = 'embeddedResource'
+	}
+}
