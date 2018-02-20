@@ -332,14 +332,10 @@ namespace Standard.Data.Json
 
 						// LoadedAssemblies:
 						//
-						// You can auto resolve loaded assemblies, but that will require
-						// dependency context, which means netstandard1.5 or above.
+						// Querying this property will cause loaded assemblies to be automatically resolved. See code for
+						// this property.
 						//
-						//#if NETSTANDARD
-						//var assemblies = DependencyContext.Default.GetDefaultAssemblyNames().Select(x => Assembly.Load(x));
-						//#else
-						//var assemblies = AppDomain.CurrentDomain.GetAssemblies();
-						//#endif
+						// For netstandard1.3, you need to specify loaded assemblies and entry assembly names manually
 
 						foreach (var asm in LoadedAssemblies)
 						{

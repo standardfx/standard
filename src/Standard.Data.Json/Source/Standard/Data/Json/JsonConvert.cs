@@ -16,11 +16,11 @@ using System.Collections.Concurrent;
 using System.Dynamic;
 #endif
 
-#if !PORTABLE && !NETSTANDARD
+#if !(PORTABLE || NETSTANDARD)
 using System.Security.Permissions;
 #endif
 
-#if NETSTANDARD1_5 || NETSTANDARD1_6
+#if NETSTANDARD && !NETSTANDARD1_3
 using Microsoft.Extensions.DependencyModel;
 #endif
 
@@ -389,9 +389,11 @@ namespace Standard.Data.Json
 		private static bool _includeFields = true;
 		private static bool _generateAssembly = false;
 
-#if NETSTANDARD && !(NETSTANDARD1_5 || NETSTANDARD1_6)
+#if NETSTANDARD && NETSTANDARD1_3
+		// NETSTANDARD1_3 will require the consumer to manually specify the entry assembly name and
+		// what assemblies are loaded.
 		private static Assembly _entryAssembly;
-		private static Assembly[] _loadedAssembly;
+		private static Assembly[] _loadedAssemblies;
 #endif
 
 		/// <summary>
@@ -434,19 +436,19 @@ namespace Standard.Data.Json
 		/// Gets or sets the process executable in the default application domain.
 		/// </summary>
 		/// <remarks>
-		/// <para>This property is used for compatibility purposes with .NETStandard 1.4 and below.</para>
-		/// <para>On .NETStandard 1.4 and below, there is no API similar to <c>Assembly.GetExecutingAssembly()</c>. When targeting such frameworks, you need 
+		/// <para>This property is used for compatibility purposes with NETStandard versions below 1.6.</para>
+		/// <para>On NETStandard 1.4 and below, there is no API similar to <c>Assembly.GetExecutingAssembly()</c>. When targeting such frameworks, you need 
 		/// to set this property manually.</para>
-		/// <para>Conversely, this property is managed automatically when targeting .NETStandard 1.5 and above (or other frameworks). Do not set this property 
-		/// when targeting modern frameworks.</para>
+		/// <para>Conversely, this property is managed automatically when targeting NETStandard 1.6. You do not need to set this property 
+		/// when targeting NETStandard 1.6.</para>
 		/// </remarks>
 		public static Assembly EntryAssembly
 		{
 			get 
 			{ 
-#if NETSTANDARD1_5 || NETSTANDARD1_6
+#if NETSTANDARD && !NETSTANDARD1_3
 				return Assembly.GetEntryAssembly(); 
-#elif NETSTANDARD && !(NETSTANDARD1_5 || NETSTANDARD1_6)
+#elif NETSTANDARD && NETSTANDARD1_3
 				return _entryAssembly; 
 #else
 				return Assembly.GetExecutingAssembly();
@@ -454,7 +456,7 @@ namespace Standard.Data.Json
 			}
 			set 
 			{ 
-#if NETSTANDARD && !(NETSTANDARD1_5 || NETSTANDARD1_6)
+#if NETSTANDARD && NETSTANDARD1_3
 				_entryAssembly = value; 
 #else
 				return;
@@ -463,34 +465,39 @@ namespace Standard.Data.Json
 		}
 
 		/// <summary>
-		/// Gets or sets the assemblies that have been loaded into the execution context of this application domain.
+		/// Returns assemblies that have been loaded into the execution context of this application domain.
 		/// </summary>
 		/// <remarks>
-		/// <para>This property is used for compatibility purposes with .NETStandard 1.4 and below.</para>
-		/// <para>On .NETStandard 1.4 and below, there is no API similar to <c>AppDomain.CurrentDomain.GetAssemblies()</c>. When targeting such frameworks, you need 
+		/// <para>This property is used for compatibility purposes with NETStandard versions below 1.6.</para>
+		/// <para>NETStandard below 1.6 cannot automatically resolve loaded assemblies. When targeting such frameworks, you need 
 		/// to set this property manually.</para>
-		/// <para>Conversely, this property is managed automatically when targeting .NETStandard 1.5 and above (or other frameworks). Do not set this property 
-		/// when targeting modern frameworks.</para>
+		/// <para>Conversely, this property is managed automatically when targeting .NETStandard 1.6. You do not need to set this property 
+		/// when targeting NETStandard 1.6.</para>
 		/// </remarks>
 		public static Assembly[] LoadedAssemblies
 		{
 			get 
 			{ 
-#if NETSTANDARD1_5 || NETSTANDARD1_6
+				// Microsoft.Extensions.DependencyModel
+				//
+				// netstandard1.3 does not have DependencyContext.Default nor DependencyContextLoader -> user must specify manually.
+				// netstandard1.6 supports DependencyContext.Default
+
+#if NETSTANDARD && NETSTANDARD1_3
+				return _loadedAssemblies;
+#elif NETSTANDARD && !NETSTANDARD1_3
 				return DependencyContext.Default.GetDefaultAssemblyNames().Select(x => Assembly.Load(x)).ToArray();
-#elif NETSTANDARD && !(NETSTANDARD1_5 || NETSTANDARD1_6)
-				return _loadedAssembly; 
 #else
 				return AppDomain.CurrentDomain.GetAssemblies();
 #endif
 			}
-			set 
-			{ 
-#if NETSTANDARD && !(NETSTANDARD1_5 || NETSTANDARD1_6)
-				_loadedAssembly = value; 
+			set
+			{
+#if NETSTANDARD && NETSTANDARD1_3
+				_loadedAssemblies = value;
 #else
-				return;
-#endif
+				// do nothing
+#endif				
 			}
 		}
 
@@ -1203,7 +1210,7 @@ EXIT_DECODE_JSON_STRING_LOOP:
 #endif
 			}
 
-#if !NETSTANDARD
+#if !NETSTANDARD && !NETSTANDARD2
 			assembly.Save(String.Concat(assembly.GetName().Name, _dllStr));
 #endif
 		}

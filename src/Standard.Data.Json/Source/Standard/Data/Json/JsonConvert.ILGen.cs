@@ -85,7 +85,7 @@ namespace Standard.Data.Json
 						assemName.KeyPair = new StrongNameKeyPair(Convert.FromBase64String(JSON_GENERATED_ASSEMBLY_KEY));
 #endif
 
-#if NETSTANDARD
+#if NETSTANDARD || NETSTANDARD2
 						_assembly = AssemblyBuilder.DefineDynamicAssembly(assemName, AssemblyBuilderAccess.Run);
 #else
 						assemName.CultureInfo = new CultureInfo("en-US");
@@ -127,7 +127,7 @@ namespace Standard.Data.Json
 
 		private static AssemblyBuilder GenerateAssemblyBuilderNoShare(string asmName)
 		{
-#if NETSTANDARD
+#if NETSTANDARD || NETSTANDARD2
             var assembly = AssemblyBuilder.DefineDynamicAssembly(
 				new AssemblyName(asmName) { Version = new Version(1, 0, 0, 0) },
 				AssemblyBuilderAccess.Run);
@@ -825,9 +825,9 @@ namespace Standard.Data.Json
 
 			_types[objType] = returnType;
 
-#if !NETSTANDARD
+#if !NETSTANDARD && !NETSTANDARD2
 			if (_generateAssembly)
-				assembly.Save(String.Concat(assembly.GetName().Name, _dllStr));
+				assembly.Save(string.Concat(assembly.GetName().Name, _dllStr));
 #endif
 			return returnType;
 		}

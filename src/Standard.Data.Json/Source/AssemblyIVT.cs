@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-#if DEBUG || NETSTANDARD
+#if DEBUG || !NETFX
 
 [assembly: InternalsVisibleTo(Standard.Data.Json.JsonConvert.JSON_GENERATED_ASSEMBLY_NAME)]
 
