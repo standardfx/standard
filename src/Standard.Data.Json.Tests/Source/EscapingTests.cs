@@ -26,7 +26,7 @@ namespace Standard.Data.Json.Tests
 		{
 			var settings = new JsonSerializerSettings
 			{
-				CaseSensitive = false
+				IgnoreCase = true
 			};
 
 			// Actual string { Val : "\"sampleValue\""} before escape characters

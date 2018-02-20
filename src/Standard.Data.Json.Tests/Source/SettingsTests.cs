@@ -133,7 +133,7 @@ namespace Standard.Data.Json.Tests
 		{
 			var userType = typeof(User);
 
-			var settings = new JsonSerializerSettings { CamelCase = true, CaseSensitive = false };
+			var settings = new JsonSerializerSettings { CamelCase = true, IgnoreCase = true };
 
 			User user = new User
 			{

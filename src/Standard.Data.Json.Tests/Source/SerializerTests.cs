@@ -33,12 +33,6 @@ namespace Standard.Data.Json.Tests
             JsonConvert.LoadedAssemblies = DependencyContext.Default.GetDefaultAssemblyNames().Select(x => Assembly.Load(x)).ToArray();
         }           
 #endif
-		private class MyPrivateClass
-		{
-			public int ID { get; set; }
-			public string Name { get; set; }
-			public MyPrivateClass Inner { get; set; }
-		}
 
 		private class StubbornClass
 		{
@@ -144,14 +138,6 @@ namespace Standard.Data.Json.Tests
         }
 
         [Fact]
-        public void StringSkippingCauseInfiniteLoop2() 
-        {
-            string jsonData = "{ \"token\":\"sFdDNKjLPZJSm0+gvsD1PokoJd3YzbbsClttbWLWz50=\",\"product\":\"productblabla\",\"status\":\"SUCCESS\",\"error\":\"\" }";
-
-            var data = JsonConvert.Deserialize<BaseApiResponse>(jsonData, new JsonSerializerSettings { OptimizeString = true });
-        }
-
-        [Fact]
         public void TestJsonProperty() 
         {
             //var settings = new JsonSerializerSettings { IncludeFields = true };
@@ -215,26 +201,12 @@ namespace Standard.Data.Json.Tests
 		}
 
 		[Fact]
-		public void TestSerializeTuple()
-		{
-			var tuple = new Tuple<int, string>(100, "Hello World");
-
-			var json = JsonConvert.Serialize(tuple);
-			var ttuple = JsonConvert.Deserialize<Tuple<int, string>>(json);
-		}
-
-		[Fact]
         public void SerializeAnonymous()
         {
             var test = new { ID = 100, Name = "Test", Inner = new { ID = 100, N = "ABC" } };
             var json = JsonConvert.Serialize(test);
             Assert.True(json != null);
         }
-
-
-
-
-
 
         [Fact]
         public void WhenSerializingAnonymousObjects()
@@ -259,35 +231,6 @@ namespace Standard.Data.Json.Tests
             var resultAsDynamic = JsonConvert.Deserialize<dynamic>(json);
             var resultAsObject = JsonConvert.Deserialize<object>(json);
             var resultAsProjected = JsonConvert.Deserialize<List<Projected>>(json);
-        }
-
-        [Fact]
-        public void TestSerializeDeserializeNonPublicType()
-        {
-            string s;
-            var e = new List<E> { new E { V = 1 }, new E { V = 2 } };
-            s = JsonConvert.Serialize(e);
-            JsonConvert.Serialize(JsonConvert.Deserialize<List<E>>(s = JsonConvert.Serialize(e)));
-            Assert.True(!string.IsNullOrWhiteSpace(s));
-        }
-
-        [Fact]
-        public void SerializeNonPublicType()
-        {
-            var test = new MyPrivateClass { ID = 100, Name = "Test", Inner = new MyPrivateClass { ID = 200, Name = "Inner" } };
-            var json = JsonConvert.Serialize(test);
-            var data = JsonConvert.Deserialize<MyPrivateClass>(json);
-            Assert.True(json != null);
-        }
-
-
-
-
-        [Fact]
-        public void TestObjectDeserialize() 
-        {
-            var value = "\"Test\"";
-            var obj = JsonConvert.Deserialize<object>(value);
         }
 
         [Fact]
@@ -341,30 +284,12 @@ namespace Standard.Data.Json.Tests
             Assert.True(tracker3.SortBy == "Relevance", tracker3.SortBy);
         }
 
-
         [Fact]
         public void TestJsonFile() 
         {
             var evnts = JsonConvert.Deserialize<EvntsRoot>(
                 TestHelper.GetEmbedFileContent("json.json"), 
                 new JsonSerializerSettings { IgnoreCase = false });
-        }
-
-
-
-        [Fact]
-        public void TestSerializeDeserializeNonPublicSetter() 
-        {
-            var model = new Person("John", 12);
-
-            var json = JsonConvert.Serialize(model);
-
-            //var settings = new JsonSerializerSettings { IncludeTypeInformation = true };
-            JsonConvert.IncludeTypeInfo = true;
-            var deserializedModel = JsonConvert.Deserialize<Person>(json);
-            Assert.Equal("John", deserializedModel.Name);
-            Assert.Equal(12, deserializedModel.Age);
-            JsonConvert.IncludeTypeInfo = false;            
         }
 
         [Fact]
@@ -383,38 +308,6 @@ namespace Standard.Data.Json.Tests
             clone = JsonConvert.Deserialize<List<MyDto>>(json);
 
             Assert.True(clone.Count == count);
-        }
-
-        [Fact]
-        public void TestSerializeComplexTuple() 
-        {
-            var tuple = new Tuple<int, DateTime, string,
-                Tuple<double, List<string>>>(1, DateTime.Now, "xisbound",
-                	new Tuple<double, List<string>>(45.45, new List<string> { "hi", "man" }));
-
-            var json = JsonConvert.Serialize(tuple);
-            var ttuple = JsonConvert.Deserialize<Tuple<int, DateTime, string, Tuple<double, List<string>>>>(json);
-        }
-
-        [Fact]
-        public void StringSkippingCauseInfiniteLoop() 
-        {
-            string jsonData = "{\"jsonrpc\":\"2.0\",\"result\":{\"availableToBetBalance\":602.15,\"exposure\":0.0,\"retainedCommission\":0.0,\"exposureLimit\":-10000.0,\"discountRate\":2.0,\"pointsBalance\":1181,\"wallet\":\"UK\"},\"id\":1}";
-
-            var data = JsonConvert.Deserialize<JsonRpcResponse<AccountFundsResponse>>(jsonData);
-        }
-
-
-
-
-
-
-        [Fact]
-        public void TestPossibleInfiniteLoopReproduced() 
-        {
-            //var obj = new TestNullableNullClass { ID  = 1, Name = "Hello" };
-            var json = "{\"ID\": 2, \"Name\": \"Hello world\"}";
-            var obj = JsonConvert.Deserialize<TestNullableNullClass>(json);
         }
 
         [Fact]
@@ -452,16 +345,6 @@ namespace Standard.Data.Json.Tests
             Assert.True(o.TopWins.Count() == data.TopWins.Count());
         }
 
-
-
-
-
-
-
-
-
-
-
         [Fact]
         public void TestPersonClassWithMultipleNonDefaultConstructor() 
         {
@@ -479,10 +362,5 @@ namespace Standard.Data.Json.Tests
             var stubbornOne = JsonConvert.Deserialize(typeof(StubbornClass), one);
             var stubbornTwo = JsonConvert.Deserialize(typeof(StubbornClass), two);
         }
-
-
-
-
-
     }
 }

@@ -9,6 +9,13 @@ namespace Standard.Data.Json.Tests
     public class PrimitiveTests
     {
 		[Fact]
+		public void TestObjectDeserialize()
+		{
+			var value = "\"Test\"";
+			var obj = JsonConvert.Deserialize<object>(value);
+		}
+
+		[Fact]
 		public void CanDeserialiseNullableGuid()
 		{
 			var itm = new Guid("10b5a72b-815f-4e64-90bf-cb250840e989");

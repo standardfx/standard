@@ -9,20 +9,31 @@ using System.Threading.Tasks;
 using System.Reflection;
 using System.Xml.Serialization;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Standard.Data.Json.Tests
 {
-    public class XmlTests
+#if FEAT_SUPPORT_XML_ATTRIBUTE
+	public class XmlTests
     {
+		private readonly ITestOutputHelper output;
+
+		public XmlTests(ITestOutputHelper output)
+		{
+			this.output = output;
+		}
+
 		[Fact]
 		public void TestUsingAttributeOfXmlForName()
 		{
-			var data = new XmlTestClass { Name = "Value" };
+			var data = new XmlTestClass { Name = "MyValue" };
 			var json = JsonConvert.Serialize(data);
+			output.WriteLine(json);
 
 			Assert.Contains("XmlName", json);
 		}
 	}
+#endif
 
 	public class XmlTestClass
 	{
