@@ -1,8 +1,8 @@
 year = '2018'
 
-pkgDir = ${rootDir}'/packages/oneget'
-dotnetSdkDir = ${rootDir}'/packages/dotnetsdk'
-#credDir = ${rootDir}'/Credentials/standardfx'
+pkgDir = ${rootDir}'packages/oneget'
+dotnetSdkDir = ${rootDir}'packages/dotnetsdk'
+#credDir = ${rootDir}'Credentials/standardfx'
 
 # ------------------
 # Tooling
@@ -21,7 +21,7 @@ dotnetRuntimeUrl = 'https://download.microsoft.com/download/1/1/0/11046135-4207-
 # ------------------
 # Git and CI
 # ------------------
-gitUser = 'lizoc'
+gitUser = 'standardfx'
 gitServerUrl = 'https://www.github.com'
 docServerUrl = 'http://'${gitUser}'.github.io'
 
@@ -29,22 +29,23 @@ docServerUrl = 'http://'${gitUser}'.github.io'
 # Version management
 # ------------------
 versioning {
-    major = 1
-    minor = 4
+    major = 2
+    minor = 1
     revision = 0
     
-    # Default value is 'beta'. You should set it to '' or comment out when releasing a production build
+    # Default value is 'beta'. You should set it to '' when releasing a production build
+    #suffix = ''
     suffix = 'beta'
 
     # The 'build' property takes its value from either 'release-build' or 'debug-build', depending on the configuration.
 
     # Build number to use when configuration is 'release'
     # Use 'auto' to autoincrement with every build
-    release-build = 186
+    release-build = 282
 
     # Build number to use when configuration is 'debug'
     # Use 'auto' to autoincrement with every build
-    #debug-build = auto
+    debug-build = auto
 }
 
 # ------------------
