@@ -4,10 +4,6 @@ frameworks {
             constants = ['NETSTANDARD', 'NETSTANDARD1_3']
         }
         dependencies {
-            'Microsoft.CSharp' {
-                type = 'package'
-                version = '4.3.0'
-            }
             'System.Collections' {
                 type = 'package'
                 version = '4.3.0'

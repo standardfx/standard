@@ -216,7 +216,7 @@ namespace {{ $rootNamespace }}
         }
 
         #region Culture strings
-{{ $publicProperties | where { $_ -ne $null } | % { }}
+{{ $publicProperties | where { ($_ -ne $null) -and ($_ -ne '') } | % { }}
         /// <summary>
         /// {{ (($_.value -split "`n")[0] | % { ($_ -split "`r")[0] }) | xmltext }}
         /// </summary>

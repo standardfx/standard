@@ -525,7 +525,7 @@ task Setup -depends Precheck {
     # ~~~~~~~~~~~~~~~~~
     @(
         'outputDir', 'outputObjDir'
-        'credDir', 'releaseDir', 'docDir'
+        'credDir', 'releaseDir', 'docDir', 'pkgDir'
     ) | ForEach-Object {
         if (Test-Path $BuildEnv."$_" -PathType Leaf)
         {
@@ -921,6 +921,7 @@ task Publish -depends Setup -precondition { $Subcommand -eq 'Publish' } {
             else
             {
                 $pkgServerCred = Get-Content $pkgServerCredFilePath -Encoding UTF8
+
                 if (($pkgServerCred.Count -lt 1) -or ($pkgServerCred[0] -eq ''))
                 {
                     say ($sr.PublishingCredMissing -f $pkgServerName, $pkgServerCredFilePath)
@@ -928,7 +929,7 @@ task Publish -depends Setup -precondition { $Subcommand -eq 'Publish' } {
                 else
                 {
                     $pkgServerInfo | Add-Member -MemberType NoteProperty -Name name -Value $pkgServerName
-                    $pkgServerInfo | Add-Member -MemberType NoteProperty -Name apiKey -Value $pkgServerCred[0]
+                    $pkgServerInfo | Add-Member -MemberType NoteProperty -Name apiKey -Value @($pkgServerCred)[0]
                     if (($pkgServerCred.Count -gt 1) -and ($pkgServerCred[1] -ne ''))
                     {
                         $pkgServerInfo | Add-Member -MemberType NoteProperty -Name symbolsApiKey -Value $pkgServerCred[1]

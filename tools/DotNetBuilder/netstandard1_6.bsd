@@ -5,10 +5,6 @@ frameworks {
             debugType = 'portable'
         }
         dependencies {
-            'Microsoft.CSharp' {
-                type = 'package'
-                version = '4.3.0'
-            }
             'System.Collections' {
                 type = 'package'
                 version = '4.3.0'

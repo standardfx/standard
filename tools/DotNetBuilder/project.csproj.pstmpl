@@ -355,6 +355,13 @@
   </PropertyGroup>
 {{   } }}
 
+{{- if ($_.disableDefaultDependencyPackages) { }}
+  <!-- Default package dependencies for this framework will not be added -->
+  <PropertyGroup Condition="'$(TargetFramework)'=='{{ $currentFrameworkName | xmlattrib }}'">
+    <DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+  </PropertyGroup>
+{{- } -}}
+
   <!-- project dependencies for {{ $currentFrameworkName }} -->
   <ItemGroup Condition="'$(TargetFramework)'=='{{ $currentFrameworkName | xmlattrib }}'">
 {{-   $_.dependencies | array | where { ($_.type -eq 'project') } | % { }}
