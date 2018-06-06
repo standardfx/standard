@@ -1,0 +1,8 @@
+#include cslib,net462,xunit,xunit-net462
+clsCompliant = false
+allowPartialTrust = false
+dependencies {
+  'Standard.IPC.SharedMemory' {
+  	type = 'project'
+  }
+}

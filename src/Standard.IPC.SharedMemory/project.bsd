@@ -1,0 +1,50 @@
+#include cslib,net462
+assemblyDescription = 'Fast interprocess communication using shared memory.'
+clsCompliant = false
+allowPartialTrust = false
+
+compiler {
+	cslang = 7
+	allowUnsafe = true
+
+	# CS0414: field is assigned but its value is never used
+	# CS0169: field is never used
+	# CS0649: field is never assigned to, and will always have its default value null
+	# CS1574: xml cref attribute cannot be resolved (SerializationException) -- netstandard1.3
+    nowarn = ['CS0414', 'CS0169', 'CS0649', 'CS1574']
+}
+
+dependencies {
+	'Standard.Runtime.Win32API' {
+		type = 'project'
+	}
+}
+
+frameworks {
+	net462 {
+		compiler {
+			configuration {
+				Release {
+					strongNameKey = ${strongNameKey.testsign}
+				}
+			}
+		}
+	}
+}
+
+internalsVisibleTo {
+	'Standard.IPC.SharedMemory.Tests' {
+		'DEBUG' = null
+		'!DEBUG,NETFX' = 'PublicKey='${frameworks.net462.compiler.configuration.Release.strongNameKey.hash}
+		'!DEBUG,!NETFX' = null
+	}
+}
+
+package {
+	output {
+		nuget {
+			tags = ['standard', 'ipc', 'sharedmemory']
+			summary = ${assemblyDescription}
+		}
+	}
+}

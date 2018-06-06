@@ -1,0 +1,17 @@
+#include cslib,consoleapp,net462
+assemblyDescription = 'Demonstrates the use of Standard.IPC.SharedMemory.'
+clsCompliant = true
+allowPartialTrust = true
+dependencies {
+	'Standard.IPC.SharedMemory' {
+		type = 'project'
+	}
+}
+package {
+	output {
+		nuget {
+			tags = ["standard", "demo", "mqtt"]
+			summary = ${assemblyDescription}
+		}
+	}
+}

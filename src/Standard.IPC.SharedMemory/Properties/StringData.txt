@@ -1,0 +1,14 @@
+InvalidArgumentNullOrEmptyString = Cannot be String.Empty or null
+BufferSizeRequireGtZero = Buffer size must be larger than zero when creating a new shared memory buffer.
+BufferSizeNotEvenlyDivisible = Buffer size is not evenly divisible by the size of {0}
+MustBeGtNegativeOne = Expect a value that is greater than -1.
+WriteOperationTimedOut = The write operation timed out waiting for the write lock WaitEvent. Check your usage of AcquireWriteLock/ReleaseWriteLock and AcquireReadLock/ReleaseReadLock.
+ReadOperationTimedOut = The read operation timed out waiting for the read lock WaitEvent. Check your usage of AcquireWriteLock/ReleaseWriteLock and AcquireReadLock/ReleaseReadLock.
+InvalidOffsetIntoArray = Invalid offset into array specified by index and count.
+NonValueTypeNotSupported = Non-value types are not supported: field {0} is of type {1} in structure {2}
+NodeCountRequireGeTwo = The node count must be a minimum of 2.
+StructureSizeGtNodeBufferSize = The size of structure {0} is larger than NodeBufferSize.
+InvalidOffsetLength = Invalid offset length.
+ArrayIsNull = The array is null.
+EnumeratorNotStarted = The enumerator has not started yet.
+EnumeratorEnded = The enumerator has already ended all operations.
