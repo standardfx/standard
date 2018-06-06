@@ -1,0 +1,4 @@
+UnableToConnect = Unable to connect to the remote host or IP. Verify that the device is connected and try again.
+RemoteHostNotFound = The remote host name cannot be resolved. Verify that your DNS service is working and try again.
+SslProtocolVersionRequired = A SSL/TLS protocol version is required to establish a secure connection.
+UnsupportedSslVersion = The requested SSL/TLS protocol version is not supported by the current platform.

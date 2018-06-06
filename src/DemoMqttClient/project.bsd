@@ -1,0 +1,38 @@
+#include cslib,csapp,net462
+assemblyDescription = 'Demonstrates the use of Standard.Web.Mqtt as a MQTT client.'
+clsCompliant = true
+allowPartialTrust = true
+compiler {
+	outputType = 'WinExe'
+}
+package {
+	output {
+		nuget {
+			tags = ["standard", "demo", "mqtt"]
+			summary = ${assemblyDescription}
+		}
+	}
+}
+dependencies {
+	'Standard.Web.Mqtt' {
+		type = 'project'
+	}
+}
+frameworks {
+	net462 {
+		dependencies {
+			'System.Net.Http' {
+				type = 'gac'
+				version = '4.0.0'
+			}
+			'System.Drawing' {
+				type = 'gac'
+				version = '4.0.0'
+			}
+			'System.Windows.Forms' {
+				type = 'gac'
+				version = '4.0.0'
+			}
+		}
+	}
+}

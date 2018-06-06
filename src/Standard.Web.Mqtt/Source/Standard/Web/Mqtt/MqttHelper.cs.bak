@@ -1,0 +1,20 @@
+using System.Threading;
+
+namespace Standard.Web.Mqtt
+{
+    /// <summary>
+    /// MQTT helper class
+    /// </summary>
+    internal static partial class MqttHelper
+    {
+        public static void StartThread(ThreadStart threadStart)
+        {
+            new Thread(threadStart).Start();
+        }
+
+        public static void SleepThread(int millisecondsTimeout)
+        {
+            Thread.Sleep(millisecondsTimeout);
+        }
+    }
+}

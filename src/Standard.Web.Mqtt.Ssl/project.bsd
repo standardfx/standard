@@ -1,0 +1,58 @@
+#include cslib,net462,netstandard1_3
+assemblyDescription = 'A secure client for communicating with MQTT brokers.'
+clsCompliant = false
+compiler {
+	nowarn = ['CS0618', 'CS1591']
+}
+dependencies {
+	'Standard.Core' {
+		type = 'project'
+	}
+	'Standard.Web.Mqtt' {
+		type = 'project'
+	}
+}
+package {
+	output {
+		nuget {
+			tags = ['standard', 'web', 'mqtt', 'ssl', 'secure']
+			summary = ${assemblyDescription}
+		}
+	}
+}
+frameworks {
+	net462 {
+		compiler {
+			configuration {
+				Release {
+					strongNameKey = ${strongNameKey.testsign}
+				}
+			}
+		}
+	}
+	'netstandard1.3' {
+		disableDefaultDependencyPackages = true
+		dependencies {
+			'System.Collections.NonGeneric' {
+				type = 'package'
+				version = '4.3.0'
+			}
+			'System.Net.Security' {
+				type = 'package'
+				version = '4.3.0'
+			}
+			'System.Net.NameResolution' {
+				type = 'package'
+				version = '4.3.0'
+			}
+			'System.Threading.Thread' {
+				type = 'package'
+				version = '4.3.0'
+			}
+			'System.Net.Sockets' {
+				type = 'package'
+				version = '4.3.0'
+			}
+		}
+	}
+}
