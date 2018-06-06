@@ -1,5 +1,5 @@
 #include cslib,net462,netstandard1_3
-assemblyDescription = 'Commonly used algorithms for measuring string distance.'
+assemblyDescription = 'Commonly used algorithms for measuring string distance, including Levenstein distance, block distance, Chapman length deviation, cosine similarity, Dice similarity, Euclidean distance, Jaccard similarity, Jaro, Jaro Winkler, matching coefficient, Monge Elkan, Needleman Wunch, overlapping coefficient, Q-Gram distance, Smith Waterman, Smith Waterman Gotoh, Smith Waterman Gotoh windowed affine, and Chapman mean length.'
 #assemblyAlias
 #comGuid
 clsCompliant = true
@@ -10,7 +10,7 @@ compiler {
 }
 
 dependencies {
-	'Standard.Extensions.Core' {
+	'Standard.Core' {
 		type = 'project'
 	}
 }
@@ -25,6 +25,9 @@ frameworks {
 			}
 		}
 	}
+	'netstandard1.3' {
+        disableDefaultDependencyPackages = true
+    }
 }
 
 internalsVisibleTo {
