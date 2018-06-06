@@ -12,6 +12,7 @@ EndOfInput = end of input
 EndOfSource = end of source
 UnexpectedToken = Unexpected token: {0}
 RepeatCountExpectation = the token(s) to repeat {1} to {2} times, but found {3} repetitions: {0}
+RepeatExactCountExpectation = the token(s) to repeat {1} times, but found {2} repetitions: {0}
 UnexpectedEndOfInput = Unexpected end of input
 RegexMismatch = Expects a string that matches the regular expression "{0}": {1}
 ExceptedParserSucceeded = Excepted parser succeeded.

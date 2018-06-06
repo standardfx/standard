@@ -5,6 +5,10 @@ assemblyDescription = 'A general purpose string parser that is compatible with L
 clsCompliant = true
 allowPartialTrust = true
 
+compiler {
+	cslang = 7
+}
+
 frameworks {
 	net462 {
 		compiler {

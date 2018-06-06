@@ -86,7 +86,9 @@ namespace Standard.Data.Parsing
                             : r.Remainder.Current.ToString();
 
                         string msg = string.Format(RS.UnexpectedToken, what);
-                        string exp = string.Format(RS.RepeatCountExpectation, StringHelper.Join(", ", r.Expectations), minimumCount, maximumCount, n);
+                        string exp = (minimumCount == maximumCount)
+                            ? string.Format(RS.RepeatExactCountExpectation, StringHelper.Join(", ", r.Expectations), minimumCount, n)
+                            : string.Format(RS.RepeatCountExpectation, StringHelper.Join(", ", r.Expectations), minimumCount, maximumCount, n);
 
                         return Result.Failure<IEnumerable<T>>(i, msg, new[] { exp });
                     }
