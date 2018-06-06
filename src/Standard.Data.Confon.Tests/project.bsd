@@ -6,15 +6,15 @@ dependencies {
 		type = 'project'
 	}
 }
+files {
+ 	'Resource/**/*.bsd' {
+		type = 'embeddedResource'
+	}
+}
 frameworks {
 	'netcoreapp2.0' {
 		compiler {
 			constants = ['NETSTANDARD']
 		}
 	}
-}
-files {
-  'Resource/**/*.cfon' {
-    type = 'embeddedResource'
-  }
 }

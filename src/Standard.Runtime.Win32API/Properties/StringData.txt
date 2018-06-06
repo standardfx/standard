@@ -1,0 +1,9 @@
+NegativeLength = Expects a number that is larger than zero.
+NegativeDestinationOffset = Destination offset cannot be a negative number.
+DestinationBufferNotLargeEnough = Destination buffer does not have enough capacity. Use a larger buffer size and try again.
+SourceOffsetAndLengthOutsideBounds = Source contains less elements than the sum of the requested offset and length.
+HandleInvalid = The handle is invalid.
+HandleInvalidWin32Error = The handle is invalid: {0}
+RegistryHiveFileNotFound = The registry hive file was not found.
+InvalidRegistryMountPoint = You can only mount to HKLM or HKU root.
+InvalidRegistryPath = The registry path specified is in an invalid format: {0}

@@ -1,0 +1,36 @@
+#include cslib,net462
+assemblyDescription = 'Provides direct access to operating system APIs available on Windows platforms. This package is only available for Windows platforms.'
+clsCompliant = false
+allowPartialTrust = false
+
+compiler {
+	allowUnsafe = true
+}
+
+frameworks {
+	net462 {
+		compiler {
+			configuration {
+				Release {
+					strongNameKey = ${strongNameKey.testsign}
+				}
+			}
+		}
+	}
+}
+
+package {
+	output {
+		nuget {
+			tags = ["standard", "runtime", "win32", "api"]
+			summary = ${assemblyDescription}
+		}
+	}
+}
+
+#scripts {
+#	preCompile = []
+#	postCompile = []
+#	prePublish = []
+#	postPublish = []
+#}
