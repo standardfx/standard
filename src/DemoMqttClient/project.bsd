@@ -1,10 +1,7 @@
-#include cslib,csapp,net462
+#include cslib,winformapp,net462
 assemblyDescription = 'Demonstrates the use of Standard.Web.Mqtt as a MQTT client.'
 clsCompliant = true
 allowPartialTrust = true
-compiler {
-	outputType = 'WinExe'
-}
 package {
 	output {
 		nuget {

@@ -207,7 +207,6 @@ function replace
         [AllowEmptyString()]
         [string[]]$InputObject,
 
-        [parameter(Mandatory, ParameterSetName = 'ReplaceNullSet')]
         [parameter(ParameterSetName = 'ReplaceSubstringSet')]
         [parameter(ParameterSetName = 'ReplaceEntireStringSet')]
         [AllowEmptyString()]
@@ -257,10 +256,18 @@ function replace
             }
             elseif ($PSCmdlet.ParameterSetName -eq 'ReplaceEntireStringSet')
             {
-                $With
+                if ($PSBoundParameters.ContainsKey('With'))
+                {
+                    $With
+                }
+                else
+                {
+                    $inputItem
+                }
             }
             else
             {
+                # this shouldn't happen
                 $inputItem
             }
         }
