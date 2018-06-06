@@ -1,2 +1,0 @@
-SequenceIsEmpty = The source sequence is empty.
-NoItemSatisfyPredicate = No element satisfies the condition in predicate.
