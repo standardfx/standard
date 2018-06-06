@@ -15,6 +15,9 @@ frameworks {
 			}
 		}
 	}
+	'netstandard1.3' {
+		disableDefaultDependencyPackages = true
+	}
 }
 
 internalsVisibleTo {
