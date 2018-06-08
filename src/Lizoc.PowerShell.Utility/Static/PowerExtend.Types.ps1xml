@@ -1,0 +1,697 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Types>
+	<Type>
+		<Name>System.String</Name>
+ 		<Members>
+ 			<!-- After -->
+			<ScriptMethod>
+				<Name>After</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[string]$Substring,
+
+						[Parameter()]
+						[StringComparison]$ComparisonType = [StringComparison]::InvariantCulture
+					)
+
+					[Standard.StringExtension]::After($this, $Substring, $ComparisonType)
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>AfterIgnoreCase</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[string]$Substring
+					)
+
+					[Standard.StringExtension]::AfterIgnoreCase($this, $Substring)
+				</Script>
+			</ScriptMethod>
+ 			<!-- Before -->
+			<ScriptMethod>
+				<Name>Before</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[string]$Substring,
+
+						[Parameter()]
+						[StringComparison]$ComparisonType = [StringComparison]::InvariantCulture
+					)
+
+					[Standard.StringExtension]::Before($this, $Substring, $ComparisonType)
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>BeforeIgnoreCase</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[string]$Substring
+					)
+
+					[Standard.StringExtension]::BeforeIgnoreCase($this, $Substring)
+				</Script>
+			</ScriptMethod>
+			<!-- Between -->
+			<ScriptMethod>
+				<Name>Between</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[string[]]$Leading,
+
+						[Parameter(Mandatory = $true)]
+						[string[]]$Enclosing,
+
+						[Parameter()]
+						[StringComparison]$ComparisonType = [StringComparison]::InvariantCulture
+					)
+
+					[Standard.StringExtension]::Between($this, $Leading, $Enclosing, $ComparisonType)
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>BetweenIgnoreCase</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[string[]]$Leading,
+
+						[Parameter(Mandatory = $true)]
+						[string[]]$Enclosing
+					)
+
+					[Standard.StringExtension]::BetweenIgnoreCase($this, $Leading, $Enclosing)
+				</Script>
+			</ScriptMethod>
+			<!-- FirstBetween -->
+			<ScriptMethod>
+				<Name>FirstBetween</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[string[]]$Leading,
+
+						[Parameter(Mandatory = $true)]
+						[string[]]$Enclosing,
+
+						[Parameter()]
+						[StringComparison]$ComparisonType = [StringComparison]::InvariantCulture
+					)
+
+					[Standard.StringExtension]::FirstBetween($this, $Leading, $Enclosing, $ComparisonType)
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>FirstBetweenIgnoreCase</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[string[]]$Leading,
+
+						[Parameter(Mandatory = $true)]
+						[string[]]$Enclosing
+					)
+
+					[Standard.StringExtension]::FirstBetweenIgnoreCase($this, $Leading, $Enclosing)
+				</Script>
+			</ScriptMethod>
+			<!-- EndsWith -->
+			<ScriptMethod>
+				<Name>EndsWithIgnoreCase</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[string]$Suffix
+					)
+
+					[Standard.StringExtension]::EndsWithIgnoreCase($this, $Suffix)
+				</Script>
+			</ScriptMethod>
+			<!-- EnsureEndsWith -->
+			<ScriptMethod>
+				<Name>EnsureEndsWith</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[string]$Suffix,
+
+						[Parameter()]
+						[StringComparison]$ComparisonType = [StringComparison]::InvariantCulture
+					)
+
+					[Standard.StringExtension]::EnsureEndsWith($this, $Suffix, $ComparisonType)
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>EnsureEndsWithIgnoreCase</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[string]$Suffix
+					)
+
+					[Standard.StringExtension]::EnsureEndsWithIgnoreCase($this, $Suffix)
+				</Script>
+			</ScriptMethod>
+			<!-- EnsureStartsWith -->
+			<ScriptMethod>
+				<Name>EnsureStartsWith</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[string]$Prefix,
+
+						[Parameter()]
+						[StringComparison]$ComparisonType = [StringComparison]::InvariantCulture
+					)
+
+					[Standard.StringExtension]::EnsureStartsWith($this, $Prefix, $ComparisonType)
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>EnsureStartsWithIgnoreCase</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[string]$Prefix
+					)
+
+					[Standard.StringExtension]::EnsureStartsWithIgnoreCase($this, $Prefix, $Suffix)
+				</Script>
+			</ScriptMethod>
+			<!-- FirstTo{Upper/Lower}Invariant -->
+			<ScriptMethod>
+				<Name>FirstToLowerInvariant</Name>
+				<Script>
+					Param()
+
+					[Standard.StringExtension]::FirstToLowerInvariant($this)
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>FirstToUpperInvariant</Name>
+				<Script>
+					Param()
+
+					[Standard.StringExtension]::FirstToUpperInvariant($this)
+				</Script>
+			</ScriptMethod>
+			<!-- From{End/Start} -->
+			<ScriptMethod>
+				<Name>FromEnd</Name>
+				<Script>
+					Param(
+						[Parameter()]
+						[int]$Length = 0
+					)
+
+					[Standard.StringExtension]::FromEnd($this, $Length)
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>FromStart</Name>
+				<Script>
+					Param(
+						[Parameter()]
+						[int]$Length = 0
+					)
+
+					[Standard.StringExtension]::FromStart($this, $Length)
+				</Script>
+			</ScriptMethod>
+			<!-- Is -->
+			<ScriptMethod>
+				<Name>IsDecimal</Name>
+				<Script>
+					Param()
+
+					[Standard.StringExtension]::IsDecimal($this)
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>IsInteger</Name>
+				<Script>
+					Param()
+
+					[Standard.StringExtension]::IsInteger($this)
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>IsNumeric</Name>
+				<Script>
+					Param()
+
+					[Standard.StringExtension]::IsNumeric($this)
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>IsUDecimal</Name>
+				<Script>
+					Param()
+
+					[Standard.StringExtension]::IsUDecimal($this)
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>IsUInteger</Name>
+				<Script>
+					Param()
+
+					[Standard.StringExtension]::IsUInteger($this)
+				</Script>
+			</ScriptMethod>
+			<!-- Normalize -->
+			<ScriptMethod>
+				<Name>NormalizeNewLine</Name>
+				<Script>
+					Param()
+
+					[Standard.StringExtension]::NormalizeNewLine($this)
+				</Script>
+			</ScriptMethod>
+			<!-- Remove -->
+			<ScriptMethod>
+				<Name>Remove</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[string[]]$Substring,
+
+						[Parameter()]
+						[StringComparison]$ComparisonType = [StringComparison]::InvariantCulture
+					)
+
+					[Standard.StringExtension]::Remove($this, $Substring, $ComparisonType)
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>RemoveIgnoreCase</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[string[]]$Substring
+					)
+
+					[Standard.StringExtension]::Remove($RemoveIgnoreCase, $Substring)
+				</Script>
+			</ScriptMethod>
+			<!-- Replace -->
+			<ScriptMethod>
+				<Name>Replace</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[string]$OldValue,
+
+						[Parameter(Mandatory = $true)]
+						[AllowEmptyString()]
+						[string]$NewValue,
+
+						[Parameter(Mandatory = $true)]
+						[int]$Count,
+
+						[Parameter()]
+						[StringComparison]$ComparisonType = [StringComparison]::InvariantCulture
+					)
+
+					# caveat! 2 optional params will cause 1 of them to always remain as the default value.
+
+					[Standard.StringExtension]::Replace($this, $OldValue, $NewValue, $Count, $ComparisonType)
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>ReplaceIgnoreCase</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[string]$OldValue,
+
+						[Parameter(Mandatory = $true)]
+						[AllowEmptyString()]
+						[string]$NewValue,
+
+						[Parameter()]
+						[int]$Count = 0
+					)
+
+					[Standard.StringExtension]::ReplaceIgnoreCase($this, $OldValue, $NewValue, $Count)
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>ReplaceLast</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[string]$OldValue,
+
+						[Parameter(Mandatory = $true)]
+						[AllowEmptyString()]
+						[string]$NewValue,
+
+						[Parameter(Mandatory = $true)]
+						[int]$Count,
+
+						[Parameter()]
+						[StringComparison]$ComparisonType = [StringComparison]::InvariantCulture
+					)
+
+					[Standard.StringExtension]::ReplaceLast($this, $OldValue, $NewValue, $Count, $ComparisonType)
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>ReplaceLastIgnoreCase</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[string]$OldValue,
+
+						[Parameter(Mandatory = $true)]
+						[AllowEmptyString()]
+						[string]$NewValue,
+
+						[Parameter()]
+						[int]$Count = 0
+					)
+
+					[Standard.StringExtension]::ReplaceLastIgnoreCase($this, $OldValue, $NewValue, $Count)
+				</Script>
+			</ScriptMethod>
+			<!-- Reverse -->
+			<ScriptMethod>
+				<Name>Reverse</Name>
+				<Script>
+					Param(
+						[Parameter()]
+						[bool]$Unicode = $false
+					)
+
+					[Standard.StringExtension]::Reverse($this, $Unicode)
+				</Script>
+			</ScriptMethod>
+			<!-- Split -->
+			<ScriptMethod>
+				<Name>Split</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[string]$Separator,
+
+						[Parameter()]
+						[StringSplitOptions]$Options = [StringSplitOptions]::None
+					)
+
+					[Standard.StringExtension]::Split($this, $Separator, $Options)
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>SplitLine</Name>
+				<Script>
+					Param()
+
+					[Standard.StringExtension]::SplitLine($this)
+				</Script>
+			</ScriptMethod>
+			<!-- StartsWith -->
+			<ScriptMethod>
+				<Name>StartsWithIgnoreCase</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[string]$Prefix
+					)
+
+					[Standard.StringExtension]::StartsWithIgnoreCase($this, $Prefix)
+				</Script>
+			</ScriptMethod>
+			<!-- To -->
+			<ScriptMethod>
+				<Name>ToASCII</Name>
+				<Script>
+					Param()
+
+					[Standard.StringExtension]::ToASCII($this)
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>ToCamelCase</Name>
+				<Script>
+					Param(
+						[Parameter()]
+						[bool]$FromMedialCaps
+					)
+
+					[Standard.StringExtension]::ToCamelCase($this, $FromMedialCaps)
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>ToPascalCase</Name>
+				<Script>
+					Param(
+						[Parameter()]
+						[bool]$FromMedialCaps
+					)
+
+					[Standard.StringExtension]::ToPascalCase($this, $FromMedialCaps)
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>ToSentenceCase</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[bool]$FromMedialCaps,
+
+						[Parameter(Mandatory = $true)]
+						[char]$Separator = ' '
+					)
+
+					[Standard.StringExtension]::ToSentenceCase($this, $FromMedialCaps, $Separator)
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>ToTitleCase</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[bool]$FromMedialCaps,
+
+						[Parameter(Mandatory = $true)]
+						[char]$Separator = ' '
+					)
+
+					[Standard.StringExtension]::ToTitleCase($this, $FromMedialCaps, $Separator)
+				</Script>
+			</ScriptMethod>
+			<!-- Trim -->
+			<ScriptMethod>
+				<Name>Trim</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[string[]]$TrimStrings,
+
+						[Parameter()]
+						[StringComparison]$ComparisonType = [StringComparison]::InvariantCulture
+					)
+
+					[Standard.StringExtension]::Trim($this, $TrimStrings, $ComparisonType)
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>TrimIgnoreCase</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[string[]]$TrimStrings
+					)
+
+					[Standard.StringExtension]::TrimIgnoreCase($this, $TrimStrings)
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>TrimStart</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[string[]]$Prefix,
+
+						[Parameter()]
+						[StringComparison]$ComparisonType = [StringComparison]::InvariantCulture
+					)
+
+					[Standard.StringExtension]::TrimStart($this, $Prefix, $ComparisonType)
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>TrimStartIgnoreCase</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[string[]]$Prefix
+					)
+
+					[Standard.StringExtension]::TrimStartIgnoreCase($this, $Prefix)
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>TrimEnd</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[string[]]$Suffix,
+
+						[Parameter()]
+						[StringComparison]$ComparisonType = [StringComparison]::InvariantCulture
+					)
+
+					[Standard.StringExtension]::TrimStart($this, $Suffix, $ComparisonType)
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>TrimEndIgnoreCase</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[string[]]$Suffix
+					)
+
+					[Standard.StringExtension]::TrimEndIgnoreCase($this, $Suffix)
+				</Script>
+			</ScriptMethod>
+			<!-- Truncate -->
+			<ScriptMethod>
+				<Name>Truncate</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[int]$MaxLength,
+
+						[Parameter(Mandatory = $true)]
+						[string]$Tail,
+
+						[Parameter()]
+						[bool]$RTL
+					)
+
+					[Standard.StringExtension]::Truncate($this, $MaxLength, $Tail, $RTL)
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>TruncateChars</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[int]$MaxLength,
+
+						[Parameter(Mandatory = $true)]
+						[string]$Tail,
+
+						[Parameter()]
+						[bool]$RTL
+					)
+
+					[Standard.StringExtension]::TruncateChars($this, $MaxLength, $Tail, $RTL)
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>TruncateWords</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[int]$MaxLength,
+
+						[Parameter(Mandatory = $true)]
+						[string]$Tail,
+
+						[Parameter()]
+						[bool]$RTL
+					)
+
+					[Standard.StringExtension]::TruncateWords($this, $MaxLength, $Tail, $RTL)
+				</Script>
+			</ScriptMethod>
+			<!-- Reflow -->
+			<ScriptMethod>
+				<Name>Reflow</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[int]$MaxChars
+					)
+
+					[Standard.StringReflowExtension]::Reflow($this, $MaxChars)
+				</Script>
+			</ScriptMethod>
+			<ScriptMethod>
+				<Name>ReflowWords</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[int]$MaxChars,
+
+						[Parameter(Mandatory = $true)]
+						[char[]]$SeparatorChars = @(' ')
+					)
+
+					[Standard.StringReflowExtension]::ReflowWords($this, $MaxChars, $SeparatorChars)
+				</Script>
+			</ScriptMethod>
+ 		</Members>
+	</Type>
+	<Type>
+		<Name>System.DateTime</Name>
+ 		<Members>
+			<ScriptMethod>
+				<Name>ToUnixTime</Name>
+				<Script>
+					Param(
+						[Parameter(Mandatory = $true)]
+						[ValidateSet('Millisecond', 'Second')]
+						[string]$TimeUnit = 'Second'
+					)
+
+					if ($TimeUnit -eq 'Second')
+					{
+						[Standard.DateTimeExtension]::ToUnixTimeSeconds($this)
+					}
+					elseif ($TimeUnit -eq 'Millisecond')
+					{
+						[Standard.DateTimeExtension]::ToUnixTimeMilliseconds($this)					
+					}
+					else
+					{
+						[Standard.DateTimeExtension]::ToUnixTimeSeconds($this)
+					}
+				</Script>
+			</ScriptMethod>
+ 		</Members>
+ 	</Type>
+ 	<Type>
+ 		<Name>System.SecureString</Name>
+ 		<Members>
+ 			<ScriptMethod>
+ 				<Name>GetValue</Name>
+ 				<Script>
+ 					Param()
+
+ 					[Standard.SecureStringExtension]::GetValue($this)
+ 				</Script>
+ 			</ScriptMethod>
+ 			<ScriptMethod>
+ 				<Name>ValueEquals</Name>
+ 				<Script>
+ 					Param(
+ 						[Parameter(Mandatory = $true)]
+ 						[SecureString]$CompareWith
+ 					)
+
+ 					[Standard.SecureStringExtension]::ValueEquals($this, $CompareWith)
+ 				</Script>
+ 			</ScriptMethod>
+ 		</Members>
+ 	</Type>
+</Types>
