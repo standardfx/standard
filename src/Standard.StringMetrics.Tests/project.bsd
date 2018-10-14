@@ -1,0 +1,24 @@
+#include cslib,net462,xunit,xunit-net462,xunit-netcoreapp2
+clsCompliant = false
+allowPartialTrust = false
+dependencies {
+	'Standard.StringMetrics' {
+		type = 'project'
+	}
+}
+frameworks {
+	net462 {
+		compiler {
+			configuration {
+				Release {
+					strongNameKey = ${strongNameKey.testsign}
+				}
+			}
+		}
+	}
+	'netcoreapp2.0' {
+		compiler {
+			constants = ['NETSTANDARD']
+		}
+	}
+}

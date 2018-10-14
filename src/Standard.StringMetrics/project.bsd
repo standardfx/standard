@@ -1,0 +1,55 @@
+#include cslib,net462,netstandard1_3
+assemblyDescription = 'Commonly used algorithms for measuring string distance, including Levenstein distance, block distance, Chapman length deviation, cosine similarity, Dice similarity, Euclidean distance, Jaccard similarity, Jaro, Jaro Winkler, matching coefficient, Monge Elkan, Needleman Wunch, overlapping coefficient, Q-Gram distance, Smith Waterman, Smith Waterman Gotoh, Smith Waterman Gotoh windowed affine, and Chapman mean length.'
+#assemblyAlias
+#comGuid
+clsCompliant = true
+allowPartialTrust = true
+
+compiler {
+	allowUnsafe = true
+}
+
+dependencies {
+	'Standard.Core' {
+		type = 'project'
+	}
+}
+
+frameworks {
+	net462 {
+		compiler {
+			configuration {
+				Release {
+					strongNameKey = ${strongNameKey.testsign}
+				}
+			}
+		}
+	}
+	'netstandard1.3' {
+        disableDefaultDependencyPackages = true
+    }
+}
+
+internalsVisibleTo {
+	'Standard.StringMetrics.Tests' {
+		'DEBUG' = null
+		'!DEBUG,NETFX' = 'PublicKey='${frameworks.net462.compiler.configuration.Release.strongNameKey.hash}
+		'!DEBUG,!NETFX' = null
+	}
+}
+
+package {
+	output {
+		nuget {
+			tags = ["standard", "data", "string", "editdistance"]
+			summary = ${assemblyDescription}
+		}
+	}
+}
+
+#scripts {
+#	preCompile = []
+#	postCompile = []
+#	prePublish = []
+#	postPublish = []
+#}
