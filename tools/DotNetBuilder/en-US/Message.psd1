@@ -1,4 +1,4 @@
-# Localized	7/2/2018 7:08 PM (GMT)	303:4.80.0411	Message.psd1
+# Localized	9/27/2018 9:40 PM (GMT)	303:4.80.0411	Message.psd1
 # DotNetBuilder BMLocalizedData.en-US
 
 ConvertFrom-StringData @'
@@ -9,7 +9,7 @@ LocaleName = en-US
 AuthorLabel = Created by
 VersionLabel = Version
 Author = Build Team @Lizoc
-Version = 3.1.1024.0
+Version = 3.7.2048.0
 Syntax = SYNTAX
 Example = EXAMPLE
 Description = DESCRIPTION
@@ -50,6 +50,7 @@ DiscoveringAvailableProjects = [i] Getting a list of projects available in this 
 DoNotSpecifyTestProject = [!] Do not specify projects that ends with ".Tests" because they are test projects. Test projects are managed automatically.
 TargetProjectNotFound = Unable to find the requested target project (project names are case-sensitive): {0}
 SourceDirNotFound = The source folder was not found: {0}
+DotnetSdkUrlUndefined = The .NET Core SDK URL is not defined. Check "https://github.com/dotnet/core" for the download URL of the latest SDK and update file "global.bsd".
 DownloadingDotNetSdk = [i] Downloading .NET Core SDK from "{0}" -> "{1}"
 FoundLocalDotNetSdkCache = [i] Using local cached copy of .NET Core SDK: {0}
 InstallingDotNetSdk = [i] Installing .NET Core SDK to "{0}"

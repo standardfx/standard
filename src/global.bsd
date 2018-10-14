@@ -7,16 +7,18 @@ dotnetSdkDir = ${rootDir}'packages/dotnetsdk'
 # ------------------
 # Tooling
 # ------------------
-# .NET Core 2.0.5
-# https://github.com/dotnet/core/blob/master/release-notes/download-archives/2.0.5-download.md
+# .NET Core 2.1.4
+# https://github.com/dotnet/core/blob/master/release-notes/2.1/2.1.4/2.1.4-download.md
 
 # these are win64 binaries
-dotnetSdkUrl = 'https://download.microsoft.com/download/1/1/5/115B762D-2B41-4AF3-9A63-92D9680B9409/dotnet-sdk-2.1.4-win-x64.zip'
-dotnetRuntimeUrl = 'https://download.microsoft.com/download/1/1/0/11046135-4207-40D3-A795-13ECEA741B32/dotnet-runtime-2.0.5-win-x64.zip'
+dotnetSdkUrl = 'https://download.microsoft.com/download/8/A/7/8A765126-50CA-4C6F-890B-19AE47961E4B/dotnet-sdk-2.1.402-win-x64.zip'
+dotnetRuntimeUrl = 'https://download.microsoft.com/download/A/7/8/A78F1D25-8D5C-4411-B544-C7D527296D5E/dotnet-runtime-2.1.4-win-x64.zip'
 
-# use these linux binaries when compiling on linux
-#dotnetSdkUrl = 'https://download.microsoft.com/download/1/1/5/115B762D-2B41-4AF3-9A63-92D9680B9409/dotnet-sdk-2.1.4-linux-x64.tar.gz'
-#dotnetRuntimeUrl = 'https://download.microsoft.com/download/1/1/0/11046135-4207-40D3-A795-13ECEA741B32/dotnet-runtime-2.0.5-linux-x64.tar.gz'
+# the default behavior is to download the sdk into the repo working directory, which means it will install a copy of the same sdk
+# in each repo. by specifying a custom location below, all repos will share the same sdk.
+# the sdk archive is about 150mb, which will be downloaded to the repo's temp directory. it then needs to be expanded to the sdk directory below, 
+# consuming about 1.3gb. you can manually delete the sdk archive in the repo's temp directory.
+dotnetSdkDir = ${rootDir}'packages/dotnetsdk'
 
 # ------------------
 # Git and CI
@@ -30,18 +32,18 @@ docServerUrl = 'http://'${gitUser}'.github.io'
 # ------------------
 versioning {
     major = 2
-    minor = 1
+    minor = 4
     revision = 0
     
     # Default value is 'beta'. You should set it to '' when releasing a production build
-    #suffix = ''
-    suffix = 'beta'
+    suffix = ''
+    #suffix = 'beta'
 
     # The 'build' property takes its value from either 'release-build' or 'debug-build', depending on the configuration.
 
     # Build number to use when configuration is 'release'
     # Use 'auto' to autoincrement with every build
-    release-build = 282
+    release-build = 856
 
     # Build number to use when configuration is 'debug'
     # Use 'auto' to autoincrement with every build
@@ -119,16 +121,15 @@ package {
 # ------------------
 # Global templates
 # ------------------
-#templateHelperScriptFile = ${toolsDir}'/template_helpers.ps1'
 templates {
     'nuget.config' {
-        path = ${toolsDir}'/DotNetBuilder/nuget.config.pstmpl'
+        path = ${toolsDir}'/DotNetBuilder/nuget.config.tmpl1'
         outputPath = 'nuget.config'
         outputBasePath = 'workingSourceDir'
         global = true
     }
     'Message.resx' {
-        path = ${toolsDir}'/DotNetBuilder/Message.resx.pstmpl'
+        path = ${toolsDir}'/DotNetBuilder/Message.resx.tmpl1'
         outputPath = 'Resource/Message.resx'
         outputBasePath = 'projectDir'
     }

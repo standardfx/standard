@@ -151,22 +151,22 @@ compiler {
 
 templates {
   'AssemblyInfo.cs' {
-    path = ${toolsDir}'/DotNetBuilder/AssemblyInfo.cs.pstmpl'
+    path = ${toolsDir}'/DotNetBuilder/AssemblyInfo.cs.tmpl1'
     outputPath = 'Properties/AssemblyInfo.cs'
     outputBasePath = 'projectDir'
   }
   'RS.Designer.cs' {
-    path = ${toolsDir}'/DotNetBuilder/RS.Designer.cs.pstmpl'
+    path = ${toolsDir}'/DotNetBuilder/RS.Designer.cs.tmpl1'
     outputPath = 'Properties/RS.Designer.cs'
     outputBasePath = 'projectDir'
   }
   'project.csproj' {
-    path = ${toolsDir}'/DotNetBuilder/project.csproj.pstmpl'
+    path = ${toolsDir}'/DotNetBuilder/project.csproj.tmpl1'
     outputPath = ${projectName}'.csproj'
     outputBasePath = 'projectDir'
   }
-  'Source/**/.pstmpl' {
-    path = ${projectDir}'/Source/*.pstmpl'
+  'Source/**/.tmpl1' {
+    path = ${projectDir}'/Source/*.tmpl1'
     recurse = true
   }
 }
@@ -184,7 +184,7 @@ files {
   'project.csproj' {
     type = 'template'
   }
-  'Source/**/.pstmpl' {
+  'Source/**/.tmpl1' {
     type = 'template'
   }
   'Properties/**/*.cs' {

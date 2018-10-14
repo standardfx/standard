@@ -13,7 +13,7 @@
     RootModule = 'Builder.psm1'
 
     # Version number of this module.
-    ModuleVersion = '3.1.1024.0'
+    ModuleVersion = '3.7.2048.0'
 
     # ID used to uniquely identify this module
     GUID = 'f611135c-e6d9-444d-a4a7-e8a15728942b'
@@ -31,19 +31,19 @@
     Description = 'Builder is a source code build system based on PowerShell.'
 
     # Supported PSEditions
-    # CompatiblePSEditions = ''
+    #CompatiblePSEditions = @()
 
     # Minimum version of the Windows PowerShell engine required by this module
     PowerShellVersion = '4.0'
 
     # Name of the Windows PowerShell host required by this module
-    # PowerShellHostName = ''
+    #PowerShellHostName = ''
 
     # Minimum version of the Windows PowerShell host required by this module
-    # PowerShellHostVersion = ''
+    #PowerShellHostVersion = ''
 
     # Minimum version of Microsoft .NET Framework required by this module
-    # DotNetFrameworkVersion = '3.5'
+    #DotNetFrameworkVersion = '3.5'
 
     # Minimum version of the common language runtime (CLR) required by this module
     CLRVersion = '3.5'
@@ -52,46 +52,46 @@
     ProcessorArchitecture = 'None'
 
     # Modules that must be imported into the global environment prior to importing this module
-    # RequiredModules = ''
+    #RequiredModules = @()
 
     # Assemblies that must be loaded prior to importing this module
-    # RequiredAssemblies = ''
+    #RequiredAssemblies = @()
 
     # Script files (.ps1) that are run in the caller's environment prior to importing this module.
-    # ScriptsToProcess = ''
+    #ScriptsToProcess = @()
 
     # Type files (.ps1xml) to be loaded when importing this module
-    # TypesToProcess = ''
+    #TypesToProcess = @()
 
     # Format files (.ps1xml) to be loaded when importing this module
-    # FormatsToProcess = ''
+    #FormatsToProcess = @()
 
     # First load importing this module. Depreciated (use 'RootModule').
     # ModuleToProcess = ''
     
     # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
-    # NestedModules = ''
+    #NestedModules = @()
 
     # Functions to export from this module
-    # FunctionsToExport = ''
+    #FunctionsToExport = @()
 
     # Cmdlets to export from this module
-    # CmdletsToExport = ''
+    #CmdletsToExport = @()
 
     # Variables to export from this module
-    # VariablesToExport = ''
+    #VariablesToExport = @()
 
     # Aliases to export from this module
-    # AliasesToExport = ''
+    #AliasesToExport = @()
 
     # DSC resources to export from this module
-    # DscResourcesToExport = ''
+    #DscResourcesToExport = @()
 
     # List of all modules packaged with this module
-    # ModuleList = ''
+    #ModuleList = @()
 
     # List of all files packaged with this module
-    # FileList = ''
+    #FileList = @()
 
     # Private data to pass to the module specified in RootModule/ModuleToProcess
     PrivateData = @{
@@ -104,7 +104,7 @@
             Category = 'Scripting Techniques'
 
             # Keyword tags to help users find this module via navigations and search.
-            Tags = 'powershell', 'buildtool'
+            Tags = @('powershell', 'buildtool')
 
             # The web address of an icon which can be used in galleries to represent this module
             IconUri = 'http://buildcenter.github.io/Builder/icon.png'
@@ -127,13 +127,13 @@
 
         PSExtend = @{
             # Last update
-            LastUpdate = '2018-2-4'
+            LastUpdate = 'Thu 27 Sep 2018, 11:18 PM'
 
             # License family
             LicenseFamily = 'MIT'
 
             # Language customization
-            # Language = 'System'
+            #Language = 'System'
         }
     }
 
@@ -141,6 +141,6 @@
     HelpInfoURI = 'http://buildcenter.github.io/Builder/README.md'
 
     # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
-    # DefaultCommandPrefix = 
+    #DefaultCommandPrefix = 
 }
 

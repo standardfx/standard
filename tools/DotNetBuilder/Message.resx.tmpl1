@@ -117,21 +117,35 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-{{- $defaultStringDataFile = $projectDir | concat '/Properties/StringData.txt' -}}
-{{- $privateConsts = $defaultStringDataFile | include -Encoding UTF8 | stringdata -}}
-{{- $privateConsts | where { $_ -ne $null } | % { }}
-  <data name="{{ $_.name | lowercase -First 1 | concat "_en_us" | xmlattrib }}" xml:space="preserve">
-    <value>{{ $_.value | xmltext }}</value>
+  <!-- BEGIN DATA -->
+{{~
+  localized_data_file = projectDir + '/Properties/StringData.txt'
+  localized_file_exists = fs.test localized_data_file 'leaf'
+
+  if localized_file_exists == true
+    localized_data = localized_data_file | include | object.from_string
+    for prop_name in (localized_data | object.keys)
+~}}
+  <data name="{{ prop_name | string.capitalize | string.append "_en_us" | html.xmlattrib }}" xml:space="preserve">
+    <value>{{ localized_data[prop_name] | html.xmltext }}</value>
   </data>
-{{ } -}}
-{{- $stringDataFiles = $projectDir | concat '/Properties/StringData-*.txt' | dir -File -}}
-{{- $stringDataFiles | where { $_ -ne $null } | % { -}}
-{{-   $privateConsts = $_.FullName | include -Encoding UTF8 | stringdata -}}
-{{-   $localeName = '_' + $_.BaseName.Substring('StringData-'.Length) -}}
-{{-   $privateConsts | where { $_ -ne $null } | % { }}
-  <data name="{{ $_.name | lowercase -First 1 | concat $localeName | xmlattrib }}" xml:space="preserve">
-    <value>{{ $_.value | xmltext }}</value>
+{{~ 
+    end
+~}}
+{{~
+    additional_localization_files = projectDir + '/Properties/StringData-*.txt' | fs.dir
+    for localization_file in additional_localization_files
+      localization_code = localization_file | string.split '\' | array.last | string.split '.' | array.first | string.replace_first "StringData-" ""
+      localized_data = localization_file | include | object.from_string
+      for prop_name in (localized_data | object.keys)
+~}}
+  <data name="{{ prop_name | string.capitalize | string.append ("_" + (localization_code | string.replace '-' '_')) | html.xmlattrib }}" xml:space="preserve">
+    <value>{{ localized_data[prop_name] | html.xmltext }}</value>
   </data>
-{{   } -}}
-{{- } }}
+{{~
+      end
+    end
+  end
+~}}
+  <!-- END DATA -->
 </root>

@@ -15,4 +15,5 @@ dependencies {
 }
 compiler {
 	constants = ['UNIT_TEST']
+    noWarn = ['CS1591']
 }

@@ -213,7 +213,8 @@ task Setup -depends Precheck {
     say ($sr.ImportingModules)
     @(
         'PSJapson/Lizoc.PowerShell.Japson.dll'
-        'PSTemplate.psm1'
+        #'PSTemplate.psm1'
+        'TextScript/Lizoc.PowerShell.TextScript.dll'
         'Robocopy.psm1'
     ) | ForEach-Object {
         say ('* {0}' -f $_) -v 2
@@ -249,7 +250,6 @@ task Setup -depends Precheck {
         'releaseDir = ${repoDir}/releases'
         'docDir = ${repoDir}/docs'
         'globalConfigFile = ${sourceDir}/global.bsd'
-        'templateHelperScriptFile = ${toolsDir}/template_helpers.ps1'
         "includeDiscoveryDir = ['{0}', {1}, {2}]" -f $BuildEnv.BuildScriptDir.Replace('\', '/'), '${toolsDir}', '${sourceDir}'
         '# --- /paths ---'
         ''
@@ -326,11 +326,13 @@ task Setup -depends Precheck {
     # ~~~~~~~~~~~~~~~~~
     if ($Subcommand -eq 'Configure')
     {
+        <#
 	    if (-not $BuildEnv.templateHelperScriptFile)
 	    {
 	        $BuildEnv.templateHelperScriptFile = Join-Path $BuildEnv.toolsDir -ChildPath 'template_helpers.ps1'
 	    }
 	    assert (Test-Path $BuildEnv.templateHelperScriptFile -PathType Leaf) ($sr.CriticalFileNotFound -f $BuildEnv.templateHelperScriptFile)
+        #>
 
 	    if ($BuildEnv.templates)
 	    {
@@ -483,16 +485,9 @@ task Setup -depends Precheck {
     {
         md $BuildEnv.dotnetSdkDir | Out-Null
 
-        $dotnetSdkUrl = $(
-            if ($BuildEnv.dotnetSdkUrl)
-            {
-                $BuildEnv.dotnetSdkUrl
-            }
-            else
-            {
-                'https://download.microsoft.com/download/1/1/5/115B762D-2B41-4AF3-9A63-92D9680B9409/dotnet-sdk-2.1.4-win-x64.zip'
-            }
-        )
+        $dotnetSdkUrl = $BuildEnv.dotnetSdkUrl
+        assert ($dotnetSdkUrl -ne '') ($sr.DotnetSdkUrlUndefined)
+
         $downloadSdkFile = $dotnetSdkUrl.Split('/')[-1]
         $downloadSdkPath = Join-Path $BuildEnv.tempDir -ChildPath $downloadSdkFile
         if (-not (Test-Path $downloadSdkPath -PathType Leaf))
@@ -617,6 +612,7 @@ task Configure -depends Discover -precondition { $Subcommand -eq 'Configure' } {
     # -----------
     # global level templates
     # -----------
+    # we need to regen the templates every time we reconfigure, because (1) template may have changed, or (2) BuildEnv may have changed
     $BuildEnv.templates | Get-Member -MemberType NoteProperty | select -expand Name | ForEach-Object {
         if ($BuildEnv.templates."$_".global -eq $true)
         {
@@ -625,15 +621,13 @@ task Configure -depends Discover -precondition { $Subcommand -eq 'Configure' } {
 
             say ($sr.ProcessingGlobalTemplate -f $globalTmplPath)
 
-            $expandPSTemplateParams = @{
-                ScriptFile = $BuildEnv.templateHelperScriptFile
-                DataBinding = $BuildEnv
+            $convertFromTemplateParams = @{
+                InputObject = $BuildEnv
                 Template = ((Get-Content -Path $globalTmplPath -Encoding UTF8) -join [Environment]::NewLine)
             }
-            Expand-PSTemplate @expandPSTemplateParams | Set-Content -Path $globalTmplOutputPath -Encoding UTF8
+            ConvertFrom-Template @convertFromTemplateParams | Set-Content -Path $globalTmplOutputPath -Encoding UTF8
         }
     }
-
 
     # -----------
     # project level templates
@@ -749,12 +743,11 @@ task Configure -depends Discover -precondition { $Subcommand -eq 'Configure' } {
                         assert (-not (Test-Path $tmplOutputPath -PathType Container)) ($sr.TemplateOutputPathAlreadyUsed -f $tmplOutputPath)
 
                         say ($sr.ProcessingTemplate -f $tmplPath, (Split-Path $tmplOutputPath -Leaf))
-                        $expandPSTemplateParams = @{
-                            ScriptFile = $BuildEnv.templateHelperScriptFile
-                            DataBinding = $projectConfigHashtable
+                        $convertFromTemplateParams = @{
+                            InputObject = $projectConfigHashtable
                             Template = ((Get-Content -Path $tmplPath -Encoding UTF8) -join [Environment]::NewLine)
                         }
-                        Expand-PSTemplate @expandPSTemplateParams | Set-Content -Path $tmplOutputPath -Encoding UTF8
+                        ConvertFrom-Template @convertFromTemplateParams | Set-Content -Path $tmplOutputPath -Encoding UTF8
                     }
                 }
                 else
@@ -774,16 +767,17 @@ task Configure -depends Discover -precondition { $Subcommand -eq 'Configure' } {
                     }
 
                     say ($sr.ProcessingTemplate -f $tmplInfo.path, $tmplOutputPath)
-                    $expandPSTemplateParams = @{
-                        ScriptFile = $BuildEnv.templateHelperScriptFile
-                        DataBinding = $projectConfigHashtable
+                    $convertFromTemplateParams = @{
+                        InputObject = $projectConfigHashtable
                         Template = ((Get-Content -Path $tmplInfo.path -Encoding UTF8) -join [Environment]::NewLine)
                     }
-                    Expand-PSTemplate @expandPSTemplateParams | Set-Content -Path $tmplOutputPath -Encoding UTF8
+                    ConvertFrom-Template @convertFromTemplateParams | Set-Content -Path $tmplOutputPath -Encoding UTF8
                 }
             }
         }
 
+        #die "so far so good!"
+        
         # make file
         $projectMakeFilePath = Join-Path $projectConfig.projectDir -ChildPath ($projectConfig.projectName + $projectConfig.compiler.makeFileExtension)
         $allMakeFiles += Resolve-Path $projectMakeFilePath | select -expand Path

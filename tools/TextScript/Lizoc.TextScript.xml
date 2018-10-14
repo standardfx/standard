@@ -1,0 +1,3738 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Lizoc.TextScript</name>
+    </assembly>
+    <members>
+        <member name="P:Lizoc.TextScript.RS.Culture">
+            <summary>
+            Overrides the current thread's CurrentUICulture property for all
+            resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Functions.ArrayFunctions">
+            <summary>
+            Array functions available through the object 'array'.
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.ArrayFunctions.Add(System.Collections.IList,System.Object)">
+            <summary>
+            Adds a value to the input list.
+            </summary>
+            <param name="list">The input list</param>
+            <param name="value">The value to add at the end of the list</param>
+            <returns>A new list with the value added</returns>
+            <remarks>
+            ```template-text
+            {{ [1, 2, 3] | array.add 4 }}
+            ```
+            ```html
+            [1, 2, 3, 4]
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.ArrayFunctions.AddRange(System.Collections.IEnumerable,System.Collections.IEnumerable)">
+            <summary>
+            Concatenates two lists.
+            </summary>
+            <param name="list1">The 1st input list</param>
+            <param name="list2">The 2nd input list</param>
+            <returns>The concatenation of the two input lists</returns>
+            <remarks>
+            ```template-text
+            {{ [1, 2, 3] | array.concat [4, 5] }}
+            ```
+            ```html
+            [1, 2, 3, 4, 5]
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.ArrayFunctions.Compact(System.Collections.IEnumerable)">
+            <summary>
+            Removes any null values from the input list.
+            </summary>
+            <param name="list">An input list</param>
+            <returns>Returns a list with null value removed</returns>
+            <remarks>
+            ```template-text
+            {{ [1, null, 3] | array.compact }}
+            ```
+            ```html
+            [1, 3]
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.ArrayFunctions.Concat(System.Collections.IEnumerable,System.Collections.IEnumerable)">
+            <summary>
+            Concatenates two lists.
+            </summary>
+            <param name="list1">The 1st input list</param>
+            <param name="list2">The 2nd input list</param>
+            <returns>The concatenation of the two input lists</returns>
+            <remarks>
+            ```template-text
+            {{ [1, 2, 3] | array.concat [4, 5] }}
+            ```
+            ```html
+            [1, 2, 3, 4, 5]
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.ArrayFunctions.Cycle(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Parsing.SourceSpan,System.Collections.IList,System.Object)">
+            <summary>
+            Loops through a group of strings and outputs them in the order that they were passed as parameters. Each time cycle is called, the next string that was passed as a parameter is output.
+            </summary>
+            <param name="context">The template context</param>
+            <param name="span">The source span</param>
+            <param name="list">An input list</param>
+            <param name="group">The group used. Default is `null`</param>
+            <returns>Returns a list with null value removed</returns>
+            <remarks>
+            ```template-text
+            {{ array.cycle ['one', 'two', 'three'] }}
+            {{ array.cycle ['one', 'two', 'three'] }}
+            {{ array.cycle ['one', 'two', 'three'] }}
+            {{ array.cycle ['one', 'two', 'three'] }}
+            ```
+            ```html
+            one
+            two
+            three
+            one
+            ```
+            `cycle` accepts a parameter called cycle group in cases where you need multiple cycle blocks in one template. 
+            If no name is supplied for the cycle group, then it is assumed that multiple calls with the same parameters are one group.
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.ArrayFunctions.First(System.Collections.IEnumerable)">
+            <summary>
+            Returns the first element of the input `list`.
+            </summary>
+            <param name="list">The input list</param>
+            <returns>The first element of the input `list`.</returns>
+            <remarks>
+            ```template-text
+            {{ [4, 5, 6] | array.first }}
+            ```
+            ```html
+            4
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.ArrayFunctions.InsertAt(System.Collections.IList,System.Int32,System.Object)">
+            <summary>
+            Inserts a `value` at the specified index in the input `list`.
+            </summary>
+            <param name="list">The input list</param>
+            <param name="index">The index in the list where to insert the element</param>
+            <param name="value">The value to insert</param>
+            <returns>A new list with the element inserted.</returns>
+            <remarks>
+            ```template-text
+            {{ ["a", "b", "c"] | array.insert_at 2 "Yo" }}
+            ```
+            ```html
+            [a, b, Yo, c]
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.ArrayFunctions.Join(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Parsing.SourceSpan,System.Collections.IEnumerable,System.String,System.String)">
+            <summary>
+            Joins the element of a list separated by a delimiter string and return the concatenated string.
+            </summary>
+            <param name="context">The template context</param>
+            <param name="span">The source span</param>
+            <param name="list">The input list</param>
+            <param name="delimiter">The delimiter string to use to separate elements in the output string</param>
+            <param name="format">An optional string to specify how to format each item in the array.</param>
+            <returns>A new list with the element inserted.</returns>
+            <remarks>
+            ```template-text
+            {{ [1, 2, 3] | array.join "|" }}
+            {{ [1, 2, 3] | array.join "," "*{0}*" }}
+            ```
+            ```html
+            1|2|3
+            *1*,*2*,*3*
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.ArrayFunctions.Last(System.Collections.IEnumerable)">
+            <summary>
+            Returns the last element of the input `list`.
+            </summary>
+            <param name="list">The input list</param>
+            <returns>The last element of the input `list`.</returns>
+            <remarks>
+            ```template-text
+            {{ [4, 5, 6] | array.last }}
+            ```
+            ```html
+            6
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.ArrayFunctions.Limit(System.Collections.IEnumerable,System.Int32)">
+            <summary>
+            Returns a limited number of elments from the input list
+            </summary>
+            <param name="list">The input list</param>
+            <param name="count">The number of elements to return from the input list</param>
+            <remarks>
+            ```template-text
+            {{ [4, 5, 6] | array.limit 2 }}
+            ```
+            ```html
+            [4, 5]
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.ArrayFunctions.Map(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Parsing.SourceSpan,System.Object,System.String)">
+            <summary>
+            Accepts an array element's attribute as a parameter and creates an array out of each array element's value.
+            </summary>
+            <param name="context">The template context</param>
+            <param name="span">The source span</param>
+            <param name="list">The input list</param>
+            <param name="member">The member to extract the value from</param>
+            <remarks>
+            ```template-text
+            {{ 
+            products = [{title: "orange", type: "fruit"}, {title: "computer", type: "electronics"}, {title: "sofa", type: "furniture"}]
+            products | array.map "type" | array.uniq | array.sort }}
+            ```
+            ```html
+            [electronics, fruit, furniture]
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.ArrayFunctions.Offset(System.Collections.IEnumerable,System.Int32)">
+            <summary>
+            Returns the remaining of the list after the specified offset
+            </summary>
+            <param name="list">The input list</param>
+            <param name="index">The index of a list to return elements</param>
+            <remarks>
+            ```template-text
+            {{ [4, 5, 6, 7, 8] | array.offset 2 }}
+            ```
+            ```html
+            [6, 7, 8]
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.ArrayFunctions.RemoveAt(System.Collections.IList,System.Int32)">
+            <summary>
+            Removes an element at the specified `index` from the input `list`
+            </summary>
+            <param name="list">The input list</param>
+            <param name="index">The index of a list to return elements</param>
+            <returns>A new list with the element removed. If index is negative, remove at the end of the list.</returns>
+            <remarks>
+            ```template-text
+            {{ [4, 5, 6, 7, 8] | array.remove_at 2 }}
+            ```
+            ```html
+            [4, 5, 7, 8]
+            ```
+            If the `index` is negative, removes at the end of the list (notice that we need to put -1 in parenthesis to avoid confusing the parser with a binary `-` operation):
+            ```template-text
+            {{ [4, 5, 6, 7, 8] | array.remove_at (-1) }}
+            ```
+            ```html
+            [4, 5, 6, 7]
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.ArrayFunctions.ReplaceEmpty(System.Collections.IEnumerable,System.String,System.String)">
+            <summary>
+            Returns a string based on whether an array is empty.
+            </summary>
+            <param name="list">The input list</param>
+            <param name="replace">The string to replace if the input list is null or empty.</param>
+            <param name="notEmpty">The string to return if the input list contains members.</param>
+            <returns>A string based on whether the list is null or empty.</returns>
+            <remarks>
+            ```template-text
+            {{ [4, 5, 6, 7, 8] | array.replace_empty "i am empty" "i am full" }}
+            ```
+            ```html
+            i am full
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.ArrayFunctions.Reverse(System.Collections.IEnumerable)">
+            <summary>
+            Reverses the input `list`
+            </summary>
+            <param name="list">The input list</param>
+            <returns>A new list in reversed order.</returns>
+            <remarks>
+            ```template-text
+            {{ [4, 5, 6, 7] | array.reverse }}
+            ```
+            ```html
+            [7, 6, 5, 4]
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.ArrayFunctions.Size(System.Collections.IEnumerable)">
+            <summary>
+            Returns the number of elements in the input `list`
+            </summary>
+            <param name="list">The input list</param>
+            <returns>A number of elements in the input `list`.</returns>
+            <remarks>
+            ```template-text
+            {{ [4, 5, 6] | array.size }}
+            ```
+            ```html
+            3
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.ArrayFunctions.Sort(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Parsing.SourceSpan,System.Object,System.String)">
+            <summary>
+            Sorts the elements of the input `list` according to the value of each element or the value of the specified `member` of each element
+            </summary>
+            <param name="context">The template context</param>
+            <param name="span">The source span</param>
+            <param name="list">The input list</param>
+            <param name="member">The member name to sort according to its value. Null by default, meaning that the element's value are used instead.</param>
+            <returns>A list sorted according to the value of each element or the value of the specified `member` of each element.</returns>
+            <remarks>
+            Sorts by element's value: 
+            ```template-text
+            {{ [10, 2, 6] | array.sort }}
+            ```
+            ```html
+            [2, 6, 10]
+            ```
+            Sorts by elements member's value: 
+            ```template-text
+            {{
+            products = [{title: "orange", type: "fruit"}, {title: "computer", type: "electronics"}, {title: "sofa", type: "furniture"}]
+            products | array.sort "title" | array.map "title"
+            }}
+            ```
+            ```html
+            [computer, orange, sofa]
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.ArrayFunctions.Uniq(System.Collections.IEnumerable)">
+            <summary>
+            Returns the unique elements of the input `list`.
+            </summary>
+            <param name="list">The input list</param>
+            <returns>A list of unique elements of the input `list`.</returns>
+            <remarks>
+            ```template-text
+            {{ [1, 1, 4, 5, 8, 8] | array.uniq }}
+            ```
+            ```html
+            [1, 4, 5, 8]
+            ```
+            </remarks>
+        </member>
+        <member name="F:Lizoc.TextScript.Functions.BuiltinFunctions.Default">
+            <summary>
+            This object is readonly, should not be modified by any other objects internally.
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Functions.BuiltinFunctions.DefaultBuiltins">
+            <summary>
+            Use an internal object to create all default builtins just once to avoid allocations of delegates/IScriptCustomFunction
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Functions.DateTimeFunctions">
+            <summary>
+            A datetime object represents an instant in time, expressed as a date and time of day. 
+            
+            | Name             | Description
+            |--------------    |-----------------
+            | `.year`          | Gets the year of a date object 
+            | `.month`         | Gets the month of a date object
+            | `.day`           | Gets the day in the month of a date object
+            | `.day_of_year`   | Gets the day within the year
+            | `.hour`          | Gets the hour of the date object
+            | `.minute`        | Gets the minute of the date object
+            | `.second`        | Gets the second of the date object
+            | `.millisecond`   | Gets the millisecond of the date object
+            
+            [:top:](#builtins)
+            #### Binary operations
+            
+            The substract operation `date1 - date2`: Substract `date2` from `date1` and return a timespan internal object (see timespan object below).
+            
+            Other comparison operators(`==`, `!=`, `&lt;=`, `&gt;=`, `&lt;`, `&gt;`) are also working with date objects.
+            
+            A `timespan` and also the added to a `datetime` object.
+            </summary>
+            <seealso cref="T:Lizoc.TextScript.Runtime.ScriptObject" />
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.DateTimeFunctions.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Lizoc.TextScript.Functions.DateTimeFunctions"/> class.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.Functions.DateTimeFunctions.Format">
+            <summary>
+            Gets or sets the format used to format all dates
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.Functions.DateTimeFunctions.Now">
+            <summary>
+            Returns a datetime object of the current time, including the hour, minutes, seconds and milliseconds.
+            </summary>
+            <remarks>
+            ```template-text
+            {{ date.now.year }}
+            ```
+            ```html
+            2017
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.DateTimeFunctions.AddDays(System.DateTime,System.Double)">
+            <summary>
+            Adds the specified number of days to the input date. 
+            </summary>
+            <param name="date">The date.</param>
+            <param name="days">The days.</param>
+            <returns>A new date</returns>
+            <remarks>
+            ```template-text
+            {{ date.parse '2016/01/05' | date.add_days 1 }}
+            ```
+            ```html
+            06 Jan 2016
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.DateTimeFunctions.AddMonths(System.DateTime,System.Int32)">
+            <summary>
+            Adds the specified number of months to the input date. 
+            </summary>
+            <param name="date">The date.</param>
+            <param name="months">The months.</param>
+            <returns>A new date</returns>
+            <remarks>
+            ```template-text
+            {{ date.parse '2016/01/05' | date.add_months 1 }}
+            ```
+            ```html
+            05 Feb 2016
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.DateTimeFunctions.AddYears(System.DateTime,System.Int32)">
+            <summary>
+            Adds the specified number of years to the input date. 
+            </summary>
+            <param name="date">The date.</param>
+            <param name="years">The years.</param>
+            <returns>A new date</returns>
+            <remarks>
+            ```template-text
+            {{ date.parse '2016/01/05' | date.add_years 1 }}
+            ```
+            ```html
+            05 Jan 2017
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.DateTimeFunctions.AddHours(System.DateTime,System.Double)">
+            <summary>
+            Adds the specified number of hours to the input date. 
+            </summary>
+            <param name="date">The date.</param>
+            <param name="hours">The hours.</param>
+            <returns>A new date</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.DateTimeFunctions.AddMinutes(System.DateTime,System.Double)">
+            <summary>
+            Adds the specified number of minutes to the input date. 
+            </summary>
+            <param name="date">The date.</param>
+            <param name="minutes">The minutes.</param>
+            <returns>A new date</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.DateTimeFunctions.AddSeconds(System.DateTime,System.Double)">
+            <summary>
+            Adds the specified number of seconds to the input date. 
+            </summary>
+            <param name="date">The date.</param>
+            <param name="seconds">The seconds.</param>
+            <returns>A new date</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.DateTimeFunctions.AddMilliseconds(System.DateTime,System.Double)">
+            <summary>
+            Adds the specified number of milliseconds to the input date. 
+            </summary>
+            <param name="date">The date.</param>
+            <param name="millis">The milliseconds.</param>
+            <returns>A new date</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.DateTimeFunctions.Parse(Lizoc.TextScript.TemplateContext,System.String)">
+            <summary>
+            Parses the specified input string to a date object. 
+            </summary>
+            <param name="context">The template context.</param>
+            <param name="text">A text representing a date.</param>
+            <returns>A date object</returns>
+            <remarks>
+            ```template-text
+            {{ date.parse '2016/01/05' }}
+            ```
+            ```html
+            05 Jan 2016
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.DateTimeFunctions.ToString(System.Nullable{System.DateTime},System.String,System.Globalization.CultureInfo)">
+            <summary>
+            Converts a datetime object to a textual representation using the specified format string.
+            
+            By default, if you are using a date, it will use the format specified by `date.format` which defaults to /// `date.default_format` (readonly) which default to `%d %b %Y`
+            
+            You can override the format used for formatting all dates by assigning the a new format: `date.format = '%a /// %b %e %T %Y';`
+            
+            You can recover the default format by using `date.format = date.default_format;`
+            
+            By default, the to_string format is using the **current culture**, but you can switch to an invariant /// culture by using the modifier `%g`
+            
+            For example, using `%g %d %b %Y` will output the date using an invariant culture.
+            
+            If you are using `%g` alone, it will output the date with `date.format` using an invariant culture.
+            
+            Suppose that `date.now` would return the date `2013-09-12 22:49:27 +0530`, the following table explains the /// format modifiers:
+            
+            | Format | Result        | Description
+            |--------|---------------|--------------------------------------------
+            | `"%a"` |  `"Thu"` 	   | Name of week day in short form of the
+            | `"%A"` |  `"Thursday"` | Week day in full form of the time
+            | `"%b"` |  `"Sep"` 	   | Month in short form of the time
+            | `"%B"` |  `"September"`| Month in full form of the time
+            | `"%c"` |               | Date and time (%a %b %e %T %Y)
+            | `"%d"` |  `"12"` 	     | Day of the month of the time
+            | `"%e"` |  `"12"`       | Day of the month, blank-padded ( 1..31)
+            | `"%H"` |  `"22"`       | Hour of the time in 24 hour clock format
+            | `"%I"` |  `"10"` 	     | Hour of the time in 12 hour clock format
+            | `"%j"` |               | Day of the year (001..366) (3 digits, left padded with zero)
+            | `"%m"` |  `"09"` 	     | Month of the time
+            | `"%M"` |  `"49"` 	     | Minutes of the time (2 digits, left padded with zero e.g 01 02)
+            | `"%p"` |  `"PM"` 	     | Gives AM / PM of the time
+            | `"%S"` |  `"27"` 	     | Seconds of the time
+            | `"%U"` |               | Week number of the current year, starting with the first Sunday as the first day /// of the first week (00..53)
+            | `"%W"` |               | Week number of the current year, starting with the first Monday as the first day /// of the first week (00..53)
+            | `"%w"` |  `"4"` 	     | Day of week of the time
+            | `"%x"` |               | Preferred representation for the date alone, no time
+            | `"%X"` |               | Preferred representation for the time alone, no date
+            | `"%y"` |  `"13"` 	     | Gives year without century of the time
+            | `"%Y"` |  `"2013"`     | Year of the time
+            | `"%Z"` |  `"IST"` 	   | Gives Time Zone of the time
+            | `"%%"` |  `"%"`        | Output the character `%`
+            
+            Note that the format is using a good part of the ruby format ([source]/// (http://apidock.com/ruby/DateTime/strftime))
+            ```template-text
+            {{ date.parse '2016/01/05' | date.to_string `%d %b %Y` }}
+            ```
+            ```html
+            05 Jan 2016
+            ```
+            </summary>
+            <param name="datetime">The input datetime to format</param>
+            <param name="pattern">The date format pattern.</param>
+            <param name="culture">The culture used to format the datetime</param>
+            <returns>
+            A <see cref="T:System.String" /> that represents this instance.
+            </returns>
+        </member>
+        <member name="T:Lizoc.TextScript.Functions.FileSystemFunctions">
+            <summary>
+            File system functions available through the builtin object 'fs'.
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.FileSystemFunctions.Test(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Parsing.SourceSpan,System.String,System.String)">
+            <summary>
+            Tests for the existance of a path.
+            </summary>
+            <param name="context">The template context</param>
+            <param name="span">The source span</param>
+            <param name="path">The path to test</param>
+            <param name="type">The type of path to test. May be one of the following: "leaf", "container" or "any". Defaults to "any".</param>
+            <returns>If the path exists, `true`. Otherwise, `false`.</returns>
+            <remarks>
+            ```template-text
+            {{ '.\foo.txt' | fs.test }}
+            ```
+            ```html
+            true
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.FileSystemFunctions.Dir(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Parsing.SourceSpan,System.String,System.String)">
+            <summary>
+            Returns items in a container path.
+            </summary>
+            <param name="context">The template context</param>
+            <param name="span">The source span</param>
+            <param name="path">The path to query. Wildcard is supported. For recursive search, use the syntax `**\foo.txt`.</param>
+            <param name="type">The type of children items to return. May be one of the following: "leaf", "container" or "any". Defaults to "any".</param>
+            <returns>A list of children items under the path specified.</returns>
+            <remarks>
+            ```template-text
+            {{ '**\fo?.txt' | fs.dir }}
+            ```
+            ```html
+            [C:\foo.txt, C:\temp\foa.txt]
+            ```
+            </remarks>
+        </member>
+        <member name="T:Lizoc.TextScript.Functions.HtmlFunctions">
+            <summary>
+            Html functions available through the builtin object 'html'.
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.HtmlFunctions.Strip(Lizoc.TextScript.TemplateContext,System.String)">
+            <summary>
+            Removes any HTML tags from the input string
+            </summary>
+            <param name="context">The template context (used for <see cref="P:Lizoc.TextScript.TemplateContext.RegexTimeOut"/>)</param>
+            <param name="text">The input string</param>
+            <returns>The input string removed with any HTML tags</returns>
+            <remarks>
+            ```template-text
+            {{ "&lt;p&gt;This is a paragraph&lt;/p&gt;" | html.strip }}
+            ```
+            ```html
+            This is a paragraph
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.HtmlFunctions.Escape(System.String)">
+            <summary>
+            Escapes a HTML input string (replacing `&amp;` by `&amp;amp;`)
+            </summary>
+            <param name="text">The input string</param>
+            <returns>The input string removed with any HTML tags</returns>
+            <remarks>
+            ```template-text
+            {{ "&lt;p&gt;This is a paragraph&lt;/p&gt;" | html.escape }}
+            ```
+            ```html
+            &amp;lt;p&amp;gt;This is a paragraph&amp;lt;/p&amp;gt;
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.HtmlFunctions.UrlEncode(System.String)">
+            <summary>
+            Converts any URL-unsafe characters in a string into percent-encoded characters.
+            </summary>
+            <param name="text">The input string</param>
+            <returns>The input string url encoded</returns>
+            <remarks>
+            ```template-text
+            {{ "john@liquid.com" | html.url_encode }}
+            ```
+            ```html
+            john%40liquid.com
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.HtmlFunctions.UrlEscape(System.String)">
+            <summary>
+            Identifies all characters in a string that are not allowed in URLS, and replaces the characters with their escaped variants.
+            </summary>
+            <param name="text">The input string</param>
+            <returns>The input string url escaped</returns>
+            <remarks>
+            ```template-text
+            {{ "&lt;hello&gt; &amp; &lt;world&gt;" | html.url_escape }}
+            ```
+            ```html
+            %3Chello%3E%20&amp;%20%3Cworld%3E
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.HtmlFunctions.Xmlattrib(System.String)">
+            <summary>
+            Escapes text for usage as XML attribute value.
+            </summary>
+            <param name="text">The input string</param>
+            <returns>The input string escaped</returns>
+            <remarks>
+            ```template-text
+            {{ 'hello "my" world' | html.xmlattrib }}
+            ```
+            ```html
+            hello &amp;quot;my&amp;quot; world
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.HtmlFunctions.Xmltext(System.String)">
+            <summary>
+            Escapes text for usage as XML text value.
+            </summary>
+            <param name="text">The input string</param>
+            <returns>The input string escaped</returns>
+            <remarks>
+            ```template-text
+            {{ 'hello &lt;my&gt; world &amp; friends' | html.xmltext }}
+            ```
+            ```html
+            hello &amp;lt;my&amp;gt; world &amp;amp; friends
+            ```
+            </remarks>
+        </member>
+        <member name="T:Lizoc.TextScript.Functions.IncludeFunction">
+            <summary>
+            The include function available through the function 'include'.
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Functions.LiquidBuiltinsFunctions">
+            <summary>
+            Builtins functions for a Liquid TemplateContext
+            </summary>
+        </member>
+        <member name="F:Lizoc.TextScript.Functions.LiquidBuiltinsFunctions.Default">
+            <summary>
+            This object is readonly, should not be modified by any other objects internally.
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Functions.LiquidBuiltinsFunctions.DefaultBuiltins">
+            <summary>
+            Use an internal object to create all default builtins just once to avoid allocations of delegates/IScriptCustomFunction
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Functions.MathFunctions">
+            <summary>
+            Math functions available through the object 'math'.
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.MathFunctions.Abs(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Parsing.SourceSpan,System.Object)">
+            <summary>
+            Returns the absolute value of a specified number.
+            </summary>
+            <param name="context">The template context</param>
+            <param name="span">The source span</param>
+            <param name="value">The input value</param>
+            <returns>The absolute value of the input value</returns>
+            <remarks>
+            ```template-text
+            {{ -15.5| math.abs }}
+            {{ -5| math.abs }}
+            ```
+            ```html
+            15.5
+            5
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.MathFunctions.Ceil(System.Double)">
+            <summary>
+            Returns the smallest integer greater than or equal to the specified number.
+            </summary>
+            <param name="value">The input value</param>
+            <returns>The smallest integer greater than or equal to the specified number.</returns>
+            <remarks>
+            ```template-text
+            {{ 4.6 | math.ceil }}
+            {{ 4.3 | math.ceil }}
+            ```
+            ```html
+            5
+            5
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.MathFunctions.DividedBy(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Parsing.SourceSpan,System.Double,System.Object)">
+            <summary>
+            Divides the specified value by another value. If the divisor is an integer, the result will
+            be floor to and converted back to an integer.
+            </summary>
+            <param name="context">The template context</param>
+            <param name="span">The source span</param>
+            <param name="value">The input value</param>
+            <param name="divisor">The divisor value</param>
+            <returns>The division of `value` by `divisor`.</returns>
+            <remarks>
+            ```template-text
+            {{ 8.4 | math.divided_by 2.0 | math.round 1 }}
+            {{ 8.4 | math.divided_by 2 }}
+            ```
+            ```html
+            4.2
+            4
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.MathFunctions.Floor(System.Double)">
+            <summary>
+            Returns the largest integer less than or equal to the specified number.
+            </summary>
+            <param name="value">The input value</param>
+            <returns>The largest integer less than or equal to the specified number.</returns>
+            <remarks>
+            ```template-text
+            {{ 4.6 | math.floor }}
+            {{ 4.3 | math.floor }}
+            ```
+            ```html
+            4
+            4
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.MathFunctions.Format(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Parsing.SourceSpan,System.Object,System.String)">
+            <summary>
+            Formats a number value with specified [.NET standard numeric format strings](https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings)
+            </summary>
+            <param name="context">The template context</param>
+            <param name="span">The source span</param>
+            <param name="value">The input value</param>
+            <param name="format">The format string.</param>
+            <returns>The largest integer less than or equal to the specified number.</returns>
+            <remarks>
+            ```template-text
+            {{ 255 | math.format "X4" }}
+            ```
+            ```html
+            00FF
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.MathFunctions.IsNumber(System.Object)">
+            <summary>
+            Returns a boolean indicating if the input value is a number
+            </summary>
+            <param name="value">The input value</param>
+            <returns>**true** if the input value is a number; otherwise false.</returns>
+            <remarks>
+            ```template-text
+            {{ 255 | math.is_number }}
+            {{ "yo" | math.is_number }}
+            ```
+            ```html
+            true
+            false
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.MathFunctions.Minus(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Parsing.SourceSpan,System.Object,System.Object)">
+            <summary>
+            Substracts from the input value the `with` value
+            </summary>
+            <param name="context">The template context</param>
+            <param name="span">The source span</param>
+            <param name="value">The input value</param>
+            <param name="with">The with value to substract from `value`</param>
+            <returns>The results of the substraction: `value` - `with`</returns>
+            <remarks>
+            ```template-text
+            {{ 255 | math.minus 5}}
+            ```
+            ```html
+            250
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.MathFunctions.Modulo(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Parsing.SourceSpan,System.Object,System.Object)">
+            <summary>
+            Performs the modulo of the input value with the `with` value
+            </summary>
+            <param name="context">The template context</param>
+            <param name="span">The source span</param>
+            <param name="value">The input value</param>
+            <param name="with">The with value to module `value`</param>
+            <returns>The results of the modulo: `value` % `with`</returns>
+            <remarks>
+            ```template-text
+            {{ 11 | math.modulo 10}}
+            ```
+            ```html
+            1
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.MathFunctions.Plus(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Parsing.SourceSpan,System.Object,System.Object)">
+            <summary>
+            Performs the addition of the input value with the `with` value
+            </summary>
+            <param name="context">The template context</param>
+            <param name="span">The source span</param>
+            <param name="value">The input value</param>
+            <param name="with">The with value to add to`value`</param>
+            <returns>The results of the addition: `value` + `with`</returns>
+            <remarks>
+            ```template-text
+            {{ 1 | math.plus 2}}
+            ```
+            ```html
+            3
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.MathFunctions.Round(System.Double,System.Int32)">
+            <summary>
+            Rounds a value to the nearest integer or to the specified number of fractional digits.
+            </summary>
+            <param name="value">The input value</param>
+            <param name="precision">The number of fractional digits in the return value. Default is 0.</param>
+            <returns>A value rounded to the nearest integer or to the specified number of fractional digits.</returns>
+            <remarks>
+            ```template-text
+            {{ 4.6 | math.round }}
+            {{ 4.3 | math.round }}
+            {{ 4.5612 | math.round 2 }}
+            ```
+            ```html
+            5
+            4
+            4.56
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.MathFunctions.Times(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Parsing.SourceSpan,System.Object,System.Object)">
+            <summary>
+            Performs the multiplication of the input value with the `with` value
+            </summary>
+            <param name="context">The template context</param>
+            <param name="span">The source span</param>
+            <param name="value">The input value</param>
+            <param name="with">The with value to multiply to`value`</param>
+            <returns>The results of the multiplication: `value` * `with`</returns>
+            <remarks>
+            ```template-text
+            {{ 2 | math.times 3}}
+            ```
+            ```html
+            6
+            ```
+            </remarks>
+        </member>
+        <member name="T:Lizoc.TextScript.Functions.ObjectFunctions">
+            <summary>
+            Object functions available through the builtin object 'object'.
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.ObjectFunctions.Default(System.Object,System.Object)">
+            <summary>
+            The `default` value is returned if the input `value` is null or an empty string "". A string containing whitespace characters will not resolve to the default value.
+            </summary>
+            <param name="value">The input value to check if it is null or an empty string.</param>
+            <param name="default">The default alue to return if the input `value` is null or an empty string.</param>
+            <returns>The `default` value is returned if the input `value` is null or an empty string "", otherwise it returns `value`</returns>
+            <remarks>
+            ```template-text
+            {{ undefined_var | object.default "Yo" }}
+            ```
+            ```html
+            Yo
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.ObjectFunctions.HasKey(System.Collections.Generic.IDictionary{System.String,System.Object},System.String)">
+            <summary>
+            Checks if the specified object as the member `key`
+            </summary>
+            <param name="value">The input object.</param>
+            <param name="key">The member name to check its existence.</param>
+            <returns>**true** if the input object contains the member `key`; otherwise **false**</returns>
+            <remarks>
+            ```template-text
+            {{ product | object.has_key "title" }}
+            ```
+            ```html
+            true
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.ObjectFunctions.HasValue(System.Collections.Generic.IDictionary{System.String,System.Object},System.String)">
+            <summary>
+            Checks if the specified object as a value for the member `key`
+            </summary>
+            <param name="value">The input object.</param>
+            <param name="key">The member name to check the existence of its value.</param>
+            <returns>**true** if the input object contains the member `key` and has a value; otherwise **false**</returns>
+            <remarks>
+            ```template-text
+            {{ product | object.has_value "title" }}
+            ```
+            ```html
+            true
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.ObjectFunctions.Keys(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Gets the members/keys of the specified value object.
+            </summary>
+            <param name="value">The input object.</param>
+            <returns>A list with the member names/key of the input object</returns>
+            <remarks>
+            ```template-text
+            {{ product | object.keys | array.sort }}
+            ```
+            ```html
+            [title, type]
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.ObjectFunctions.Size(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Parsing.SourceSpan,System.Object)">
+            <summary>
+            Returns the size of the input object. 
+            - If the input object is a string, it will return the length
+            - If the input is a list, it will return the number of elements
+            - If the input is an object, it will return the number of members
+            </summary>
+            <param name="context">The template context</param>
+            <param name="span">The source span</param>
+            <param name="value">The input object.</param>
+            <returns>The size of the input object.</returns>
+            <remarks>
+            ```template-text
+            {{ [1, 2, 3] | object.size }}
+            ```
+            ```html
+            3
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.ObjectFunctions.FromString(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Parsing.SourceSpan,System.String)">
+            <summary>
+            This is similar to the Powershell command `ConvertFrom-StringData`, but uses the character "`" instead 
+            of "\"" as the escape character.
+            For a list of characters that must be escaped, refer to 
+            the [MSDN documentation](https://msdn.microsoft.com/library/system.text.regularexpressions.regex.unescape)
+            </summary>
+            <param name="context">The template context</param>
+            <param name="span">The source span</param>
+            <param name="text">Text in the string data syntax.</param>
+            <returns>
+            An object representing key-value pairs of strings.
+            </returns>
+            <remarks>
+            ```template-text
+            {{ localized = include 'localization.txt' | object.from_string
+            localized.foo
+            }}
+            ```
+            ```html
+            bar!
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.ObjectFunctions.Typeof(System.Object)">
+            <summary>
+            Returns string representing the type of the input object. The type can be `string`, `boolean`, `number`, `array`, `iterator` and `object` 
+            </summary>
+            <param name="value">The input object.</param>
+            <remarks>
+            ```template-text
+            {{ null | object.typeof }}
+            {{ true | object.typeof }}
+            {{ 1 | object.typeof }}
+            {{ 1.0 | object.typeof }}
+            {{ "text" | object.typeof }}
+            {{ 1..5 | object.typeof }}
+            {{ [1,2,3,4,5] | object.typeof }}
+            {{ {} | object.typeof }}
+            {{ object | object.typeof }}
+            ```
+            ```html
+            
+            boolean
+            number
+            number
+            string
+            iterator
+            array
+            object
+            object
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.ObjectFunctions.Values(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Gets the member's values of the specified value object.
+            </summary>
+            <param name="value">The input object.</param>
+            <returns>A list with the member values of the input object</returns>
+            <remarks>
+            ```template-text
+            {{ product | object.values | array.sort }}
+            ```
+            ```html
+            [fruit, Orange]
+            ```
+            </remarks>
+        </member>
+        <member name="T:Lizoc.TextScript.Functions.RegexFunctions">
+            <summary>
+            Functions exposed through `regex` builtin object.
+            </summary>
+            <seealso cref="T:Lizoc.TextScript.Runtime.ScriptObject" />
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.RegexFunctions.Escape(System.String)">
+            <summary>
+            Escapes a minimal set of characters (`\`, `*`, `+`, `?`, `|`, `{`, `[`, `(`,`)`, `^`, `$`,`.`, `#`, and white space) 
+            by replacing them with their escape codes. 
+            This instructs the regular expression engine to interpret these characters literally rather than as metacharacters.
+            </summary>
+            <param name="pattern">The input string that contains the text to convert.</param>
+            <returns>A string of characters with metacharacters converted to their escaped form.</returns>
+            <remarks>
+            ```template-text
+            {{ "(abc.*)" | regex.escape }}
+            ```
+            ```html
+            \(abc\.\*\)
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.RegexFunctions.Match(Lizoc.TextScript.TemplateContext,System.String,System.String,System.String)">
+            <summary>
+            Searches an input string for a substring that matches a regular expression pattern and returns an array with the match occurences. 
+            </summary>
+            <param name="context">The template context (to fetch the timeout configuration)</param>
+            <param name="text">The string to search for a match.</param>
+            <param name="pattern">The regular expression pattern to match.</param>
+            <param name="options">A string with regex options, that can contain the following option characters (default is `null`):
+            - `i`: Specifies case-insensitive matching. 
+            - `m`: Multiline mode. Changes the meaning of `^` and `$` so they match at the beginning and end, respectively, of any line, and not just the beginning and end of the entire string.
+            - `s`: Specifies single-line mode. Changes the meaning of the dot `.` so it matches every character (instead of every character except `\n`).
+            - `x`: Eliminates unescaped white space from the pattern and enables comments marked with `#`. 
+            </param>
+            <returns>An array that contains all the match groups. The first group contains the entire match. The other elements contain regex matched groups `(..)`. An empty array returned means no match.</returns>
+            <remarks>
+            ```template-text
+            {{ "this is a text123" | regex.match `(\w+) a ([a-z]+\d+)` }}
+            ```
+            ```html
+            [is a text123, is, text123]
+            ```
+            Notice that the first element returned in the array is the entire regex match, followed by the regex group matches.
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.RegexFunctions.Replace(Lizoc.TextScript.TemplateContext,System.String,System.String,System.String,System.String)">
+            <summary>
+            In a specified input string, replaces strings that match a regular expression pattern with a specified replacement string. 
+            </summary>
+            <param name="context">The template context (to fetch the timeout configuration)</param>
+            <param name="text">The string to search for a match.</param>
+            <param name="pattern">The regular expression pattern to match.</param>
+            <param name="replace">The replacement string.</param>
+            <param name="options">A string with regex options, that can contain the following option characters (default is `null`):
+            - `i`: Specifies case-insensitive matching. 
+            - `m`: Multiline mode. Changes the meaning of `^` and `$` so they match at the beginning and end, respectively, of any line, and not just the beginning and end of the entire string.
+            - `s`: Specifies single-line mode. Changes the meaning of the dot `.` so it matches every character (instead of every character except `\n`).
+            - `x`: Eliminates unescaped white space from the pattern and enables comments marked with `#`. 
+            </param>
+            <returns>A new string that is identical to the input string, except that the replacement string takes the place of each matched string. If pattern is not matched in the current instance, the method returns the current instance unchanged.</returns>
+            <remarks>
+            ```template-text
+            {{ "abbbbcccd" | regex.replace "b+c+" "-Yo-" }}
+            ```
+            ```html
+            a-Yo-d
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.RegexFunctions.Split(Lizoc.TextScript.TemplateContext,System.String,System.String,System.String)">
+            <summary>
+            Splits an input string into an array of substrings at the positions defined by a regular expression match.
+            </summary>
+            <param name="context">The template context (to fetch the timeout configuration)</param>
+            <param name="text">The string to split.</param>
+            <param name="pattern">The regular expression pattern to match.</param>
+            <param name="options">A string with regex options, that can contain the following option characters (default is `null`):
+            - `i`: Specifies case-insensitive matching. 
+            - `m`: Multiline mode. Changes the meaning of `^` and `$` so they match at the beginning and end, respectively, of any line, and not just the beginning and end of the entire string.
+            - `s`: Specifies single-line mode. Changes the meaning of the dot `.` so it matches every character (instead of every character except `\n`).
+            - `x`: Eliminates unescaped white space from the pattern and enables comments marked with `#`. 
+            </param>
+            <returns>A string array.</returns>
+            <remarks>
+            ```template-text
+            {{ "a, b   , c,    d" | regex.split `\s*,\s*` }}
+            ```
+            ```html
+            [a, b, c, d]
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.RegexFunctions.Unescape(System.String)">
+            <summary>
+            Converts any escaped characters in the input string.
+            </summary>
+            <param name="pattern">The input string containing the text to convert.</param>
+            <returns>A string of characters with any escaped characters converted to their unescaped form.</returns>
+            <remarks>
+            ```template-text
+            {{ "\\(abc\\.\\*\\)" | regex.unescape }}
+            ```
+            ```html
+            (abc.*)
+            ```
+            </remarks>
+        </member>
+        <member name="T:Lizoc.TextScript.Functions.StringFunctions">
+            <summary>
+            String functions available through the builtin object 'string`.
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.Append(System.String,System.String)">
+            <summary>
+            Concatenates two strings
+            </summary>
+            <param name="text">The input string</param>
+            <param name="with">The text to append</param>
+            <returns>The two strings concatenated</returns>
+            <remarks>
+            ```template-text
+            {{ "Hello" | string.append " World" }}
+            ```
+            ```html
+            Hello World
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.Bool(System.Boolean,System.String,System.String)">
+            <summary>
+            Returns a string based on whether a condition is evaluated to `true` or `false`.
+            </summary>
+            <param name="condition">The condition to evaluate.</param>
+            <param name="truthy">The string to return if the condition evaluates to `true`.</param>
+            <param name="falsy">The string to return if the condition evaluates to `false`.</param>
+            <returns>A string based on condition evaluated.</returns>
+            <remarks>
+            ```template-text
+            {{ true | string.bool "Got it!" "Not here" }}
+            ```
+            ```html
+            Got it!
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.Capitalize(System.String)">
+            <summary>
+            Converts the first character of the passed string to a upper case character.
+            </summary>
+            <param name="text">The input string</param>
+            <returns>The capitalized input string</returns>
+            <remarks>
+            ```template-text
+            {{ "test" | string.capitalize }}
+            ```
+            ```html
+            Test
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.Capitalizewords(System.String)">
+            <summary>
+            Converts the first character of each word in the passed string to a upper case character.
+            </summary>
+            <param name="text">The input string</param>
+            <returns>The capitalized input string</returns>
+            <remarks>
+            ```template-text
+            {{ "This is easy" | string.capitalizewords }}
+            ```
+            ```html
+            This Is Easy
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.Contains(System.String,System.String)">
+            <summary>
+            Returns a boolean indicating whether the input string contains the specified string `value`.
+            </summary>
+            <param name="text">The input string</param>
+            <param name="value">The string to look for</param>
+            <returns><c>true</c> if `text` contains the string `value`</returns>
+            <remarks>
+            ```template-text
+            {{ "This is easy" | string.contains "easy" }}
+            ```
+            ```html
+            true
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.Downcase(System.String)">
+            <summary>
+            Converts the string to lower case.
+            </summary>
+            <param name="text">The input string</param>
+            <returns>The input string lower case</returns>
+            <remarks>
+            ```template-text
+            {{ "TeSt" | string.downcase }}
+            ```
+            ```html
+            test
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.EndsWith(System.String,System.String)">
+            <summary>
+            Returns a boolean indicating whether the input string ends with the specified string `value`.
+            </summary>
+            <param name="text">The input string</param>
+            <param name="value">The string to look for</param>
+            <returns><c>true</c> if `text` ends with the specified string `value`</returns>
+            <remarks>
+            ```template-text
+            {{ "This is easy" | string.ends_with "easy" }}
+            ```
+            ```html
+            true
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.Handleize(System.String)">
+            <summary>
+            Returns a url handle from the input string.
+            </summary>
+            <param name="text">The input string</param>
+            <returns>A url handle</returns>
+            <remarks>
+            ```template-text
+            {{ '100% M &amp; Ms!!!' | string.handleize  }}
+            ```
+            ```html
+            100-m-ms
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.LStrip(System.String)">
+            <summary>
+            Removes any whitespace characters on the **left** side of the input string.
+            </summary>
+            <param name="text">The input string</param>
+            <returns>The input string without any left whitespace characters</returns>
+            <remarks>
+            ```template-text
+            {{ '   too many spaces           ' | string.lstrip  }}
+            ```
+            > Highlight to see the empty spaces to the right of the string
+            ```html
+            too many spaces           
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.Pluralize(System.Int32,System.String,System.String)">
+            <summary>
+            Outputs the singular or plural version of a string based on the value of a number. 
+            </summary>
+            <param name="number">The number to check</param>
+            <param name="singular">The singular string to return if number is == 1</param>
+            <param name="plural">The plural string to return if number is != 1</param>
+            <returns>The singular or plural string based on number</returns>
+            <remarks>
+            ```template-text
+            {{ products.size }} {{products.size | string.pluralize 'product' 'products' }}
+            ```
+            ```html
+            7 products
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.Prepend(System.String,System.String)">
+            <summary>
+            Concatenates two strings by placing the `by` string in from of the `text` string
+            </summary>
+            <param name="text">The input string</param>
+            <param name="by">The string to prepend to `text`</param>
+            <returns>The two strings concatenated</returns>
+            <remarks>
+            ```template-text
+            {{ "World" | string.prepend "Hello " }}
+            ```
+            ```html
+            Hello World
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.Remove(System.String,System.String)">
+            <summary>
+            Removes all occurrences of a substring from a string.
+            </summary>
+            <param name="text">The input string</param>
+            <param name="remove">The substring to remove from the `text` string</param>
+            <returns>The input string with the all occurence of a substring removed</returns>
+            <remarks>
+            ```template-text
+            {{ "Hello, world. Goodbye, world." | string.remove "world" }}
+            ```
+            ```html
+            Hello, . Goodbye, .
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.RemoveFirst(System.String,System.String)">
+            <summary>
+            Removes the first occurrence of a substring from a string.
+            </summary>
+            <param name="text">The input string</param>
+            <param name="remove">The first occurence of substring to remove from the `text` string</param>
+            <returns>The input string with the first occurence of a substring removed</returns>
+            <remarks>
+            ```template-text
+            {{ "Hello, world. Goodbye, world." | string.remove_first "world" }}
+            ```
+            ```html
+            Hello, . Goodbye, world.
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.Replace(System.String,System.String,System.String)">
+            <summary>
+            Replaces all occurrences of a string with a substring.
+            </summary>
+            <param name="text">The input string</param>
+            <param name="match">The substring to find in the `text` string</param>
+            <param name="replace">The substring used to replace the string matched by `match` in the input `text`</param>
+            <returns>The input string replaced</returns>
+            <remarks>
+            ```template-text
+            {{ "Hello, world. Goodbye, world." | string.replace "world" "buddy" }}
+            ```
+            ```html
+            Hello, buddy. Goodbye, buddy.
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.ReplaceEmpty(System.String,System.String,System.String)">
+            <summary>
+            Substitutes a null or empty string with the specified string.
+            </summary>
+            <param name="text">The input string</param>
+            <param name="replace">The string to return if the input `text` is null or an empty string.</param>
+            <param name="notEmpty">The string to return if the input `text` is a not an empty string.</param>
+            <returns>The input string replaced</returns>
+            <remarks>
+            ```template-text
+            {{ "" | string.replace_empty "its empty" "its full" }}
+            ```
+            ```html
+            its empty
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.ReplaceFirst(System.String,System.String,System.String)">
+            <summary>
+            Replaces the first occurrence of a string with a substring.
+            </summary>
+            <param name="text">The input string</param>
+            <param name="match">The substring to find in the `text` string</param>
+            <param name="replace">The substring used to replace the string matched by `match` in the input `text`</param>
+            <returns>The input string replaced</returns>
+            <remarks>
+            ```template-text
+            {{ "Hello, world. Goodbye, world." | string.replace_first "world" "buddy" }}
+            ```
+            ```html
+            Hello, buddy. Goodbye, world.
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.RStrip(System.String)">
+            <summary>
+            Removes any whitespace characters on the **right** side of the input string.
+            </summary>
+            <param name="text">The input string</param>
+            <returns>The input string without any left whitespace characters</returns>
+            <remarks>
+            ```template-text
+            {{ '   too many spaces           ' | string.rstrip  }}
+            ```
+            > Highlight to see the empty spaces to the right of the string
+            ```html
+               too many spaces
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.Size(System.String)">
+            <summary>
+            Returns the number of characters from the input string
+            </summary>
+            <param name="text">The input string</param>
+            <returns>The length of the input string</returns>
+            <remarks>
+            ```template-text
+            {{ "test" | string.size }}
+            ```
+            ```html
+            4
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.Slice(System.String,System.Int32,System.Int32)">
+            <summary>
+            The slice returns a substring, starting at the specified index. An optional second parameter can be passed to specify the length of the substring. 
+            If no second parameter is given, a substring with the remaining characters will be returned.
+            </summary>
+            <param name="text">The input string</param>
+            <param name="start">The starting index character where the slice should start from the input `text` string</param>
+            <param name="length">The number of character. Default is 0, meaning that the remaining of the string will be returned.</param>
+            <returns>The input string sliced</returns>
+            <remarks>
+            ```template-text
+            {{ "hello" | string.slice 0 }}
+            {{ "hello" | string.slice 1 }}
+            {{ "hello" | string.slice 1 3 }}
+            {{ "hello" | string.slice 1 length:3 }}
+            ```
+            ```html
+            hello
+            ello
+            ell
+            ell
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.Slice1(System.String,System.Int32,System.Int32)">
+            <summary>
+            The slice returns a substring, starting at the specified index. An optional second parameter can be passed to specify the length of the substring. 
+            If no second parameter is given, a substring with the first character will be returned.
+            </summary>
+            <param name="text">The input string</param>
+            <param name="start">The starting index character where the slice should start from the input `text` string</param>
+            <param name="length">The number of character. Default is 1, meaning that only the first character at `start` position will be returned.</param>
+            <returns>The input string sliced</returns>
+            <remarks>
+            ```template-text
+            {{ "hello" | string.slice1 0 }}
+            {{ "hello" | string.slice1 1 }}
+            {{ "hello" | string.slice1 1 3 }}
+            {{ "hello" | string.slice1 1 length: 3 }}
+            ```
+            ```html
+            h
+            e
+            ell
+            ell
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.Split(System.String,System.String)">
+            <summary>
+            The `split` function takes on a substring as a parameter. 
+            The substring is used as a delimiter to divide a string into an array. You can output different parts of an array using `array` functions.
+            </summary>
+            <param name="text">The input string</param>
+            <param name="match">The string used to split the input `text` string</param>
+            <returns>An enumeration of the substrings</returns>
+            <remarks>
+            ```template-text
+            {{ for word in "Hi, how are you today?" | string.split ' ' ~}}
+            {{ word }}
+            {{ end ~}}
+            ```
+            ```html
+            Hi,
+            how
+            are
+            you
+            today?
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.StartsWith(System.String,System.String)">
+            <summary>
+            Returns a boolean indicating whether the input string starts with the specified string `value`.
+            </summary>
+            <param name="text">The input string</param>
+            <param name="value">The string to look for</param>
+            <returns><c>true</c> if `text` starts with the specified string `value`</returns>
+            <remarks>
+            ```template-text
+            {{ "This is easy" | string.starts_with "This" }}
+            ```
+            ```html
+            true
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.Strip(System.String)">
+            <summary>
+            Removes any whitespace characters on the **left** and **right** side of the input string.
+            </summary>
+            <param name="text">The input string</param>
+            <returns>The input string without any left and right whitespace characters</returns>
+            <remarks>
+            ```template-text
+            {{ '   too many spaces           ' | string.strip  }}
+            ```
+            > Highlight to see the empty spaces to the right of the string
+            ```html
+            too many spaces
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.StripNewlines(System.String)">
+            <summary>
+            Removes any line breaks/newlines from a string.
+            </summary>
+            <param name="text">The input string</param>
+            <returns>The input string without any breaks/newlines characters</returns>
+            <remarks>
+            ```template-text
+            {{ "This is a string.\r\n With \nanother \rstring" | string.strip_newlines  }}
+            ```
+            ```html
+            This is a string. With another string
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.ToInt(System.String)">
+            <summary>
+            Converts a string to an integer
+            </summary>
+            <param name="text">The input string</param>
+            <returns>A 32 bit integer or null if conversion failed</returns>
+            <remarks>
+            ```template-text
+            {{ "123" | string.to_int + 1 }}
+            ```
+            ```html
+            124
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.ToLong(System.String)">
+            <summary>
+            Converts a string to a long 64 bit integer
+            </summary>
+            <param name="text">The input string</param>
+            <returns>A 64 bit integer or null if conversion failed</returns>
+            <remarks>
+            ```template-text
+            {{ "123678912345678" | string.to_long + 1 }}
+            ```
+            ```html
+            123678912345679
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.ToFloat(System.String)">
+            <summary>
+            Converts a string to a float
+            </summary>
+            <param name="text">The input string</param>
+            <returns>A 32 bit float or null if conversion failed</returns>
+            <remarks>
+            ```template-text
+            {{ "123.4" | string.to_float + 1 }}
+            ```
+            ```html
+            124.4
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.ToDouble(System.String)">
+            <summary>
+            Converts a string to a double
+            </summary>
+            <param name="text">The input string</param>
+            <returns>A 64 bit float or null if conversion failed</returns>
+            <remarks>
+            ```template-text
+            {{ "123.4" | string.to_double + 1 }}
+            ```
+            ```html
+            124.4
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.Truncate(System.String,System.Int32,System.String)">
+            <summary>
+            Truncates a string down to the number of characters passed as the first parameter. 
+            An ellipsis (...) is appended to the truncated string and is included in the character count
+            </summary>
+            <param name="text">The input string</param>
+            <param name="length">The maximum length of the output string, including the length of the `ellipsis`</param>
+            <param name="ellipsis">The ellipsis to append to the end of the truncated string</param>
+            <returns>The truncated input string</returns>
+            <remarks>
+            ```template-text
+            {{ "The cat came back the very next day" | string.truncate 13 }}
+            ```
+            ```html
+            The cat ca...
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.Truncatewords(System.String,System.Int32,System.String)">
+            <summary>
+            Truncates a string down to the number of words passed as the first parameter. 
+            An ellipsis (...) is appended to the truncated string.
+            </summary>
+            <param name="text">The input string</param>
+            <param name="count">The number of words to keep from the input `text` string before appending the `ellipsis`</param>
+            <param name="ellipsis">The ellipsis to append to the end of the truncated string</param>
+            <returns>The truncated input string</returns>
+            <remarks>
+            ```template-text
+            {{ "The cat came back the very next day" | string.truncatewords 4 }}
+            ```
+            ```html
+            The cat came back...
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.Upcase(System.String)">
+            <summary>
+            Converts the string to uppercase
+            </summary>
+            <param name="text">The input string</param>
+            <returns>The input string upper case</returns>
+            <remarks>
+            ```template-text
+            {{ "test" | string.upcase }}
+            ```
+            ```html
+            TEST
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.Md5(System.String)">
+            <summary>
+            Computes the `md5` hash of the input string
+            </summary>
+            <param name="text">The input string</param>
+            <returns>The `md5` hash of the input string</returns>
+            <remarks>
+            ```template-text
+            {{ "test" | string.md5 }}
+            ```
+            ```html
+            098f6bcd4621d373cade4e832627b4f6
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.Sha1(System.String)">
+            <summary>
+            Computes the `sha1` hash of the input string
+            </summary>
+            <param name="text">The input string</param>
+            <returns>The `sha1` hash of the input string</returns>
+            <remarks>
+            ```template-text
+            {{ "test" | string.sha1 }}
+            ```
+            ```html
+            a94a8fe5ccb19ba61c4c0873d391e987982fbbd3
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.Sha256(System.String)">
+            <summary>
+            Computes the `sha256` hash of the input string
+            </summary>
+            <param name="text">The input string</param>
+            <returns>The `sha256` hash of the input string</returns>
+            <remarks>
+            ```template-text
+            {{ "test" | string.sha256 }}
+            ```
+            ```html
+            9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.HmacSha1(System.String,System.String)">
+            <summary>
+            Converts a string into a SHA-1 hash using a hash message authentication code (HMAC). Pass the secret key for the message as a parameter to the function.
+            </summary>
+            <param name="text">The input string</param>
+            <param name="secretKey">The secret key</param>
+            <returns>The `SHA-1` hash of the input string using a hash message authentication code (HMAC)</returns>
+            <remarks>
+            ```template-text
+            {{ "test" | string.hmac_sha1 "secret" }}
+            ```
+            ```html
+            1aa349585ed7ecbd3b9c486a30067e395ca4b356
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.StringFunctions.HmacSha256(System.String,System.String)">
+            <summary>
+            Converts a string into a SHA-256 hash using a hash message authentication code (HMAC). Pass the secret key for the message as a parameter to the function.
+            </summary>
+            <param name="text">The input string</param>
+            <param name="secretKey">The secret key</param>
+            <returns>The `SHA-256` hash of the input string using a hash message authentication code (HMAC)</returns>
+            <remarks>
+            ```template-text
+            {{ "test" | string.hmac_sha256 "secret" }}
+            ```
+            ```html
+            0329a06b62cd16b33eb6792be8c60b158d89a2ee3a876fce9a881ebb488c0914
+            ```
+            </remarks>
+        </member>
+        <member name="T:Lizoc.TextScript.Functions.TimeSpanFunctions">
+            <summary>
+            A timespan object represents a time interval.
+            
+            | Name             | Description
+            |--------------    |-----------------
+            | `.days`          | Gets the number of days of this interval 
+            | `.hours`         | Gets the number of hours of this interval
+            | `.minutes`       | Gets the number of minutes of this interval
+            | `.seconds`       | Gets the number of seconds of this interval
+            | `.milliseconds`  | Gets the number of milliseconds of this interval 
+            | `.total_days`    | Gets the total number of days in fractional part
+            | `.total_hours`   | Gets the total number of hours in fractional part
+            | `.total_minutes` | Gets the total number of minutes in fractional part
+            | `.total_seconds` | Gets the total number of seconds  in fractional part
+            | `.total_milliseconds` | Gets the total number of milliseconds  in fractional part
+            </summary>
+            <seealso cref="T:Lizoc.TextScript.Runtime.ScriptObject" />
+        </member>
+        <member name="P:Lizoc.TextScript.Functions.TimeSpanFunctions.Zero">
+            <summary>
+            Returns a timespan object that represents a 0 interval
+            </summary>
+            <returns>A zero timespan object</returns>
+            <remarks>
+            ```template-text
+            {{ (timespan.zero + timespan.from_days 5).days }}
+            ```
+            ```html
+            5
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.TimeSpanFunctions.FromDays(System.Double)">
+            <summary>
+            Returns a timespan object that represents a `days` interval
+            </summary>
+            <param name="days">The days.</param>
+            <returns>A timespan object</returns>
+            <remarks>
+            ```template-text
+            {{ (timespan.from_days 5).days }}
+            ```
+            ```html
+            5
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.TimeSpanFunctions.FromHours(System.Double)">
+            <summary>
+            Returns a timespan object that represents a `hours` interval
+            </summary>
+            <param name="hours">The hours.</param>
+            <returns>A timespan object</returns>
+            <remarks>
+            ```template-text
+            {{ (timespan.from_hours 5).hours }}
+            ```
+            ```html
+            5
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.TimeSpanFunctions.FromMinutes(System.Double)">
+            <summary>
+            Returns a timespan object that represents a `minutes` interval
+            </summary>
+            <param name="minutes">The minutes.</param>
+            <returns>A timespan object</returns>
+            <remarks>
+            ```template-text
+            {{ (timespan.from_minutes 5).minutes }}
+            ```
+            ```html
+            5
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.TimeSpanFunctions.FromSeconds(System.Double)">
+            <summary>
+            Returns a timespan object that represents a `seconds` interval
+            </summary>
+            <param name="seconds">The seconds.</param>
+            <returns>A timespan object</returns>
+            <remarks>
+            ```template-text
+            {{ (timespan.from_seconds 5).seconds }}
+            ```
+            ```html
+            5
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.TimeSpanFunctions.FromMilliseconds(System.Double)">
+            <summary>
+            Returns a timespan object that represents a `milliseconds` interval
+            </summary>
+            <param name="millis">The milliseconds.</param>
+            <returns>A timespan object</returns>
+            <remarks>
+            ```template-text
+            {{ (timespan.from_milliseconds 5).milliseconds }}
+            ```
+            ```html
+            5
+            ```
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Functions.TimeSpanFunctions.Parse(System.String)">
+            <summary>
+            Parses the specified input string into a timespan object. 
+            </summary>
+            <param name="text">A timespan text</param>
+            <returns>A timespan object parsed from timespan</returns>
+        </member>
+        <member name="T:Lizoc.TextScript.Parsing.Lexer">
+            <summary>
+            Lexer enumerator that generates <see cref="T:Lizoc.TextScript.Parsing.Token"/>, to use in a foreach.
+            </summary>
+        </member>
+        <member name="F:Lizoc.TextScript.Parsing.Lexer.Options">
+            <summary>
+            Lexer options.
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.Parsing.Lexer.#ctor(System.String,System.String,System.Nullable{Lizoc.TextScript.Parsing.LexerOptions})">
+            <summary>
+            Initialize a new instance of this <see cref="T:Lizoc.TextScript.Parsing.Lexer" />.
+            </summary>
+            <param name="text">The text to analyze</param>
+            <param name="sourcePath">The sourcePath</param>
+            <param name="options">The options for the lexer</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="P:Lizoc.TextScript.Parsing.Lexer.Text">
+            <summary>
+            Gets the text being parsed by this lexer
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.Parsing.Lexer.SourcePath">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.Parsing.Lexer.HasErrors">
+            <summary>
+            Gets a boolean indicating whether this lexer has errors.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.Parsing.Lexer.Errors">
+            <summary>
+            Gets error messages.
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.Parsing.Lexer.GetEnumerator">
+            <summary>
+            TokenEnumerator. Use simply <code>foreach</code> on this instance to automatically trigger an enumeration of the tokens.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Lizoc.TextScript.Parsing.Lexer.TokenEnumerator">
+            <summary>
+            Custom enumerator on <see cref="T:Lizoc.TextScript.Parsing.Token"/>
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Parsing.LexerOptions">
+            <summary>
+            Defines the options for the lexer.
+            </summary>
+        </member>
+        <member name="F:Lizoc.TextScript.Parsing.LexerOptions.Default">
+            <summary>
+            Default <see cref="T:Lizoc.TextScript.Parsing.LexerOptions"/>
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.Parsing.LexerOptions.Mode">
+            <summary>
+            Gets or sets the template mode (text and script, script only, script with frontmatter...etc.). Default is <see cref="F:Lizoc.TextScript.Parsing.ScriptMode.Default"/> text and script mixed.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.Parsing.LexerOptions.FrontMatterMarker">
+            <summary>
+            If selected mode is <see cref="F:Lizoc.TextScript.Parsing.ScriptMode.FrontMatterOnly"/> or <see cref="F:Lizoc.TextScript.Parsing.ScriptMode.FrontMatterAndContent"/>, this marker will be used
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.Parsing.LexerOptions.EnableIncludeImplicitString">
+            <summary>
+            <c>true</c> to parse the include target as an implicit string (to support Jekyll passing raw path /a/b/c.txt as an include target).
+            Only valid if Mode == <see cref="F:Lizoc.TextScript.Parsing.ScriptMode.Liquid"/> as well.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.Parsing.LexerOptions.StartPosition">
+            <summary>
+            Defines the position to start the lexer parsing relative to the input text passed to <see cref="T:Lizoc.TextScript.Parsing.Lexer"/> constructor
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.Parsing.LexerOptions.KeepTrivia">
+            <summary>
+            The lexer will return whitespaces tokens
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Parsing.Parser">
+            <summary>
+            The parser.
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.Parsing.Parser.#ctor(Lizoc.TextScript.Parsing.Lexer,System.Nullable{Lizoc.TextScript.Parsing.ParserOptions})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Lizoc.TextScript.Parsing.Parser"/> class.
+            </summary>
+            <param name="lexer">The lexer.</param>
+            <param name="options">The options.</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="F:Lizoc.TextScript.Parsing.Parser.ParseExpressionMode.Default">
+            <summary>
+            All expressions (e.g literals, function calls, function pipes...etc.)
+            </summary>
+        </member>
+        <member name="F:Lizoc.TextScript.Parsing.Parser.ParseExpressionMode.BasicExpression">
+            <summary>
+            Only literal, unary, nested, array/object initializer, dot access, array access
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Parsing.ParserOptions">
+            <summary>
+            Defines the options used when parsing a template.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.Parsing.ParserOptions.ExpressionDepthLimit">
+            <summary>
+            Sets the depth limit of nested statements (e.g nested if/else) to disallow deep/potential stack-overflow exploits. Default is null, so there is no limit.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.Parsing.ParserOptions.ConvertLiquidFunctions">
+            <summary>
+            <c>true</c> to convert liquid builtin function calls to TextScript function calls (e.g abs = math.abs, downcase = string.downcase)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Parsing.ScriptMode">
+            <summary>
+            Defines how the parser should parse a TextScript text.
+            </summary>
+        </member>
+        <member name="F:Lizoc.TextScript.Parsing.ScriptMode.Default">
+            <summary>
+            The template contains a regular content (text and script mixed).
+            </summary>
+        </member>
+        <member name="F:Lizoc.TextScript.Parsing.ScriptMode.Liquid">
+            <summary>
+            The template contains a liquid content (text and script mixed).
+            </summary>
+        </member>
+        <member name="F:Lizoc.TextScript.Parsing.ScriptMode.FrontMatterOnly">
+            <summary>
+            The template contains a frontmatter (script only) and the parser will parse only this part.
+            </summary>
+        </member>
+        <member name="F:Lizoc.TextScript.Parsing.ScriptMode.FrontMatterAndContent">
+            <summary>
+            The template contains a frontmatter (script only) and a content (text and script mixed) and will parse both.
+            </summary>
+        </member>
+        <member name="F:Lizoc.TextScript.Parsing.ScriptMode.ScriptOnly">
+            <summary>
+            The template is directly code (script only) so it is not necessary {{ }} for entering a code block
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Parsing.SourceSpan">
+            <summary>
+            Defines the precise source location.
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Parsing.Token">
+            <summary>
+            A lightweight token struct to avoid GC allocations.
+            </summary>
+            <seealso>
+                <cref>System.IEquatable{Lizoc.TextScript.Parsing.Token}</cref>
+            </seealso>
+        </member>
+        <member name="M:Lizoc.TextScript.Parsing.Token.#ctor(Lizoc.TextScript.Parsing.TokenType,Lizoc.TextScript.Parsing.TextPosition,Lizoc.TextScript.Parsing.TextPosition)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Lizoc.TextScript.Parsing.Token"/> struct.
+            </summary>
+            <param name="type">The type.</param>
+            <param name="start">The start.</param>
+            <param name="end">The end.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+        </member>
+        <member name="F:Lizoc.TextScript.Parsing.Token.Type">
+            <summary>
+            The type of token.
+            </summary>
+        </member>
+        <member name="F:Lizoc.TextScript.Parsing.Token.Start">
+            <summary>
+            The start position of this token.
+            </summary>
+        </member>
+        <member name="F:Lizoc.TextScript.Parsing.Token.End">
+            <summary>
+            The end position of this token.
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Parsing.TokenType">
+            <summary>
+            An enumeration to categorize tokens.
+            </summary>
+        </member>
+        <member name="F:Lizoc.TextScript.Parsing.TokenType.IdentifierSpecial">
+            <summary>
+            An identifier starting by a $
+            </summary>
+        </member>
+        <member name="F:Lizoc.TextScript.Parsing.TokenType.Identifier">
+            <summary>
+            An identifier
+            </summary>
+        </member>
+        <member name="F:Lizoc.TextScript.Parsing.TokenType.Integer">
+            <summary>
+            An integer (int, long...)
+            </summary>
+        </member>
+        <member name="F:Lizoc.TextScript.Parsing.TokenType.Float">
+            <summary>
+            A floating point number
+            </summary>
+        </member>
+        <member name="F:Lizoc.TextScript.Parsing.TokenType.String">
+            <summary>
+            A string
+            </summary>
+        </member>
+        <member name="F:Lizoc.TextScript.Parsing.TokenType.ImplicitString">
+            <summary>
+            An implicit string with quotes
+            </summary>
+        </member>
+        <member name="F:Lizoc.TextScript.Parsing.TokenType.VerbatimString">
+            <summary>
+            A verbatim string
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction">
+            <summary>
+            Creates a reflection based <see cref="T:Lizoc.TextScript.Runtime.IScriptCustomFunction"/> from a <see cref="T:System.Reflection.MethodInfo"/>.
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_bool_object">
+            <summary>
+            Optimized custom function for: bool (object)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_bool_string_string">
+            <summary>
+            Optimized custom function for: bool (string, string)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_bool_TemplateContext_SourceSpan_string_string___Opt">
+            <summary>
+            Optimized custom function for: bool (TemplateContext, SourceSpan, string, string = ...)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_DateTime_DateTime_double">
+            <summary>
+            Optimized custom function for: DateTime (DateTime, double)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_DateTime_DateTime_int">
+            <summary>
+            Optimized custom function for: DateTime (DateTime, int)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_double_double">
+            <summary>
+            Optimized custom function for: double (double)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_double_double_int___Opt">
+            <summary>
+            Optimized custom function for: double (double, int = ...)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_IEnumerable_IEnumerable">
+            <summary>
+            Optimized custom function for: IEnumerable (IEnumerable)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_IEnumerable_IEnumerable_IEnumerable">
+            <summary>
+            Optimized custom function for: IEnumerable (IEnumerable, IEnumerable)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_IEnumerable_string_string">
+            <summary>
+            Optimized custom function for: IEnumerable (string, string)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_IEnumerable_TemplateContext_SourceSpan_object_string___Opt">
+            <summary>
+            Optimized custom function for: IEnumerable (TemplateContext, SourceSpan, object, string = ...)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_IEnumerable_TemplateContext_SourceSpan_object_string">
+            <summary>
+            Optimized custom function for: IEnumerable (TemplateContext, SourceSpan, object, string)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_IEnumerable_TemplateContext_SourceSpan_string_string___Opt">
+            <summary>
+            Optimized custom function for: IEnumerable (TemplateContext, SourceSpan, string, string = ...)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_IList_IList_int">
+            <summary>
+            Optimized custom function for: IList (IList, int)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_IList_IList_int_object">
+            <summary>
+            Optimized custom function for: IList (IList, int, object)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_IList_IList_object">
+            <summary>
+            Optimized custom function for: IList (IList, object)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_int_IEnumerable">
+            <summary>
+            Optimized custom function for: int (IEnumerable)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_int_string">
+            <summary>
+            Optimized custom function for: int (string)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_int_TemplateContext_SourceSpan_object">
+            <summary>
+            Optimized custom function for: int (TemplateContext, SourceSpan, object)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_object_IEnumerable">
+            <summary>
+            Optimized custom function for: object (IEnumerable)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_object_object_object">
+            <summary>
+            Optimized custom function for: object (object, object)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_object_string">
+            <summary>
+            Optimized custom function for: object (string)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_object_TemplateContext_SourceSpan_double_object">
+            <summary>
+            Optimized custom function for: object (TemplateContext, SourceSpan, double, object)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_object_TemplateContext_SourceSpan_IList_object___Opt">
+            <summary>
+            Optimized custom function for: object (TemplateContext, SourceSpan, IList, object = ...)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_object_TemplateContext_SourceSpan_object">
+            <summary>
+            Optimized custom function for: object (TemplateContext, SourceSpan, object)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_object_TemplateContext_SourceSpan_object_object">
+            <summary>
+            Optimized custom function for: object (TemplateContext, SourceSpan, object, object)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_ScriptArray_IEnumerable">
+            <summary>
+            Optimized custom function for: ScriptArray (IEnumerable)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_ScriptArray_IEnumerable_int">
+            <summary>
+            Optimized custom function for: ScriptArray (IEnumerable, int)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_ScriptArray_TemplateContext_string_string_string___Opt">
+            <summary>
+            Optimized custom function for: ScriptArray (TemplateContext, string, string, string = ...)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_ScriptObject_TemplateContext_SourceSpan_string">
+            <summary>
+            Optimized custom function for: ScriptObject (TemplateContext, SourceSpan, string)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_string_bool_string_string">
+            <summary>
+            Optimized custom function for: string (bool, string, string)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_string_IEnumerable_string_string___Opt">
+            <summary>
+            Optimized custom function for: string (IEnumerable, string, string = ...)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_string_int_string_string">
+            <summary>
+            Optimized custom function for: string (int, string, string)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_string_object">
+            <summary>
+            Optimized custom function for: string (object)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_string_string">
+            <summary>
+            Optimized custom function for: string (string)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_string_string_int_int___Opt">
+            <summary>
+            Optimized custom function for: string (string, int, int = ...)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_string_string_int_string___Opt">
+            <summary>
+            Optimized custom function for: string (string, int, string = ...)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_string_string_string">
+            <summary>
+            Optimized custom function for: string (string, string)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_string_string_string_string___Opt">
+            <summary>
+            Optimized custom function for: string (string, string, string = ...)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_string_string_string_string">
+            <summary>
+            Optimized custom function for: string (string, string, string)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_string_TemplateContext_SourceSpan_IEnumerable_string_string___Opt">
+            <summary>
+            Optimized custom function for: string (TemplateContext, SourceSpan, IEnumerable, string, string = ...)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_string_TemplateContext_SourceSpan_object_string">
+            <summary>
+            Optimized custom function for: string (TemplateContext, SourceSpan, object, string)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_string_TemplateContext_string">
+            <summary>
+            Optimized custom function for: string (TemplateContext, string)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_string_TemplateContext_string_string_string_string___Opt">
+            <summary>
+            Optimized custom function for: string (TemplateContext, string, string, string, string = ...)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_TimeSpan_double">
+            <summary>
+            Optimized custom function for: TimeSpan (double)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.Function_TimeSpan_string">
+            <summary>
+            Optimized custom function for: TimeSpan (string)
+            </summary>
+        </member>
+        <member name="F:Lizoc.TextScript.Runtime.DynamicCustomFunction.Method">
+            <summary>
+            Gets the reflection method associated to this dynamic call.
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.DynamicCustomFunction.Create(System.Object,System.Reflection.MethodInfo)">
+            <summary>
+            Returns a <see cref="T:Lizoc.TextScript.Runtime.DynamicCustomFunction"/> from the specified object target and <see cref="T:System.Reflection.MethodInfo"/>.
+            </summary>
+            <param name="target">A target object - might be null</param>
+            <param name="method">A MethodInfo</param>
+            <returns>A custom <see cref="T:Lizoc.TextScript.Runtime.DynamicCustomFunction"/></returns>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DynamicCustomFunction.GenericFunctionWrapper">
+            <summary>
+            Generic function wrapper handling any kind of function parameters.
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.DelegateCustomFunction">
+            <summary>
+            An implementation of <see cref="T:Lizoc.TextScript.Runtime.IScriptCustomFunction"/> using a function delegate.
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.EmptyScriptObject">
+            <summary>
+            The empty object (unique singleton, cannot be modified, does not contain any properties)
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.IListAccessor">
+            <summary>
+            Generic interface used to access a list/array, used by <see cref="T:Lizoc.TextScript.TemplateContext"/> via <see cref="M:Lizoc.TextScript.TemplateContext.GetListAccessor(System.Object)"/>
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.IListAccessor.GetLength(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Parsing.SourceSpan,System.Object)">
+            <summary>
+            Gets the length of the specified target object
+            </summary>
+            <param name="context">The template context originating this call</param>
+            <param name="span">The source span originating</param>
+            <param name="target">The target list object</param>
+            <returns>The length</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.IListAccessor.GetValue(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Parsing.SourceSpan,System.Object,System.Int32)">
+            <summary>
+            Gets the element value at the specified index.
+            </summary>
+            <param name="context">The template context originating this call</param>
+            <param name="span">The source span originating</param>
+            <param name="target">The target list object</param>
+            <param name="index">The index to retrieve a value</param>
+            <returns>The value retrieved at the specified index for the target object</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.IListAccessor.SetValue(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Parsing.SourceSpan,System.Object,System.Int32,System.Object)">
+            <summary>
+            Sets the element value at the specified index.
+            </summary>
+            <param name="context">The template context originating this call</param>
+            <param name="span">The source span originating</param>
+            <param name="target">The target list object</param>
+            <param name="index">The index to set the value</param>
+            <param name="value">The value to set at the specified index</param>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.IObjectAccessor">
+            <summary>
+            Generic interface used to access an object (either <see cref="T:Lizoc.TextScript.Runtime.ScriptObject"/> or .NET object), used by <see cref="T:Lizoc.TextScript.TemplateContext"/> via <see cref="M:Lizoc.TextScript.TemplateContext.GetMemberAccessor(System.Object)"/>
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.IObjectAccessor.GetMemberCount(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Parsing.SourceSpan,System.Object)">
+            <summary>
+            Returns true if the object has any members, <c>false</c> otherwise.
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.IObjectAccessor.GetMembers(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Parsing.SourceSpan,System.Object)">
+            <summary>
+            Returns the member names of an object.
+            </summary>
+            <param name="context">The originated tempate context</param>
+            <param name="span">The originated span</param>
+            <param name="target">The object target</param>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.IObjectAccessor.HasMember(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Parsing.SourceSpan,System.Object,System.String)">
+            <summary>
+            Returns true if the specified target object has the specified member.
+            </summary>
+            <param name="context">The originated tempate context</param>
+            <param name="span">The originated span</param>
+            <param name="target">The object target</param>
+            <param name="member">The member name</param>
+            <returns><c>true</c> if the target object has the specified member; <c>false</c> otherwise</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.IObjectAccessor.TryGetValue(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Parsing.SourceSpan,System.Object,System.String,System.Object@)">
+            <summary>
+            Tries to get the member value for the specified target object.
+            </summary>
+            <param name="context">The originated tempate context</param>
+            <param name="span">The originated span</param>
+            <param name="target">The object target</param>
+            <param name="member">The member name</param>
+            <param name="value">The value of the specified member if successful.</param>
+            <returns><c>true</c> if the member value was retrieved from the target object; <c>false</c> otherwise</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.IObjectAccessor.TrySetValue(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Parsing.SourceSpan,System.Object,System.String,System.Object)">
+            <summary>
+            Tries to set the member value for the specified target object.
+            </summary>
+            <param name="context">The originated tempate context</param>
+            <param name="span">The originated span</param>
+            <param name="target">The object target</param>
+            <param name="member">The member name</param>
+            <param name="value">The value of the specified member to set.</param>
+            <returns><c>true</c> if the member value was set onto the target object; <c>false</c> otherwise</returns>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.IScriptCustomFunction">
+            <summary>
+            Allows to create a custom function object.
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.IScriptCustomFunction.Invoke(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Syntax.ScriptNode,Lizoc.TextScript.Runtime.ScriptArray,Lizoc.TextScript.Syntax.ScriptBlockStatement)">
+            <summary>
+            Calls the custom function object.
+            </summary>
+            <param name="context">The template context</param>
+            <param name="callerContext">The script node originating this call</param>
+            <param name="arguments">The parameters of the call</param>
+            <param name="blockStatement">The current block statement this call is made</param>
+            <returns>The result of the call</returns>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.IScriptObject">
+            <summary>
+            Base interface for a scriptable object.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.Runtime.IScriptObject.Count">
+            <summary>
+            Gets the number of members
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.IScriptObject.Contains(System.String)">
+            <summary>
+            Determines whether this object contains the specified member.
+            </summary>
+            <param name="member">The member.</param>
+            <returns><c>true</c> if this object contains the specified member; <c>false</c> otherwise</returns>
+            <exception cref="T:System.ArgumentNullException">If member is null</exception>
+        </member>
+        <member name="P:Lizoc.TextScript.Runtime.IScriptObject.IsReadOnly">
+            <summary>
+            Gets or sets a value indicating whether this instance is read only.
+            </summary>
+            <value><c>true</c> if this instance is read only; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.IScriptObject.TryGetValue(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Parsing.SourceSpan,System.String,System.Object@)">
+            <summary>
+            Tries the get the value of the specified member.
+            </summary>
+            <param name="context"></param>
+            <param name="span"></param>
+            <param name="member">The member.</param>
+            <param name="value">The value.</param>
+            <returns><c>true</c> if the value was retrieved</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.IScriptObject.CanWrite(System.String)">
+            <summary>
+            Determines whether the specified member is read-only.
+            </summary>
+            <param name="member">The member.</param>
+            <returns><c>true</c> if the specified member is read-only</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.IScriptObject.SetValue(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Parsing.SourceSpan,System.String,System.Object,System.Boolean)">
+            <summary>
+            Sets the value and readonly state of the specified member. This method overrides previous readonly state.
+            </summary>
+            <param name="context"></param>
+            <param name="span"></param>
+            <param name="member">The member.</param>
+            <param name="value">The value.</param>
+            <param name="readOnly">if set to <c>true</c> the value will be read only.</param>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.IScriptObject.Remove(System.String)">
+            <summary>
+            Removes the specified member from this object.
+            </summary>
+            <param name="member">The member.</param>
+            <returns><c>true</c> if it was removed</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.IScriptObject.SetReadOnly(System.String,System.Boolean)">
+            <summary>
+            Sets to read only the specified member.
+            </summary>
+            <param name="member">The member.</param>
+            <param name="readOnly">if set to <c>true</c> the value will be read only.</param>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.IScriptObject.Clone(System.Boolean)">
+            <summary>
+            Clones this instance.
+            </summary>
+            <param name="deep">Clones this instance deeply</param>
+            <returns>A clone of this instance</returns>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.IScriptOutput">
+            <summary>
+            Interface used to text output when evaluating a template used by <see cref="P:Lizoc.TextScript.TemplateContext.Output"/> and <see cref="M:Lizoc.TextScript.TemplateContext.PushOutput"/>
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.ITemplateLoader">
+            <summary>
+            Interface used for loading a template.
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ITemplateLoader.GetPath(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Parsing.SourceSpan,System.String)">
+            <summary>
+            Gets an absolute path for the specified include template name. Note that it is not necessarely a path on a disk, 
+            but an absolute path that can be used as a dictionary key for caching)
+            </summary>
+            <param name="context">The current context called from</param>
+            <param name="callerSpan">The current span called from</param>
+            <param name="templateName">The name of the template to load</param>
+            <returns>An absolute path or unique key for the specified template name</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ITemplateLoader.Load(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Parsing.SourceSpan,System.String)">
+            <summary>
+            Loads a template using the specified template path/key.
+            </summary>
+            <param name="context">The current context called from</param>
+            <param name="callerSpan">The current span called from</param>
+            <param name="templatePath">The path/key previously returned by <see cref="M:Lizoc.TextScript.Runtime.ITemplateLoader.GetPath(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Parsing.SourceSpan,System.String)"/></param>
+            <returns>The content string loaded from the specified template path/key</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ITemplateLoader.PathExists(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Parsing.SourceSpan,System.String,Lizoc.TextScript.Runtime.PathType)">
+            <summary>
+            Test for the existance of a specified path or key.
+            </summary>
+            <param name="context">The current context called from</param>
+            <param name="callerSpan">The current span called from</param>
+            <param name="templatePath">The path/key to test.</param>
+            <param name="type">Restricts the type of path to query.</param>
+            <returns>A boolean value indicating whether the path/key exists.</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ITemplateLoader.Enumerate(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Parsing.SourceSpan,System.String,Lizoc.TextScript.Runtime.PathType)">
+            <summary>
+            Returns a list of templates or sub-containers of a specified container.
+            </summary>
+            <param name="context">The current context called from</param>
+            <param name="callerSpan">The current span called from</param>
+            <param name="templatePath">The path/key to enumerate. Supports wildcards.</param>
+            <param name="type">Restricts the type of child paths to return.</param>
+            <returns>A list of child paths under the container specified.</returns>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.MemberFilterDelegate">
+            <summary>
+            Allows to filter a member while importing a .NET object into a ScriptObject or while exposing a .NET instance through a ScriptObject, by returning <c>true</c> to keep the member; or false to discard it.
+            </summary>
+            <param name="member">A member info</param>
+            <returns><c>true</c> to keep the member; otherwise <c>false</c> to remove the member</returns>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.MemberRenamerDelegate">
+            <summary>
+            Allows to rename a member.
+            </summary>
+            <param name="member">A member info</param>
+            <returns>The new name name of member</returns>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.PathType">
+            <summary>
+            Type of path.
+            </summary>
+        </member>
+        <member name="F:Lizoc.TextScript.Runtime.PathType.Any">
+            <summary>
+            Either container or leaf.
+            </summary>
+        </member>
+        <member name="F:Lizoc.TextScript.Runtime.PathType.Container">
+            <summary>
+            A container that may contain sub-containers or leafs.
+            </summary>
+        </member>
+        <member name="F:Lizoc.TextScript.Runtime.PathType.Leaf">
+            <summary>
+            A leaf is the smallest unit.
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.ScriptArray`1">
+            <summary>
+            Base runtime object for arrays.
+            </summary>
+            <seealso cref="T:System.Object" />
+            <seealso cref="T:System.Collections.IList" />
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ScriptArray`1.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Lizoc.TextScript.Runtime.ScriptArray"/> class.
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ScriptArray`1.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Lizoc.TextScript.Runtime.ScriptArray"/> class.
+            </summary>
+            <param name="capacity">The capacity.</param>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ScriptArray`1.#ctor(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Lizoc.TextScript.Runtime.ScriptArray`1"/> class.
+            </summary>
+            <param name="values">The values.</param>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.ScriptArray">
+            <summary>
+            Base runtime object for arrays.
+            </summary>
+            <seealso cref="T:System.Object" />
+            <seealso cref="T:System.Collections.IList" />
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ScriptArray.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Lizoc.TextScript.Runtime.ScriptArray"/> class.
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ScriptArray.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Lizoc.TextScript.Runtime.ScriptArray"/> class.
+            </summary>
+            <param name="capacity">The capacity.</param>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ScriptArray.#ctor(System.Collections.IEnumerable)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Lizoc.TextScript.Runtime.ScriptArray"/> class.
+            </summary>
+            <param name="values">The values.</param>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ScriptArray.#ctor(System.Collections.Generic.IEnumerable{System.Object})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Lizoc.TextScript.Runtime.ScriptArray"/> class.
+            </summary>
+            <param name="values">The values.</param>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.ScriptObject">
+            <summary>
+            Base runtime object used to store properties.
+            </summary>
+            <seealso cref="T:System.Collections.IEnumerable" />
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ScriptObject.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Lizoc.TextScript.Runtime.ScriptObject"/> class.
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ScriptObject.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Lizoc.TextScript.Runtime.ScriptObject"/> class.
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ScriptObject.#ctor(System.Int32,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Lizoc.TextScript.Runtime.ScriptObject"/> class.
+            </summary>
+            <param name="capacity">Initial capacity of the dictionary</param>
+            <param name="autoImportStaticsFromThisType">if set to <c>true</c> it is automatically importing statics members from the derived type.</param>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ScriptObject.Clear">
+            <summary>
+            Clears all members stored in this object.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.Runtime.ScriptObject.Count">
+            <summary>
+            Gets the number of members.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.Runtime.ScriptObject.IsReadOnly">
+            <summary>
+            Gets a value indicating whether this instance is read-only.
+            </summary>
+            <value><c>true</c> if this instance is read only; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ScriptObject.Contains(System.String)">
+            <summary>
+            Determines whether this object contains the specified member.
+            </summary>
+            <param name="member">The member.</param>
+            <returns><c>true</c> if this object contains the specified member; <c>false</c> otherwise</returns>
+            <exception cref="T:System.ArgumentNullException">If member is null</exception>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ScriptObject.TryGetValue(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Parsing.SourceSpan,System.String,System.Object@)">
+            <summary>
+            Tries the get the value of the specified member.
+            </summary>
+            <param name="context"></param>
+            <param name="span"></param>
+            <param name="member">The member.</param>
+            <param name="value">The value.</param>
+            <returns><c>true</c> if the value was retrieved</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ScriptObject.GetSafeValue``1(System.String)">
+            <summary>
+            Gets the value for the specified member and type.
+            </summary>
+            <typeparam name="T">Type of the expected member</typeparam>
+            <param name="name">The name of the member.</param>
+            <returns>The value or default{T} is the value is different. Note that this method will override the value in this instance if the value doesn't match the type {T} </returns>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ScriptObject.CanWrite(System.String)">
+            <summary>
+            Determines whether the specified member is read-only.
+            </summary>
+            <param name="member">The member.</param>
+            <returns><c>true</c> if the specified member is read-only</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ScriptObject.SetValue(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Parsing.SourceSpan,System.String,System.Object,System.Boolean)">
+            <summary>
+            Sets the value and readonly state of the specified member. This method overrides previous readonly state.
+            </summary>
+            <param name="context"></param>
+            <param name="span"></param>
+            <param name="member">The member.</param>
+            <param name="value">The value.</param>
+            <param name="readOnly">if set to <c>true</c> the value will be read only.</param>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ScriptObject.Remove(System.String)">
+            <summary>
+            Removes the specified member from this object.
+            </summary>
+            <param name="member">The member.</param>
+            <returns><c>true</c> if it was removed</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ScriptObject.SetReadOnly(System.String,System.Boolean)">
+            <summary>
+            Sets to read only the specified member.
+            </summary>
+            <param name="member">The member.</param>
+            <param name="readOnly">if set to <c>true</c> the value will be read only.</param>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ScriptObject.ToString(Lizoc.TextScript.TemplateContext,Lizoc.TextScript.Parsing.SourceSpan)">
+            <summary>
+            Returns a <see cref="T:System.String" /> that represents this instance.
+            </summary>
+            <param name="context">The template context requesting this evaluation</param>
+            <param name="span">The span.</param>
+            <returns>A <see cref="T:System.String" /> that represents this instance.</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ScriptObject.Clone(System.Boolean)">
+            <summary>
+            Clones the content of this object.
+            </summary>
+            <param name="deep">If set to <c>true</c> all <see cref="T:Lizoc.TextScript.Runtime.ScriptObject"/> and <see cref="T:Lizoc.TextScript.Runtime.ScriptArray"/> will be cloned and copied recursively</param>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ScriptObject.From(System.Object)">
+            <summary>
+            Creates a <see cref="T:Lizoc.TextScript.Runtime.ScriptObject"/> by importing from the specified object. See remarks.
+            </summary>
+            <param name="obj">The object or a type.</param>
+            <returns>A script object</returns>
+            <remarks>
+            <ul>
+            <li>If <paramref name="obj"/> is a <see cref="T:System.Type"/>, this method will import only the static field/properties of the specified object.</li>
+            <li>If <paramref name="obj"/> is a <see cref="T:Lizoc.TextScript.Runtime.ScriptObject"/>, this method will import the members of the specified object into the new object.</li>
+            <li>If <paramref name="obj"/> is a plain object, this method will import the public fields/properties of the specified object into the <see cref="T:Lizoc.TextScript.Runtime.ScriptObject"/>.</li>
+            </ul>
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ScriptObject.IsImportable(System.Object)">
+            <summary>
+            Determines whether the specified object is importable by the method the various Import methods.
+            </summary>
+            <param name="obj">The object.</param>
+            <returns><c>true</c> if the object is importable; <c>false</c> otherwise</returns>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.ScriptObjectExtensions">
+            <summary>
+            Extensions attached to an <see cref="T:Lizoc.TextScript.Runtime.IScriptObject"/>.
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ScriptObjectExtensions.AssertNotReadOnly(Lizoc.TextScript.Runtime.IScriptObject)">
+            <summary>
+            Asserts that the specified script object is not readonly or throws a <see cref="T:Lizoc.TextScript.Syntax.ScriptRuntimeException"/>
+            </summary>
+            <param name="scriptObject">The script object.</param>
+            <exception cref="T:Lizoc.TextScript.Syntax.ScriptRuntimeException">If the object is not readonly</exception>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ScriptObjectExtensions.Import(Lizoc.TextScript.Runtime.IScriptObject,System.Object,Lizoc.TextScript.Runtime.MemberFilterDelegate,Lizoc.TextScript.Runtime.MemberRenamerDelegate)">
+            <summary>
+            Imports the specified object intto this <see cref="T:Lizoc.TextScript.Runtime.ScriptObject"/> context. See remarks.
+            </summary>
+            <param name="scriptObject">The script object to import into</param>
+            <param name="obj">The object.</param>
+            <param name="filter">Optional member filterer</param>
+            <param name="renamer">Optional renamer</param>
+            <remarks>
+            <ul>
+            <li>If <paramref name="obj"/> is a <see cref="T:System.Type"/>, this method will import only the static field/properties of the specified object.</li>
+            <li>If <paramref name="obj"/> is a <see cref="T:Lizoc.TextScript.Runtime.ScriptObject"/>, this method will import the members of the specified object into the new object.</li>
+            <li>If <paramref name="obj"/> is a plain object, this method will import the public fields/properties of the specified object into the <see cref="T:Lizoc.TextScript.Runtime.ScriptObject"/>.</li>
+            </ul>
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ScriptObjectExtensions.TrySetValue(Lizoc.TextScript.Runtime.IScriptObject,System.String,System.Object,System.Boolean)">
+            <summary>
+            Tries to set the value and readonly state of the specified member.
+            </summary>
+            <param name="scriptObject">The script object</param>
+            <param name="member">The member.</param>
+            <param name="value">The value.</param>
+            <param name="readOnly">if set to <c>true</c> the value will be read only.</param>
+            <returns><c>true</c> if the value could be set; <c>false</c> if a value already exist an is readonly</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ScriptObjectExtensions.Import(Lizoc.TextScript.Runtime.IScriptObject,Lizoc.TextScript.Runtime.IScriptObject)">
+            <summary>
+            Imports the specified <see cref="T:Lizoc.TextScript.Runtime.ScriptObject"/> into this instance by copying the member values into this object.
+            </summary>
+            <param name="scriptObject">The script object to import into</param>
+            <param name="other">The other <see cref="T:Lizoc.TextScript.Runtime.ScriptObject"/>.</param>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ScriptObjectExtensions.GetScriptObject(Lizoc.TextScript.Runtime.IScriptObject)">
+            <summary>
+            Gets the script object attached to the specified instance.
+            </summary>
+            <param name="scriptObject">The script object proxy.</param>
+            <returns></returns>
+            <exception cref="T:System.ArgumentException">Expecting ScriptObject or ScriptArray instance</exception>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ScriptObjectExtensions.ImportMember(Lizoc.TextScript.Runtime.IScriptObject,System.Object,System.String,System.String)">
+            <summary>
+            Imports a specific member from the specified object.
+            </summary>
+            <param name="scriptObject">The script object to import into</param>
+            <param name="obj">The object.</param>
+            <param name="memberName">Name of the member.</param>
+            <param name="exportName">Name of the member name replacement. If null, use the default renamer will be used.</param>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ScriptObjectExtensions.Import(Lizoc.TextScript.Runtime.IScriptObject,System.Object,Lizoc.TextScript.Runtime.ScriptMemberImportFlags,Lizoc.TextScript.Runtime.MemberFilterDelegate,Lizoc.TextScript.Runtime.MemberRenamerDelegate)">
+            <summary>
+            Imports the specified object.
+            </summary>
+            <param name="scriptObject">The script object to import into</param>
+            <param name="obj">The object.</param>
+            <param name="flags">The import flags.</param>
+            <param name="filter">A filter applied on each member</param>
+            <param name="renamer">The member renamer.</param>
+            <exception cref="T:System.ArgumentOutOfRangeException"></exception>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.ScriptObjectExtensions.Import(Lizoc.TextScript.Runtime.IScriptObject,System.String,System.Delegate)">
+            <summary>
+            Imports the delegate to the specified member.
+            </summary>
+            <param name="scriptObject">The script object to import into</param>
+            <param name="member">The member.</param>
+            <param name="function">The function delegate.</param>
+            <exception cref="T:System.ArgumentNullException">if member or function are null</exception>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.StandardMemberRenamer">
+            <summary>
+            The standard rename make a camel/pascalcase name changed by `_` and lowercase. e.g `ThisIsAnExample` becomes `this_is_an_example`.
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.StandardMemberRenamer.Rename(System.Reflection.MemberInfo)">
+            <summary>
+            Renames a camel/pascalcase member to a lowercase and `_` name. e.g `ThisIsAnExample` becomes `this_is_an_example`.
+            </summary>
+            <param name="member">The member to rename</param>
+            <returns>The member name renamed</returns>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.StringBuilderOutput">
+            <summary>
+            Output to a <see cref="T:System.Text.StringBuilder"/>
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.StringBuilderOutput.#ctor">
+            <summary>
+            Initialize a new instance of <see cref="T:Lizoc.TextScript.Runtime.StringBuilderOutput"/>
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.StringBuilderOutput.#ctor(System.Text.StringBuilder)">
+            <summary>
+            Initialize a new instance of <see cref="T:Lizoc.TextScript.Runtime.StringBuilderOutput"/>
+            </summary>
+            <param name="builder">An existing <see cref="T:System.Text.StringBuilder"/></param>
+        </member>
+        <member name="P:Lizoc.TextScript.Runtime.StringBuilderOutput.Builder">
+            <summary>
+            The underlying <see cref="T:System.Text.StringBuilder"/>
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.TextWriterOutput">
+            <summary>
+            Output to a <see cref="T:System.IO.TextWriter"/>
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.TextWriterOutput.#ctor">
+            <summary>
+            Initialize a new instance of <see cref="T:Lizoc.TextScript.Runtime.TextWriterOutput"/> with a writer default to <see cref="T:System.IO.StringWriter"/>
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.Runtime.TextWriterOutput.#ctor(System.IO.TextWriter)">
+            <summary>
+            Initialize a new instance of <see cref="T:Lizoc.TextScript.Runtime.TextWriterOutput"/> with the specified <see cref="T:System.IO.TextWriter"/>
+            </summary>
+            <param name="writer">An existing <see cref="T:System.IO.TextWriter"/></param>
+        </member>
+        <member name="P:Lizoc.TextScript.Runtime.TextWriterOutput.Writer">
+            <summary>
+            The underlying <see cref="T:System.IO.TextWriter"/>
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Syntax.IScriptNamedArgumentContainer">
+            <summary>
+            Interfaces used by statements/expressions that have special trailing parameters (for, tablerow, include...)
+            </summary>
+        </member>
+        <member name="F:Lizoc.TextScript.Syntax.ScriptBinaryOperator.EmptyCoalescing">
+            <summary>
+            The empty coalescing operator ??
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.Syntax.ScriptCaseStatement.Value">
+            <summary>
+            Get or sets the value used to check against When clause.
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Syntax.ScriptExpression">
+            <summary>
+            Base class for all expressions.
+            </summary>
+            <seealso cref="T:Lizoc.TextScript.Syntax.ScriptNode" />
+        </member>
+        <member name="T:Lizoc.TextScript.Syntax.ScriptForStatement">
+            <summary>
+            A for in loop statement.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.Syntax.ScriptIfStatement.Condition">
+            <summary>
+            Get or sets the condition of this if statement.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.Syntax.ScriptIfStatement.InvertCondition">
+            <summary>
+            Gets or sets a boolean indicating that the result of the condition is inverted
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Syntax.ScriptLoopStatementBase">
+            <summary>
+            Base class for a loop statement
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.Syntax.ScriptLoopStatementBase.Loop(Lizoc.TextScript.TemplateContext,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            Base implementation for a loop single iteration
+            </summary>
+            <param name="context">The context</param>
+            <param name="index">The index in the loop</param>
+            <param name="localIndex"></param>
+            <param name="isLast"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Lizoc.TextScript.Syntax.ScriptNode">
+            <summary>
+            Base class for the abstract syntax tree of a TextScript program.
+            </summary>
+        </member>
+        <member name="F:Lizoc.TextScript.Syntax.ScriptNode.Span">
+            <summary>
+            The source span of this node.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.Syntax.ScriptNode.Trivias">
+            <summary>
+            Trivias, null if <see cref="P:Lizoc.TextScript.Parsing.LexerOptions.KeepTrivia"/> was false.
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.Syntax.ScriptNode.Evaluate(Lizoc.TextScript.TemplateContext)">
+            <summary>
+            Evaluates this instance with the specified context.
+            </summary>
+            <param name="context">The template context.</param>
+        </member>
+        <member name="T:Lizoc.TextScript.Syntax.ScriptNopStatement">
+            <summary>
+            Empty instruction for an empty code block
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.Syntax.ScriptPage.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Lizoc.TextScript.Syntax.ScriptPage"/> class.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.Syntax.ScriptPage.FrontMatter">
+            <summary>
+            Gets or sets the front matter. May be <c>null</c> if script is not parsed using  <see cref="F:Lizoc.TextScript.Parsing.ScriptMode.FrontMatterOnly"/> or <see cref="F:Lizoc.TextScript.Parsing.ScriptMode.FrontMatterAndContent"/>. See remarks.
+            </summary>
+            <remarks>
+            Note that this code block is not executed when evaluating this page. It has to be evaluated separately (usually before evaluating the page).
+            </remarks>
+        </member>
+        <member name="T:Lizoc.TextScript.Syntax.ScriptStatement">
+            <summary>
+            Base class for all statements.
+            </summary>
+            <seealso cref="T:Lizoc.TextScript.Syntax.ScriptNode" />
+        </member>
+        <member name="T:Lizoc.TextScript.Syntax.ScriptTableRowStatement">
+            <summary>
+            Statement handling the `tablerow`
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Syntax.ScriptThisExpression">
+            <summary>
+            this expression returns the current <see cref="P:Lizoc.TextScript.TemplateContext.CurrentGlobal"/> script object.
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Syntax.ScriptVariable">
+            <summary>
+            A script variable
+            </summary>
+            <remarks>This class is immutable as all variable object are being shared across all templates</remarks>
+        </member>
+        <member name="F:Lizoc.TextScript.Syntax.ScriptVariable.LoopChanged">
+            <summary>
+            A boolean variable indicating if the value changed from the previous value in a loop iteration
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.Syntax.ScriptVariable.Create(System.String,Lizoc.TextScript.Syntax.ScriptVariableScope)">
+            <summary>
+            Creates a <see cref="T:Lizoc.TextScript.Syntax.ScriptVariable"/> according to the specified name and <see cref="T:Lizoc.TextScript.Syntax.ScriptVariableScope"/>
+            </summary>
+            <param name="name">Name of the variable</param>
+            <param name="scope">Scope of the variable</param>
+            <returns>The script variable</returns>
+        </member>
+        <member name="P:Lizoc.TextScript.Syntax.ScriptVariable.Name">
+            <summary>
+            Gets or sets the name of the variable (without the $ sign for local variable)
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.Syntax.ScriptVariable.Scope">
+            <summary>
+            Gets or sets a boolean indicating whether this variable is a local variable (starting with $ in the template ) or global.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.Syntax.ScriptWhenStatement.Values">
+            <summary>
+            Get or sets the value used to check against When clause.
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Template">
+            <summary>
+            Basic entry point class to parse templates and render them. For more advanced scenario, you should use <see cref="T:Lizoc.TextScript.TemplateContext"/> directly.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.Template.SourceFilePath">
+            <summary>
+            Gets the source file path.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.Template.Page">
+            <summary>
+            Gets the resulting compiled <see cref="T:Lizoc.TextScript.Syntax.ScriptPage"/>. May be null if this template <see cref="P:Lizoc.TextScript.Template.HasErrors"/> 
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.Template.HasErrors">
+            <summary>
+            Gets a value indicating whether this template has errors. Error messages are in <see cref="P:Lizoc.TextScript.Template.Messages"/>.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.Template.Messages">
+            <summary>
+            Gets the lexer and parsing messages.
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.Template.Parse(System.String,System.String,System.Nullable{Lizoc.TextScript.Parsing.ParserOptions},System.Nullable{Lizoc.TextScript.Parsing.LexerOptions})">
+            <summary>
+            Parses the specified scripting text into a <see cref="T:Lizoc.TextScript.Template"/> .
+            </summary>
+            <param name="text">The scripting text.</param>
+            <param name="sourceFilePath">The source file path. Optional, used for better error reporting if the source file has a location on the disk</param>
+            <param name="parserOptions">The templating parsing parserOptions.</param>
+            <param name="lexerOptions">The options passed to the lexer</param>
+            <returns>A template</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.Template.ParseLiquid(System.String,System.String,System.Nullable{Lizoc.TextScript.Parsing.ParserOptions},System.Nullable{Lizoc.TextScript.Parsing.LexerOptions})">
+            <summary>
+            Parses the specified Liquid script text into a <see cref="T:Lizoc.TextScript.Template"/> .
+            </summary>
+            <param name="text">The liquid scripting text.</param>
+            <param name="sourceFilePath">The source file path. Optional, used for better error reporting if the source file has a location on the disk</param>
+            <param name="parserOptions">The templating parsing parserOptions.</param>
+            <param name="lexerOptions">The options passed to the lexer</param>
+            <returns>A template</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.Template.Evaluate(System.String,Lizoc.TextScript.TemplateContext)">
+            <summary>
+            Parse and evaluates a code only expression (without enclosing `{{` and `}}`) within the specified context.
+            </summary>
+            <param name="expression">A code only expression (without enclosing `{{` and `}}`)</param>
+            <param name="context">The template context</param>
+            <returns>The result of the evaluation of the expression</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.Template.Evaluate(System.String,System.Object)">
+            <summary>
+            Parse and evaluates a code only expression (without enclosing `{{` and `}}`) within the specified context.
+            </summary>
+            <param name="expression">A code only expression (without enclosing `{{` and `}}`)</param>
+            <param name="model">An object instance used as a model for evaluating this expression</param>
+            <returns>The result of the evaluation of the expression</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.Template.Evaluate(Lizoc.TextScript.TemplateContext)">
+            <summary>
+            Evaluates the template using the specified context. See remarks.
+            </summary>
+            <param name="context">The template context.</param>
+            <exception cref="T:System.ArgumentNullException">If context is null</exception>
+            <exception cref="T:System.InvalidOperationException">If the template <see cref="P:Lizoc.TextScript.Template.HasErrors"/>. Check the <see cref="P:Lizoc.TextScript.Template.Messages"/> property for more details</exception>
+            <returns>Returns the result of the last statement</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.Template.Evaluate(System.Object)">
+            <summary>
+            Evaluates the template using the specified context
+            </summary>
+            <param name="model">An object model to use with the evaluation.</param>
+            <exception cref="T:System.InvalidOperationException">If the template <see cref="P:Lizoc.TextScript.Template.HasErrors"/>. Check the <see cref="P:Lizoc.TextScript.Template.Messages"/> property for more details</exception>
+            <returns>Returns the result of the last statement</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.Template.Render(Lizoc.TextScript.TemplateContext)">
+            <summary>
+            Renders this template using the specified context. See remarks.
+            </summary>
+            <param name="context">The template context.</param>
+            <exception cref="T:System.ArgumentNullException">If context is null</exception>
+            <exception cref="T:System.InvalidOperationException">If the template <see cref="P:Lizoc.TextScript.Template.HasErrors"/>. Check the <see cref="P:Lizoc.TextScript.Template.Messages"/> property for more details</exception>
+            <remarks>
+            When using this method, the result of rendering this page is output to <see cref="P:Lizoc.TextScript.TemplateContext.Output"/>
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.Template.Render(System.Object,Lizoc.TextScript.Runtime.MemberRenamerDelegate)">
+            <summary>
+            Renders this template using the specified object model.
+            </summary>
+            <param name="model">The object model.</param>
+            <param name="memberRenamer">The member renamer used to import this .NET object and transitive objects. See member renamer documentation for more details.</param>
+            <returns>A rendering result as a string </returns>
+        </member>
+        <member name="M:Lizoc.TextScript.Template.ToText(Lizoc.TextScript.TemplateRewriterOptions)">
+            <summary>
+            Converts back this template to a textual representation. This is the inverse of <see cref="M:Lizoc.TextScript.Template.Parse(System.String,System.String,System.Nullable{Lizoc.TextScript.Parsing.ParserOptions},System.Nullable{Lizoc.TextScript.Parsing.LexerOptions})"/>.
+            </summary>
+            <param name="options">The rendering options</param>
+            <returns>The template converted back to a textual representation of the template</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.Template.EvaluateAndRender(Lizoc.TextScript.TemplateContext,System.Boolean)">
+            <summary>
+            Evaluates the template using the specified context. See remarks.
+            </summary>
+            <param name="context">The template context.</param>
+            <param name="render"><c>true</c> to render the output to the <see cref="P:Lizoc.TextScript.TemplateContext.Output"/></param>
+            <exception cref="T:System.ArgumentNullException">If context is null</exception>
+            <exception cref="T:System.InvalidOperationException">If the template <see cref="P:Lizoc.TextScript.Template.HasErrors"/>. Check the <see cref="P:Lizoc.TextScript.Template.Messages"/> property for more details</exception>
+        </member>
+        <member name="T:Lizoc.TextScript.TemplateContext">
+            <summary>
+            The template context contains the state of the page, the model.
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.TemplateContext.TryGetMemberDelegate">
+            <summary>
+            A delegate used to late binding <see cref="P:Lizoc.TextScript.TemplateContext.TryGetMember"/>
+            </summary>
+            <param name="context">The template context</param>
+            <param name="span">The current sourcespan</param>
+            <param name="target">The target.</param>
+            <param name="member">The member.</param>
+            <param name="value">The value.</param>
+            <returns><c>true</c> if the member on the target , <c>false</c> otherwise.</returns>
+        </member>
+        <member name="T:Lizoc.TextScript.TemplateContext.TryGetVariableDelegate">
+            <summary>
+            A delegate used to late binding <see cref="P:Lizoc.TextScript.TemplateContext.TryGetVariable"/>
+            </summary>
+            <param name="context">The template context</param>
+            <param name="span">The current sourcespan</param>
+            <param name="variable">The the variable to look for.</param>
+            <param name="value">The value if the result is true.</param>
+            <returns><c>true</c> if the variable was found, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Lizoc.TextScript.TemplateContext" /> class.
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.#ctor(Lizoc.TextScript.Runtime.ScriptObject)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Lizoc.TextScript.TemplateContext" /> class.
+            </summary>
+            <param name="builtin">The builtin object used to expose builtin functions, default is <see cref="M:Lizoc.TextScript.TemplateContext.GetDefaultBuiltinObject"/>.</param>
+        </member>
+        <member name="P:Lizoc.TextScript.TemplateContext.CurrentCulture">
+            <summary>
+            Gets the current culture set. Default is <c>CultureInfo.InvariantCulture</c>. Can be modified via <see cref="M:Lizoc.TextScript.TemplateContext.PushCulture(System.Globalization.CultureInfo)"/>, and <see cref="M:Lizoc.TextScript.TemplateContext.PopCulture"/>.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.TemplateContext.TemplateLoader">
+            <summary>
+            Gets or sets the <see cref="T:Lizoc.TextScript.Runtime.ITemplateLoader"/> used by the include directive. Must be set in order for the include directive to work.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.TemplateContext.TemplateLoaderParserOptions">
+            <summary>
+            The <see cref="T:Lizoc.TextScript.Parsing.ParserOptions"/> used by the <see cref="P:Lizoc.TextScript.TemplateContext.TemplateLoader"/> via the include directive.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.TemplateContext.TemplateLoaderLexerOptions">
+            <summary>
+            The <see cref="T:Lizoc.TextScript.Parsing.LexerOptions"/> used by the <see cref="P:Lizoc.TextScript.TemplateContext.TemplateLoader"/> via the include directive.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.TemplateContext.MemberRenamer">
+            <summary>
+            A global settings used to rename property names of exposed .NET objects.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.TemplateContext.MemberFilter">
+            <summary>
+            A global settings used to filter field/property names of exposed .NET objects.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.TemplateContext.LoopLimit">
+            <summary>
+            A loop limit that can be used at runtime to limit the number of loops. Default is 1000.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.TemplateContext.RecursiveLimit">
+            <summary>
+            A function recursive limit count used at runtime to limit the number of recursive calls. Default is 100
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.TemplateContext.EnableOutput">
+            <summary>
+            Gets or sets a boolean indicating whether to enable text output via <see cref="P:Lizoc.TextScript.TemplateContext.Output"/>.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.TemplateContext.Output">
+            <summary>
+            Gets the current output of the template being rendered (via <see cref="M:Lizoc.TextScript.Template.Render(Lizoc.TextScript.TemplateContext)"/>)/>.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.TemplateContext.BuiltinObject">
+            <summary>
+            Gets the builtin objects (that can be setup via the constructor). Default is retrieved via <see cref="M:Lizoc.TextScript.TemplateContext.GetDefaultBuiltinObject"/>.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.TemplateContext.CurrentGlobal">
+            <summary>
+            Gets the current global <see cref="T:Lizoc.TextScript.Runtime.ScriptObject"/>.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.TemplateContext.CachedTemplates">
+            <summary>
+            Gets the cached templates, used by the include function.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.TemplateContext.CurrentSourceFile">
+            <summary>
+            Gets the current source file.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.TemplateContext.TryGetVariable">
+            <summary>
+            Gets or sets a callback function that is called when a variable is being resolved and was not found from any scopes.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.TemplateContext.TryGetMember">
+            <summary>
+            Gets or sets the fallback accessor when accessing a member of an object and the member was not found, this accessor will be called.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.TemplateContext.Tags">
+            <summary>
+            Allows to store data within this context.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.TemplateContext.TagsCurrentLocal">
+            <summary>
+            Gets the tags currently available only inside the current local scope
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.TemplateContext.TagsCurrentLoop">
+            <summary>
+            Gets the tags currently available only inside the current loop
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.TemplateContext.PipeArguments">
+            <summary>
+            Store the current stack of pipe arguments used by <see cref="T:Lizoc.TextScript.Syntax.ScriptPipeCall"/> and <see cref="T:Lizoc.TextScript.Syntax.ScriptFunctionCall"/>
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.TemplateContext.FlowState">
+            <summary>
+            Gets or sets the internal state of control flow.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.TemplateContext.RegexTimeOut">
+            <summary>
+            Timeout used for any regexp that might be used by a builtin function. Default is 10s.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.TemplateContext.StrictVariables">
+            <summary>
+            Gets or sets a boolean indicating if the template should throw an exception if it doesn't find a variable. Default is <c>false</c>
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.TemplateContext.EnableBreakAndContinueAsReturnOutsideLoop">
+            <summary>
+            Enables break and continue to act as a return outside of a loop, used by liquid templates. Default is <c>false</c>.
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.TemplateContext.EnableRelaxedMemberAccess">
+            <summary>
+            Enables a member access on a null by returning null instead of an exception. Default is <c>false</c>
+            </summary>
+        </member>
+        <member name="P:Lizoc.TextScript.TemplateContext.IsInLoop">
+            <summary>
+            Indicates if we are in a looop
+            </summary>
+            <value>
+              <c>true</c> if [in loop]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.PushCulture(System.Globalization.CultureInfo)">
+            <summary>
+            Push a new <see cref="T:System.Globalization.CultureInfo"/> to be used when rendering/parsing numbers.
+            </summary>
+            <param name="culture">The new culture to use when rendering/parsing numbers</param>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.PopCulture">
+            <summary>
+            Pops the current culture used on the stack.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.PushSourceFile(System.String)">
+            <summary>
+            Pushes the source file path being executed. This should have enough information so that template loading/include can work correctly.
+            </summary>
+            <param name="sourceFile">The source file.</param>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.PopSourceFile">
+            <summary>
+            Pops the source file being executed.
+            </summary>
+            <returns>The source file that was executed</returns>
+            <exception cref="T:System.InvalidOperationException">Cannot PopSourceFile more than PushSourceFile</exception>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.GetValue(Lizoc.TextScript.Syntax.ScriptExpression)">
+            <summary>
+            Gets the value from the specified expression using the current <see cref="T:Lizoc.TextScript.Runtime.ScriptObject"/> bound to the model context.
+            </summary>
+            <param name="target">The expression</param>
+            <returns>The value of the expression</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.SetValue(Lizoc.TextScript.Syntax.ScriptVariableLoop,System.Object)">
+            <summary>
+            Sets the variable with the specified value.
+            </summary>
+            <param name="variable">The variable.</param>
+            <param name="value">The value.</param>
+            <exception cref="T:System.ArgumentNullException">If variable is null</exception>
+            <exception cref="T:Lizoc.TextScript.Syntax.ScriptRuntimeException">If an existing variable is already read-only</exception>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.SetValue(Lizoc.TextScript.Syntax.ScriptVariable,System.Object,System.Boolean)">
+            <summary>
+            Sets the variable with the specified value.
+            </summary>
+            <param name="variable">The variable.</param>
+            <param name="value">The value.</param>
+            <param name="asReadOnly">if set to <c>true</c> the variable set will be read-only.</param>
+            <exception cref="T:System.ArgumentNullException">If variable is null</exception>
+            <exception cref="T:Lizoc.TextScript.Syntax.ScriptRuntimeException">If an existing variable is already read-only</exception>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.SetReadOnly(Lizoc.TextScript.Syntax.ScriptVariable,System.Boolean)">
+            <summary>
+            Sets the variable to read only.
+            </summary>
+            <param name="variable">The variable.</param>
+            <param name="isReadOnly">if set to <c>true</c> the variable will be set to readonly.</param>
+            <exception cref="T:System.ArgumentNullException">If variable is null</exception>
+            <remarks>
+            This will not throw an exception if a previous variable was readonly.
+            </remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.SetValue(Lizoc.TextScript.Syntax.ScriptExpression,System.Object)">
+            <summary>
+            Sets the target expression with the specified value.
+            </summary>
+            <param name="target">The target expression.</param>
+            <param name="value">The value.</param>
+            <exception cref="T:System.ArgumentNullException">If target is null</exception>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.PushGlobal(Lizoc.TextScript.Runtime.IScriptObject)">
+            <summary>
+            Pushes a new object context accessible to the template.
+            </summary>
+            <param name="scriptObject">The script object.</param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.PopGlobal">
+            <summary>
+            Pops the previous object context.
+            </summary>
+            <returns>The previous object context</returns>
+            <exception cref="T:System.InvalidOperationException">Unexpected PopGlobal() not matching a PushGlobal</exception>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.PushOutput">
+            <summary>
+            Pushes a new output used for rendering the current template while keeping the previous output.
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.PushOutput(Lizoc.TextScript.Runtime.IScriptOutput)">
+            <summary>
+            Pushes a new output used for rendering the current template while keeping the previous output.
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.PopOutput">
+            <summary>
+            Pops a previous output.
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.Write(Lizoc.TextScript.Parsing.SourceSpan,System.Object)">
+            <summary>
+            Writes an object value to the current <see cref="P:Lizoc.TextScript.TemplateContext.Output"/>.
+            </summary>
+            <param name="span">The span of the object to render.</param>
+            <param name="textAsObject">The text as object.</param>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.Write(System.String)">
+            <summary>
+            Writes the text to the current <see cref="P:Lizoc.TextScript.TemplateContext.Output"/>
+            </summary>
+            <param name="text">The text.</param>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.WriteLine">
+            <summary>
+            Writes the a new line to the current <see cref="P:Lizoc.TextScript.TemplateContext.Output"/>
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.Write(System.String,System.Int32,System.Int32)">
+            <summary>
+            Writes the text to the current <see cref="P:Lizoc.TextScript.TemplateContext.Output"/>
+            </summary>
+            <param name="text">The text.</param>
+            <param name="startIndex">The zero-based position of the substring of text</param>
+            <param name="count">The number of characters to output starting at <paramref name="startIndex"/> position from the text</param>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.Evaluate(Lizoc.TextScript.Syntax.ScriptNode)">
+            <summary>
+            Evaluates the specified script node.
+            </summary>
+            <param name="scriptNode">The script node.</param>
+            <returns>The result of the evaluation.</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.Evaluate(Lizoc.TextScript.Syntax.ScriptNode,System.Boolean)">
+            <summary>
+            Evaluates the specified script node.
+            </summary>
+            <param name="scriptNode">The script node.</param>
+            <param name="aliasReturnedFunction">if set to <c>true</c> and a function would be evaluated as part of this node, return the object function without evaluating it.</param>
+            <returns>The result of the evaluation.</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.EvaluateImpl(Lizoc.TextScript.Syntax.ScriptNode)">
+            <summary>
+            Evaluates the specified script node by calling <see cref="M:Lizoc.TextScript.Syntax.ScriptNode.Evaluate(Lizoc.TextScript.TemplateContext)"/>
+            </summary>
+            <param name="scriptNode">The script node (might be null but should not throw an error)</param>
+            <returns>The result of the evaluation</returns>
+            <remarks>The purpose of this method is to allow to hook during the evaluation of all ScriptNode. By default calls <see cref="M:Lizoc.TextScript.Syntax.ScriptNode.Evaluate(Lizoc.TextScript.TemplateContext)"/></remarks>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.GetMemberAccessor(System.Object)">
+            <summary>
+            Gets the member accessor for the specified object.
+            </summary>
+            <param name="target">The target object to get a member accessor.</param>
+            <returns>A member accessor</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.GetMemberAccessorImpl(System.Object)">
+            <summary>
+            Gets the member accessor for the specified object if not already cached. This method can have an override.
+            </summary>
+            <param name="target"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.GetDefaultBuiltinObject">
+            <summary>
+            Gets a <see cref="T:Lizoc.TextScript.Runtime.ScriptObject"/> with all default builtins registered.
+            </summary>
+            <returns>A <see cref="T:Lizoc.TextScript.Runtime.ScriptObject"/> with all default builtins registered</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.EnterFunction(Lizoc.TextScript.Syntax.ScriptNode)">
+            <summary>
+            Called when entering a function.
+            </summary>
+            <param name="caller"></param>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.ExitFunction">
+            <summary>
+            Called when exiting a function.
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.PushVariableScope(Lizoc.TextScript.Syntax.ScriptVariableScope)">
+            <summary>
+            Push a new <see cref="T:Lizoc.TextScript.Syntax.ScriptVariableScope"/> for variables
+            </summary>
+            <param name="scope"></param>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.PopVariableScope(Lizoc.TextScript.Syntax.ScriptVariableScope)">
+            <summary>
+            Pops a previous <see cref="T:Lizoc.TextScript.Syntax.ScriptVariableScope"/>.
+            </summary>
+            <param name="scope"></param>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.PopVariableScope(Lizoc.TextScript.FastStack{Lizoc.TextScript.Runtime.ScriptObject}@)">
+            <summary>
+            Pops a previous <see cref="T:Lizoc.TextScript.Syntax.ScriptVariableScope"/>.
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.EnterLoop(Lizoc.TextScript.Syntax.ScriptLoopStatementBase)">
+            <summary>
+            Notifies this context when entering a loop.
+            </summary>
+            <param name="loop"></param>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.OnEnterLoop(Lizoc.TextScript.Syntax.ScriptLoopStatementBase)">
+            <summary>
+            Called when entering a loop.
+            </summary>
+            <param name="loop">The loop expression object</param>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.ExitLoop(Lizoc.TextScript.Syntax.ScriptLoopStatementBase)">
+            <summary>
+            Notifies this context when exiting a loop.
+            </summary>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.OnExitLoop(Lizoc.TextScript.Syntax.ScriptLoopStatementBase)">
+            <summary>
+            Called when exiting a loop.
+            </summary>
+            <param name="loop">The loop expression object</param>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.OnStepLoop(Lizoc.TextScript.Syntax.ScriptLoopStatementBase)">
+            <summary>
+            Called when stepping into a loop.
+            </summary>
+            <param name="loop">The loop expression object</param>
+            <returns><c>true</c> to continue loop; <c>false</c> to break the loop. Default is <c>true</c></returns>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.GetValue(Lizoc.TextScript.Syntax.ScriptVariable)">
+            <summary>
+            Gets the value for the specified variable from the current object context/scope.
+            </summary>
+            <param name="variable">The variable to retrieve the value</param>
+            <returns>Value of the variable</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.GetValue(Lizoc.TextScript.Syntax.ScriptVariableGlobal)">
+            <summary>
+            Gets the value for the specified global variable from the current object context/scope.
+            </summary>
+            <param name="variable">The variable to retrieve the value</param>
+            <returns>Value of the variable</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.GetOrSetValue(Lizoc.TextScript.Syntax.ScriptExpression,System.Object,System.Boolean)">
+            <summary>
+            Evaluates the specified expression
+            </summary>
+            <param name="targetExpression">The expression to evaluate</param>
+            <param name="valueToSet">A value to set in case of a setter</param>
+            <param name="setter">true if this a setter</param>
+            <returns>The value of the targetExpression</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.GetListAccessor(System.Object)">
+            <summary>
+            Gets the list accessor or a previous cached one.
+            </summary>
+            <param name="target">The expected object to be a list</param>
+            <returns>A list accessor for the specified type of target</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.GetListAccessorImpl(System.Object,System.Type)">
+            <summary>
+            Gets the list accessor for the specified target and type, if it hasn't been found yet.
+            </summary>
+            <param name="target">The expected object to be a list</param>
+            <param name="type">Type of the target object</param>
+            <returns>A list accessor for the specified type of target</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.GetStoreForSet(Lizoc.TextScript.Syntax.ScriptVariable)">
+            <summary>
+            Returns the list of <see cref="T:Lizoc.TextScript.Runtime.ScriptObject"/> depending on the scope of the variable.
+            </summary>
+            <param name="variable"></param>
+            <exception cref="T:System.NotImplementedException"></exception>
+            <returns>The list of script objects valid for the specified variable scope</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.IsEmpty(Lizoc.TextScript.Parsing.SourceSpan,System.Object)">
+            <summary>
+            Returns a boolean indicating whether the against object is empty (array/list count = 0, null, or no members for a dictionary/script object)
+            </summary>
+            <param name="span"></param>
+            <param name="against"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.ToString(Lizoc.TextScript.Parsing.SourceSpan,System.Object)">
+            <summary>
+            Called whenever an objects is converted to a string. This method can be overriden.
+            </summary>
+            <param name="span">The current span calling this ToString</param>
+            <param name="value">The object value to print</param>
+            <returns>A string representing the object value</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.ToBool(Lizoc.TextScript.Parsing.SourceSpan,System.Object)">
+            <summary>
+            Called when evaluating a value to a boolean. Can be overriden for specific object scenarios.
+            </summary>
+            <param name="span">The span requiring this conversion</param>
+            <param name="value">An object value</param>
+            <returns>The boolean representation of the object</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.ToInt(Lizoc.TextScript.Parsing.SourceSpan,System.Object)">
+            <summary>
+            Called when evaluating a value to an integer. Can be overriden.
+            </summary>
+            <param name="span">The span requiring this conversion</param>
+            <param name="value">The value of the object to convert</param>
+            <returns>The integer value</returns>
+        </member>
+        <member name="M:Lizoc.TextScript.TemplateContext.ToObject(Lizoc.TextScript.Parsing.SourceSpan,System.Object,System.Type)">
+            <summary>
+            Called when trying to convert an object to a destination type. Can be overriden.
+            </summary>
+            <param name="span">The span requiring this conversion</param>
+            <param name="value">The value of the object to convert</param>
+            <param name="destinationType">The destination type to try to convert to</param>
+            <returns>The object value of possibly the destination type</returns>
+        </member>
+        <member name="T:Lizoc.TextScript.LiquidTemplateContext">
+            <summary>
+            A Liquid based <see cref="T:Lizoc.TextScript.TemplateContext"/> providing the builtin functions usually available for a liquid template.
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.TemplateRewriterContext">
+            <summary>
+            Rewriter context used to write an AST/<see cref="T:Lizoc.TextScript.Syntax.ScriptNode"/> tree back to a text.
+            </summary>
+        </member>
+        <member name="F:Lizoc.TextScript.TemplateRewriterContext.Options">
+            <summary>
+            Gets the options for rendering
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.TemplateRewriterOptions">
+            <summary>
+            Defines the options used for rendering back an AST/<see cref="T:Lizoc.TextScript.Syntax.ScriptNode"/> to a text.
+            </summary>
+        </member>
+        <member name="F:Lizoc.TextScript.TemplateRewriterOptions.Mode">
+            <summary>
+            The mode used to render back an AST
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.FastStack`1">
+            <summary>
+            Lightweight stack object for reference types
+            </summary>
+            <typeparam name="T">Type of the object</typeparam>
+        </member>
+        <member name="T:Lizoc.TextScript.MethodImplOptionsHelper">
+            <summary>
+            Internal helper to allow to declare a method using AggressiveInlining without being .NET 4.0+
+            </summary>
+        </member>
+    </members>
+</doc>

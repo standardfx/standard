@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Lizoc.PowerShell.TextScript</name>
+    </assembly>
+    <members>
+        <member name="P:Lizoc.PowerShell.TextScript.RS.Culture">
+            <summary>
+            Overrides the current thread's CurrentUICulture property for all
+            resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Lizoc.PowerShell.TextScript.RS.MaxDepthReached">
+            <summary>
+            The value of property "{0}" of type {1} was not converted because the maximum tree depth level {2} was reached. Set the "Depth" parameter to a larger number or 0 for infinite depth conversion.
+            </summary>
+        </member>
+        <member name="P:Lizoc.PowerShell.TextScript.RS.ArgumentTypeNotSupported">
+            <summary>
+            The object type is unsupported by this parameter. Ensure that the object is one of the following types: {0}
+            </summary>
+        </member>
+        <member name="P:Lizoc.PowerShell.TextScript.RS.MaxDepthForEnumerableReached">
+            <summary>
+            An IEnumerable value was not converted to array type because the maximum tree depth level {0} was reached. Set the "Depth" parameter to a larger number or 0 for infinite depth conversion.
+            </summary>
+        </member>
+        <member name="T:Lizoc.TextScript.Runtime.LocalFileTemplateLoader">
+            <summary>
+            A simple implementation of ITemplateLoader to load a file from disk.
+            </summary>
+        </member>
+    </members>
+</doc>
