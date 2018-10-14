@@ -1,8 +1,6 @@
 using System;
-using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using Standard.Win32;
 
 namespace Standard.IPC.SharedMemory
 {
@@ -12,10 +10,11 @@ namespace Standard.IPC.SharedMemory
     public static class FastStructure
     {
         /// <summary>
-        /// Retrieve a pointer to the passed generic structure type. This is achieved by emitting a <see cref="DynamicMethod"/> to retrieve a pointer to the structure.
+        /// Retrieve a pointer to the passed generic structure type. This is achieved by emitting a <see cref="DynamicMethod"/> to 
+        /// retrieve a pointer to the structure.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="structure"></param>
+        /// <typeparam name="T">The structure type.</typeparam>
+        /// <param name="structure">The structure to search.</param>
         /// <returns>A pointer to the provided structure in memory.</returns>
         /// <see cref="FastStructure{T}.GetPtr"/>
         public static unsafe void* GetPtr<T>(ref T structure)
@@ -25,18 +24,23 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Loads the generic value type <typeparamref name="T"/> from a pointer. This is achieved by emitting a <see cref="DynamicMethod"/> that returns the value in the memory location as a <typeparamref name="T"/>.
-        /// <para>The equivalent non-generic C# code:</para>
-        /// <code>
+        /// Loads the generic value type <typeparamref name="T"/> from a pointer. This is achieved by emitting a <see cref="DynamicMethod"/> that 
+        /// returns the value in the memory location as a <typeparamref name="T"/>.
+        /// </summary>
+        /// <typeparam name="T">The structure type.</typeparam>
+        /// <param name="pointer">Unsafe pointer to memory to load the value from.</param>
+        /// <returns>
+        /// The value of the structure loaded from memory.
+        /// </returns>
+        /// <remarks>
+        /// The following code demonstrates the equivalent non-generic C# code:
+        /// ```C#
         /// unsafe MyStruct ReadFromPointer(byte* pointer)
         /// {
         ///     return *(MyStruct*)pointer;
         /// }
-        /// </code>
-        /// </summary>
-        /// <typeparam name="T">Any value/structure type</typeparam>
-        /// <param name="pointer">Unsafe pointer to memory to load the value from</param>
-        /// <returns>The newly loaded value</returns>
+        /// ```
+        /// </remarks>
         public static unsafe T PtrToStructure<T>(IntPtr pointer)
             where T : struct
         {
@@ -44,18 +48,21 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Writes the generic value type <typeparamref name="T"/> to the location specified by a pointer. This is achieved by emitting a <see cref="DynamicMethod"/> that copies the value from the referenced structure into the specified memory location.
-        /// <para>There is no exact equivalent possible in C#, the closest possible (generates the same IL) is the following code:</para>
-        /// <code>
+        /// Writes the generic value type <typeparamref name="T"/> to the location specified by a pointer. This is achieved by emitting a 
+        /// <see cref="DynamicMethod"/> that copies the value from the referenced structure into the specified memory location.
+        /// </summary>
+        /// <typeparam name="T">The structure type.</typeparam>
+        /// <param name="pointer">The pointer position to write.</param>
+        /// <param name="structure">The structure to write into memory.</param>
+        /// <remarks>
+        /// There is no exact equivalent possible in C#, the closest possible (generates the same IL) is the following code:
+        /// ```C#
         /// unsafe void WriteToPointer(ref SharedHeader dest, ref SharedHeader src)
         /// {
         ///     dest = src;
         /// }
-        /// </code>
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="pointer"></param>
-        /// <param name="structure"></param>
+        /// ```
+        /// </remarks>
         public static unsafe void StructureToPtr<T>(ref T structure, IntPtr pointer)
             where T : struct
         {
@@ -65,9 +72,11 @@ namespace Standard.IPC.SharedMemory
         /// <summary>
         /// Retrieve the cached size of a structure
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        /// <remarks>Caches the size by type</remarks>
+        /// <typeparam name="T">The structure type.</typeparam>
+        /// <returns>The size of the structure.</returns>
+        /// <remarks>
+        /// This function caches the size by type.
+        /// </remarks>
         /// <see cref="FastStructure{T}.Size"/>
         public static int SizeOf<T>()
             where T : struct
@@ -78,7 +87,7 @@ namespace Standard.IPC.SharedMemory
         /// <summary>
         /// Reads a number of elements from a memory location into the provided buffer starting at the specified index.
         /// </summary>
-        /// <typeparam name="T">The structure type</typeparam>
+        /// <typeparam name="T">The structure type.</typeparam>
         /// <param name="buffer">The destination buffer.</param>
         /// <param name="source">The source memory location.</param>
         /// <param name="index">The start index within <paramref name="buffer"/>.</param>
@@ -105,7 +114,7 @@ namespace Standard.IPC.SharedMemory
         /// <summary>
         /// Writes a number of elements to a memory location from the provided buffer starting at the specified index.
         /// </summary>
-        /// <typeparam name="T">The structure type</typeparam>
+        /// <typeparam name="T">The structure type.</typeparam>
         /// <param name="destination">The destination memory location.</param>
         /// <param name="buffer">The source buffer.</param>
         /// <param name="index">The start index within <paramref name="buffer"/>.</param>
@@ -132,35 +141,35 @@ namespace Standard.IPC.SharedMemory
 
     /// <summary>
     /// Emits optimized IL for the reading and writing of structures to/from memory.
-    /// <para>For a 32-byte structure with 1 million iterations:</para>
-    /// <para>The <see cref="FastStructure{T}.PtrToStructure"/> method performs approx. 20x faster than
-    /// <see cref="System.Runtime.InteropServices.Marshal.PtrToStructure(IntPtr, Type)"/> (8ms vs 160ms), and about 1.6x slower than the non-generic equivalent (8ms vs 5ms)</para>
-    /// <para>The <see cref="FastStructure{T}.StructureToPtr"/> method performs approx. 8x faster than 
-    /// <see cref="System.Runtime.InteropServices.Marshal.StructureToPtr(object, IntPtr, bool)"/> (4ms vs 34ms). </para>
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="T">The structure type.</typeparam>
+    /// <remarks>
+    /// For 32-byte structure with 1 million iterations:
+    /// - The <see cref="FastStructure{T}.PtrToStructure"/> method performs approx. 20x faster than <see cref="System.Runtime.InteropServices.Marshal.PtrToStructure(IntPtr, Type)"/> (8ms vs 160ms), and about 1.6x slower than the non-generic equivalent (8ms vs 5ms).
+    /// - The <see cref="FastStructure{T}.StructureToPtr"/> method performs approx. 8x faster than <see cref="System.Runtime.InteropServices.Marshal.StructureToPtr(object, IntPtr, bool)"/> (4ms vs 34ms).
+    /// </remarks>
     public static class FastStructure<T>
         where T : struct
     {
         /// <summary>
-        /// Delegate that returns a pointer to the provided structure. Use with extreme caution.
+        /// Delegate that returns a pointer to the provided structure. Use with caution.
         /// </summary>
         /// <param name="value"></param>
-        /// <returns></returns>
+        /// <returns>Point to the provided structure.</returns>
         public unsafe delegate void* GetPtrDelegate(ref T value);
         
         /// <summary>
         /// Delegate for loading a structure from the specified memory address
         /// </summary>
-        /// <param name="pointer"></param>
-        /// <returns></returns>
+        /// <param name="pointer">The pointer to the provided structure</param>
+        /// <returns>A structure at the specified memory address space.</returns>
         public delegate T PtrToStructureDelegate(IntPtr pointer);
         
         /// <summary>
         /// Delegate for writing a structure to the specified memory address
         /// </summary>
-        /// <param name="value"></param>
-        /// <param name="pointer"></param>
+        /// <param name="value">The structure to write into memory.</param>
+        /// <param name="pointer">The memory address space to write into.</param>
         public delegate void StructureToPtrDelegate(ref T value, IntPtr pointer);
         
         /// <summary>
@@ -188,9 +197,9 @@ namespace Standard.IPC.SharedMemory
         private static DynamicMethod methodWrite;
 
         /// <summary>
-        /// Performs once of type compatibility check.
+        /// Performs an initial type compatibility check.
         /// </summary>
-        /// <exception cref="ArgumentException">Thrown if the type T is incompatible</exception>
+        /// <exception cref="ArgumentException">Thrown if the type <typeparamref name="T"/> is incompatible.</exception>
         static FastStructure()
         {
             // Performs compatibility checks upon T

@@ -6,3 +6,6 @@ dependencies {
   	type = 'project'
   }
 }
+compiler {
+	noWarn = ['CS1591', 'CS0168']
+}

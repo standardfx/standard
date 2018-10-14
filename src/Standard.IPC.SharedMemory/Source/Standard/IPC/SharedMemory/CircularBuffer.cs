@@ -1,11 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.IO.MemoryMappedFiles;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Permissions;
-using System.Text;
 using System.Threading;
+using System.IO.MemoryMappedFiles;
 
 namespace Standard.IPC.SharedMemory
 {
@@ -21,19 +18,24 @@ namespace Standard.IPC.SharedMemory
         /// <summary>
         /// Creates and opens a new <see cref="CircularBuffer"/> instance with the specified name, node count and buffer size per node.
         /// </summary>
-        /// <param name="name">The name of the shared memory to be created</param>
-        /// <param name="nodeCount">The number of nodes within the circular linked-list (minimum of 2)</param>
-        /// <param name="nodeBufferSize">The buffer size per node in bytes. The total shared memory size will be <code>Marshal.SizeOf(SharedMemory.SharedHeader) + Marshal.SizeOf(CircularBuffer.NodeHeader) + (Marshal.SizeOf(CircularBuffer.Node) * nodeCount) + (bufferSize * nodeCount)</code></param>
+        /// <param name="name">The name of the shared memory to be created.</param>
+        /// <param name="nodeCount">The number of nodes within the circular linked-list. The minimum value is 2.</param>
+        /// <param name="nodeBufferSize">The buffer size per node in bytes.</param>
         /// <remarks>
-        /// <para>The maximum total shared memory size is dependent upon the system and current memory fragmentation.</para>
-        /// <para>The shared memory layout on 32-bit and 64-bit architectures is:<br />
-        /// <code>
-        /// |       Header       |   NodeHeader  | Node[0] | ... | Node[N-1] | buffer[0] | ... | buffer[N-1] |<br />
-        /// |      16-bytes      |    24-bytes   |       32-bytes * N        |     NodeBufferSize * N        |<br />
-        ///                      |------------------------------BufferSize-----------------------------------|<br />
+        /// The total shared memory size can be calculated using the following formula:
+        /// 
+        /// ```C#
+        /// Marshal.SizeOf(SharedMemory.SharedHeader) + Marshal.SizeOf(CircularBuffer.NodeHeader) + (Marshal.SizeOf(CircularBuffer.Node) * nodeCount) + (bufferSize * nodeCount)
+        /// ```
+        /// 
+        /// The maximum total shared memory size is dependent upon the system and current memory fragmentation.
+        /// The shared memory layout on 32-bit and 64-bit architectures is:
+        /// ```
+        /// |       Header       |   NodeHeader  | Node[0] | ... | Node[N-1] | buffer[0] | ... | buffer[N-1] |
+        /// |      16-bytes      |    24-bytes   |       32-bytes * N        |     NodeBufferSize * N        |
+        ///                      |------------------------------BufferSize-----------------------------------|
         /// |-----------------------------------------SharedMemorySize---------------------------------------|
-        /// </code>
-        /// </para>
+        /// ```
         /// </remarks>
         public CircularBuffer(string name, int nodeCount, int nodeBufferSize)
             : this(name, nodeCount, nodeBufferSize, true)
@@ -44,7 +46,7 @@ namespace Standard.IPC.SharedMemory
         /// <summary>
         /// Opens an existing <see cref="CircularBuffer"/> with the specified name.
         /// </summary>
-        /// <param name="name">The name of an existing <see cref="CircularBuffer"/> previously created with <see cref="SharedBuffer.IsOwnerOfSharedMemory"/>=true</param>
+        /// <param name="name">The name of an existing <see cref="CircularBuffer"/> previously created with <see cref="SharedBuffer.IsOwnerOfSharedMemory"/> set to `true`.</param>
         public CircularBuffer(string name)
             : this(name, 0, 0, false)
         {
@@ -69,27 +71,27 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// The number of nodes within the circular linked-list
+        /// The number of nodes within the circular linked-list.
         /// </summary>
         public int NodeCount { get; private set; }
         
         /// <summary>
-        /// The buffer size of each node
+        /// The buffer size of each node.
         /// </summary>
         public int NodeBufferSize { get; private set; }
         
         /// <summary>
-        /// Event signaled when data has been written if the reading index has caught up to the writing index
+        /// Event signaled when data has been written if the reading index has caught up to the writing index.
         /// </summary>
         protected EventWaitHandle DataExists { get; set; }
 
         /// <summary>
-        /// Event signaled when a node becomes available after reading if the writing index has caught up to the reading index
+        /// Event signaled when a node becomes available after reading if the writing index has caught up to the reading index.
         /// </summary>
         protected EventWaitHandle NodeAvailable { get; set; }
 
         /// <summary>
-        /// The offset relative to <see cref="SharedBuffer.BufferStartPtr"/> where the node header starts within the buffer region of the shared memory
+        /// The offset relative to <see cref="SharedBuffer.BufferStartPtr"/> where the node header starts within the buffer region of the shared memory.
         /// </summary>
         protected virtual long NodeHeaderOffset
         {
@@ -100,7 +102,7 @@ namespace Standard.IPC.SharedMemory
         }
             
         /// <summary>
-        /// Where the linked-list nodes are located within the buffer
+        /// Where the linked-list nodes are located within the buffer.
         /// </summary>
         protected virtual long NodeOffset
         {
@@ -111,7 +113,7 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Where the list of buffers are located within the shared memory
+        /// Where the list of buffers are located within the shared memory.
         /// </summary>
         protected virtual long NodeBufferOffset
         {
@@ -122,7 +124,7 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Provide direct access to the Node[] memory
+        /// Provide direct access to the <see cref="Node"/> array memory.
         /// </summary>
         /// <param name="i"></param>
         /// <returns></returns>
@@ -140,47 +142,51 @@ namespace Standard.IPC.SharedMemory
         #region Structures
 
         /// <summary>
-        /// Provides cursors for the circular buffer along with dimensions
+        /// Provides cursors for the circular buffer along with dimensions.
         /// </summary>
-        /// <remarks>This structure is the same size on 32-bit and 64-bit architectures.</remarks>
+        /// <remarks>
+        /// This structure is the same size on 32-bit and 64-bit architectures.
+        /// </remarks>
         [StructLayout(LayoutKind.Sequential)]
         public struct NodeHeader
         {
             /// <summary>
-            /// The index of the first unreadable node
+            /// The index of the first unreadable node.
             /// </summary>
             public volatile int ReadEnd;
 
             /// <summary>
-            /// The index of the next readable node
+            /// The index of the next readable node.
             /// </summary>
             public volatile int ReadStart;
 
             /// <summary>
-            /// The index of the first unwritable node
+            /// The index of the first unwritable node.
             /// </summary>
             public volatile int WriteEnd;
 
             /// <summary>
-            /// The index of the next writable node
+            /// The index of the next writable node.
             /// </summary>
             public volatile int WriteStart;
 
             /// <summary>
-            /// The number of nodes within the buffer
+            /// The number of nodes within the buffer.
             /// </summary>
             public int NodeCount;
 
             /// <summary>
-            /// The size of the buffer for each node
+            /// The size of the buffer for each node.
             /// </summary>
             public int NodeBufferSize;
         }
 
         /// <summary>
-        /// Represents a node within the buffer's circular linked list
+        /// Represents a node within the buffer's circular linked list.
         /// </summary>
-        /// <remarks>This structure is the same size on 32-bit and 64-bit architectures.</remarks>
+        /// <remarks>
+        /// This structure is the same size on 32-bit and 64-bit architectures.
+        /// </remarks>
         [StructLayout(LayoutKind.Sequential)]
         public struct Node
         {
@@ -223,9 +229,9 @@ namespace Standard.IPC.SharedMemory
         #endregion // Structures
 
         /// <summary>
-        /// Attempts to create the <see cref="EventWaitHandle"/> handles and initialise the node header and buffers.
+        /// Attempts to create the <see cref="EventWaitHandle"/> handles and initialize the node header and buffers.
         /// </summary>
-        /// <returns>True if the events and nodes were initialised successfully.</returns>
+        /// <returns>`true` if the events and nodes were initialized successfully. Otherwise, `false`.</returns>
         protected override bool DoOpen()
         {
             // Create signal events
@@ -255,7 +261,7 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Initializes the node header within the shared memory. Only applicable if <see cref="SharedBuffer.IsOwnerOfSharedMemory"/> is true.
+        /// Initializes the node header within the shared memory. Only applicable if <see cref="SharedBuffer.IsOwnerOfSharedMemory"/> is `true`.
         /// </summary>
         private void InitializeNodeHeader()
         {
@@ -273,7 +279,7 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Initialize the nodes of the circular linked-list. Only applicable if <see cref="SharedBuffer.IsOwnerOfSharedMemory"/> is true.
+        /// Initialize the nodes of the circular linked-list. Only applicable if <see cref="SharedBuffer.IsOwnerOfSharedMemory"/> is `true`.
         /// </summary>
         private void InitializeLinkedListNodes()
         {
@@ -328,7 +334,7 @@ namespace Standard.IPC.SharedMemory
         /// Attempts to reserve a node from the linked-list for writing with the specified timeout.
         /// </summary>
         /// <param name="timeout">The number of milliseconds to wait if a node is not immediately available for writing.</param>
-        /// <returns>An unsafe pointer to the node if successful, otherwise null</returns>
+        /// <returns>An unsafe pointer to the node if successful. Otherwise, `null`.</returns>
         protected virtual Node* GetNodeForWriting(int timeout)
         {
             for (; ; )
@@ -356,9 +362,9 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Makes a node available for reading after writing is complete
+        /// Makes a node available for reading after writing is complete.
         /// </summary>
-        /// <param name="node">An unsafe pointer to the node to return</param>
+        /// <param name="node">An unsafe pointer to the node to return.</param>
         protected virtual void PostNode(Node* node)
         {
             // Set the write flag for this node (the node is reserved so no need for locks)
@@ -391,13 +397,15 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Writes the byte array buffer to the next available node for writing
+        /// Writes the byte array buffer to the next available node for writing.
         /// </summary>
-        /// <param name="source">Reference to the buffer to write</param>
-        /// <param name="startIndex">The index within the buffer to start writing from</param>
-        /// <param name="timeout">The maximum number of milliseconds to wait for a node to become available for writing (default 1000ms)</param>
-        /// <returns>The number of bytes written</returns>
-        /// <remarks>The maximum number of bytes that can be written is the minimum of the length of <paramref name="source"/> and <see cref="NodeBufferSize"/>.</remarks>
+        /// <param name="source">Reference to the buffer to write.</param>
+        /// <param name="startIndex">The index within the buffer to start writing from.</param>
+        /// <param name="timeout">The maximum number of milliseconds to wait for a node to become available for writing. Defaults to 1000 (ms).</param>
+        /// <returns>The number of bytes written.</returns>
+        /// <remarks>
+        /// The maximum number of bytes that can be written is the minimum of the length of <paramref name="source"/> and <see cref="NodeBufferSize"/>.
+        /// </remarks>
         public virtual int Write(byte[] source, int startIndex = 0, int timeout = 1000)
         {
             // Grab a node for writing
@@ -417,13 +425,18 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Writes the structure array buffer to the next available node for writing
+        /// Writes the structure array buffer to the next available node for writing.
         /// </summary>
-        /// <param name="source">Reference to the buffer to write</param>
-        /// <param name="startIndex">The index within the buffer to start writing from</param>
-        /// <param name="timeout">The maximum number of milliseconds to wait for a node to become available for writing (default 1000ms)</param>
-        /// <returns>The number of elements written</returns>
-        /// <remarks>The maximum number of elements that can be written is the minimum of the length of <paramref name="source"/> subtracted by <paramref name="startIndex"/> and <see cref="NodeBufferSize"/> divided by <code>FastStructure.SizeOf&gt;T&lt;()</code>.</remarks>        
+        /// <param name="source">Reference to the buffer to write.</param>
+        /// <param name="startIndex">The index within the buffer to start writing from.</param>
+        /// <param name="timeout">The maximum number of milliseconds to wait for a node to become available for writing. Defaults to 1000 (ms).</param>
+        /// <returns>The number of elements written.</returns>
+        /// <remarks><![CDATA[
+        /// The maximum number of elements that can be written can be calculated by the following formula:
+        /// ```C#
+        /// Math.Min(source - startIndex, NodeBufferSize) / FastStructure.SizeOf<T>()
+        /// ```
+        /// ]]></remarks>
         public virtual int Write<T>(T[] source, int startIndex = 0, int timeout = 1000)
             where T : struct
         {
@@ -443,13 +456,13 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Writes the structure to the next available node for writing
+        /// Writes the structure to the next available node for writing.
         /// </summary>
-        /// <typeparam name="T">The structure type to be written</typeparam>
-        /// <param name="source">The structure to be written</param>
-        /// <param name="timeout">The maximum number of milliseconds to wait for a node to become available for writing (default 1000ms)</param>
-        /// <returns>The number of bytes written - larger than 0 if successful</returns>
-        /// <exception cref="ArgumentOutOfRangeException">If the size of the <typeparamref name="T"/> structure is larger than <see cref="NodeBufferSize"/>.</exception>
+        /// <typeparam name="T">The structure type to be written.</typeparam>
+        /// <param name="source">The structure to be written.</param>
+        /// <param name="timeout">The maximum number of milliseconds to wait for a node to become available for writing. Defaults to 1000 (ms).</param>
+        /// <exception cref="ArgumentOutOfRangeException">The size of the <typeparamref name="T"/> structure is larger than <see cref="NodeBufferSize"/>.</exception>
+        /// <returns>The number of bytes written. The value is larger than zero if successful.</returns>
         public virtual int Write<T>(ref T source, int timeout = 1000)
             where T : struct
         {
@@ -474,13 +487,15 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Writes <paramref name="length"/> bytes from <paramref name="source"/> to the next available node for writing
+        /// Writes the specified number of bytes from the source to the next available node for writing.
         /// </summary>
-        /// <param name="source">Pointer to the buffer to copy</param>
-        /// <param name="timeout">The maximum number of milliseconds to wait for a node to become available (default 1000ms)</param>
-        /// <param name="length">The number of bytes to attempt to write</param>
-        /// <returns>The number of bytes written</returns>
-        /// <remarks>The maximum number of bytes that can be written is the minimum of <paramref name="length"/> and <see cref="NodeBufferSize"/>.</remarks>        
+        /// <param name="source">Pointer to the buffer to copy.</param>
+        /// <param name="timeout">The maximum number of milliseconds to wait for a node to become available. Defaults to 1000 (ms).</param>
+        /// <param name="length">The number of bytes to attempt to write.</param>
+        /// <returns>The number of bytes written.</returns>
+        /// <remarks>
+        /// The maximum number of bytes that can be written is the minimum of <paramref name="length"/> and <see cref="NodeBufferSize"/>.
+        /// </remarks>        
         public virtual int Write(IntPtr source, int length, int timeout = 1000)
         {
             // Grab a node for writing
@@ -501,12 +516,12 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Reserves a node for writing and then calls the provided <paramref name="writeFunc"/> to perform the write operation.
+        /// Reserves a node for writing and then calls the provided <see cref="Action"/> to perform the write operation.
         /// </summary>
         /// <param name="writeFunc">A function to used to write to the node's buffer. The first parameter is a pointer to the node's buffer. 
         /// The provided function should return the number of bytes written.</param>
-        /// <param name="timeout">The maximum number of milliseconds to wait for a node to become available for writing (default 1000ms)</param>
-        /// <returns>The number of bytes written</returns>
+        /// <param name="timeout">The maximum number of milliseconds to wait for a node to become available for writing. Defaults to 1000 (ms).</param>
+        /// <returns>The number of bytes written.</returns>
         public virtual int Write(Func<IntPtr, int> writeFunc, int timeout = 1000)
         {
             // Grab a node for writing
@@ -533,7 +548,7 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Returns a copy of the shared memory header
+        /// Returns a copy of the shared memory header.
         /// </summary>
         public NodeHeader ReadNodeHeader()
         {
@@ -541,10 +556,10 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Attempts to reserve a node from the linked-list for reading with the specified timeout
+        /// Attempts to reserve a node from the linked-list for reading with the specified timeout.
         /// </summary>
         /// <param name="timeout">The number of milliseconds to wait if a node is not immediately available for reading.</param>
-        /// <returns>An unsafe pointer to the node if successful, otherwise null</returns>
+        /// <returns>If successful, an unsafe pointer to the node. Otherwise, `null`.</returns>
         protected virtual Node* GetNodeForReading(int timeout)
         {
             for (; ; )
@@ -574,7 +589,7 @@ namespace Standard.IPC.SharedMemory
         /// <summary>
         /// Returns a node to the available list of nodes for writing.
         /// </summary>
-        /// <param name="node">An unsafe pointer to the node to be returned</param>
+        /// <param name="node">An unsafe pointer to the node to be returned.</param>
         protected virtual void ReturnNode(Node* node)
         {
             // Set the finished reading flag for this node (the node is reserved so no need for locks)
@@ -609,13 +624,16 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Reads the next available node for reading into the specified byte array
+        /// Reads the next available node for reading into the specified byte array.
         /// </summary>
-        /// <param name="destination">Reference to the buffer</param>
-        /// <param name="startIndex">The index within the buffer to start writing from</param>
-        /// <param name="timeout">The maximum number of milliseconds to wait for a node to become available for reading (default 1000ms)</param>
-        /// <returns>The number of bytes read</returns>
-        /// <remarks>The maximum number of bytes that can be read is the minimum of the length of <paramref name="destination"/> subtracted by <paramref name="startIndex"/> and <see cref="NodeBufferSize"/>.</remarks>
+        /// <param name="destination">Reference to the buffer.</param>
+        /// <param name="startIndex">The index within the buffer to start writing from.</param>
+        /// <param name="timeout">The maximum number of milliseconds to wait for a node to become available for reading. Defaults to 1000 (ms).</param>
+        /// <returns>The number of bytes read.</returns>
+        /// <remarks>
+        /// The maximum number of bytes that can be read is the minimum of the length of <paramref name="destination"/> subtracted 
+        /// by <paramref name="startIndex"/> and <see cref="NodeBufferSize"/>.
+        /// </remarks>
         public virtual int Read(byte[] destination, int startIndex = 0, int timeout = 1000)
         {
             Node* node = GetNodeForReading(timeout);
@@ -635,14 +653,20 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Reads the next available node for reading into the specified structure array
+        /// Reads the next available node for reading into the specified structure array.
         /// </summary>
-        /// <typeparam name="T">The structure type to be read</typeparam>
-        /// <param name="destination">Reference to the buffer</param>
+        /// <typeparam name="T">The structure type to be read.</typeparam>
+        /// <param name="destination">Reference to the buffer.</param>
         /// <param name="startIndex">The index within the destination to start writing to.</param>
-        /// <param name="timeout">The maximum number of milliseconds to wait for a node to become available for reading (default 1000ms)</param>
-        /// <returns>The number of elements read into destination</returns>
-        /// <remarks>The maximum number of elements that can be read is the minimum of the length of <paramref name="destination"/> subtracted by <paramref name="startIndex"/> and <see cref="Node.AmountWritten"/> divided by <code>FastStructure.SizeOf&gt;T&lt;()</code>.</remarks>
+        /// <param name="timeout">The maximum number of milliseconds to wait for a node to become available for reading. Defaults to 1000 (ms).</param>
+        /// <returns>The number of elements read into destination.</returns>
+        /// <remarks><![CDATA[
+        /// The maximum number of elements that can be read can be determined by the following formula:
+        /// 
+        /// ```C#
+        /// Math.Min(destination.Length - startIndex, Node.AmountWritten / FastStructure.SizeOf<T>())
+        /// ```
+        /// ]]></remarks>
         public virtual int Read<T>(T[] destination, int startIndex = 0, int timeout = 1000)
             where T : struct
         {
@@ -661,13 +685,13 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Reads the next available node for reading into the a structure
+        /// Reads the next available node for reading into the a structure.
         /// </summary>
-        /// <typeparam name="T">The structure type to be read</typeparam>
-        /// <param name="destination">The resulting structure if successful otherwise default(T)</param>
-        /// <param name="timeout">The maximum number of milliseconds to wait for a node to become available for reading (default 1000ms)</param>
-        /// <returns>The number of bytes read</returns>
+        /// <typeparam name="T">The structure type to be read.</typeparam>
+        /// <param name="destination">The resulting structure, if successful. Otherwise, `default(T)`.</param>
+        /// <param name="timeout">The maximum number of milliseconds to wait for a node to become available for reading. Defaults to 1000 (ms).</param>
         /// <exception cref="ArgumentOutOfRangeException">If the size of <typeparamref name="T"/> is larger than <see cref="NodeBufferSize"/>.</exception>
+        /// <returns>The number of bytes read.</returns>
         public virtual int Read<T>(out T destination, int timeout = 1000)
             where T: struct
         {
@@ -693,13 +717,15 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Reads the next available node for reading into the specified memory location with the specified length
+        /// Reads the next available node for reading into the specified memory location with the specified length.
         /// </summary>
-        /// <param name="destination">Pointer to the buffer</param>
-        /// <param name="length">The maximum length of <paramref name="destination"/></param>
-        /// <param name="timeout">The maximum number of milliseconds to wait for a node to become available for reading (default 1000ms)</param>
-        /// <returns>The number of bytes read</returns>
-        /// <remarks>The maximum number of bytes that can be read is the minimum of the <paramref name="length"/> and <see cref="Node.AmountWritten"/>.</remarks>
+        /// <param name="destination">Pointer to the buffer.</param>
+        /// <param name="length">The maximum length of <paramref name="destination"/>.</param>
+        /// <param name="timeout">The maximum number of milliseconds to wait for a node to become available for reading. Defaults to 1000 (ms).</param>
+        /// <returns>The number of bytes read.</returns>
+        /// <remarks>
+        /// The maximum number of bytes that can be read is the minimum of the <paramref name="length"/> and <see cref="Node.AmountWritten"/>.
+        /// </remarks>
         public virtual int Read(IntPtr destination, int length, int timeout = 1000)
         {
             Node* node = GetNodeForReading(timeout);
@@ -720,12 +746,12 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Reserves a node for reading and then calls the provided <paramref name="readFunc"/> to perform the read operation.
+        /// Reserves a node for reading and then calls the provided <see cref="Action"/> to perform the read operation.
         /// </summary>
         /// <param name="readFunc">A function used to read from the node's buffer. The first parameter is a pointer to the node's buffer. 
         /// The provided function should return the number of bytes read.</param>
-        /// <param name="timeout">The maximum number of milliseconds to wait for a node to become available for reading (default 1000ms)</param>
-        /// <returns>The number of bytes read</returns>
+        /// <param name="timeout">The maximum number of milliseconds to wait for a node to become available for reading. Defaults to 1000 (ms).</param>
+        /// <returns>The number of bytes read.</returns>
         public virtual int Read(Func<IntPtr, int> readFunc, int timeout = 1000)
         {
             Node* node = GetNodeForReading(timeout);

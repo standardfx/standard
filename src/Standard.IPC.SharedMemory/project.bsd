@@ -11,13 +11,8 @@ compiler {
 	# CS0169: field is never used
 	# CS0649: field is never assigned to, and will always have its default value null
 	# CS1574: xml cref attribute cannot be resolved (SerializationException) -- netstandard1.3
-    nowarn = ['CS0414', 'CS0169', 'CS0649', 'CS1574']
-}
-
-dependencies {
-	'Standard.Runtime.Win32API' {
-		type = 'project'
-	}
+    #nowarn = ['CS0414', 'CS0169', 'CS0649', 'CS1574']
+    noWarn = ['CS0414', 'CS0169', 'CS0649']
 }
 
 frameworks {

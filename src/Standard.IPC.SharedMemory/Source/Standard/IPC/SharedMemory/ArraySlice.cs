@@ -6,9 +6,9 @@ using System.Security.Permissions;
 namespace Standard.IPC.SharedMemory
 {
     /// <summary>
-    /// Like <see cref="T:System.ArraySegment`1"/>, but works with <see cref="T:System.Collections.Generic.IList`1"/> not just an array.
+    /// Like <see cref="ArraySegment{T}"/>, but works with <see cref="IList{T}"/>, not just an array.
     /// </summary>
-    /// <typeparam name="T">The type that is stored in the elements of the <see cref="T:System.Collections.Generic.IList`1"/>.</typeparam>
+    /// <typeparam name="T">The type that is stored in the elements of the <see cref="IList{T}"/>.</typeparam>
     [PermissionSet(SecurityAction.LinkDemand)]
     [PermissionSet(SecurityAction.InheritanceDemand)]
     public struct ArraySlice<T> : IList<T>
@@ -18,10 +18,10 @@ namespace Standard.IPC.SharedMemory
         private readonly int _count;
 
         /// <summary>
-        /// No slicing. Just mirror the list.
+        /// Initializes a new instance of the <see cref="ArraySlice{T}"/> class without slicing. The list is mirrored.
         /// </summary>
         /// <param name="list">The list to be sliced.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="list"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="list"/> is `null`.</exception>
         public ArraySlice(IList<T> list)
         {
             if (list == null)
@@ -33,14 +33,14 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Create a slice of a list (virtually).
+        /// Initializes a new instance of the <see cref="ArraySlice{T}"/> class virtually.
         /// </summary>
         /// <param name="list">The list to be sliced.</param>
         /// <param name="offset">The offset into <paramref name="list"/> to start the slice.</param>
         /// <param name="count">The number of elements to be included in this slice.</param>
-        /// <exception cref="ArgumentNullException"><paramref name="list"/> is null.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="list"/> is `null`.</exception>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="offset"/> or <paramref name="count"/> are less than zero.</exception>
-        /// <exception cref="ArgumentException">The number of elements in <paramref name="list"/> - <paramref name="offset"/> is not less than <paramref name="count"/>.</exception>
+        /// <exception cref="ArgumentException">The number of elements in <paramref name="list"/> less <paramref name="offset"/> must be greater than <paramref name="count"/>.</exception>
         public ArraySlice(IList<T> list, int offset, int count)
         {
             if (list == null)
@@ -66,7 +66,7 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// The offset into the <see cref="T:ArraySlice`1.List"/>.
+        /// The offset into the <see cref="ArraySlice{T}.List"/>.
         /// </summary>
         public int Offset
         {
@@ -84,7 +84,7 @@ namespace Standard.IPC.SharedMemory
         /// <summary>
         /// Used to determine uniqueness.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A unique number to determine this instance.</returns>
         public override int GetHashCode()
         {
             return null == _list
@@ -96,7 +96,7 @@ namespace Standard.IPC.SharedMemory
         /// Indicates whether this instance and a specified object are equal.
         /// </summary>
         /// <param name="obj">Another object to compare to.</param>
-        /// <returns>true if <paramref name="obj" /> and this instance are the same type and represent the same value; otherwise, false.</returns>
+        /// <returns>`true` if <paramref name="obj" /> and this instance are the same type and represent the same value. Othewise, `false`.</returns>
         public override bool Equals(Object obj)
         {
             if (obj is ArraySlice<T>)
@@ -109,25 +109,29 @@ namespace Standard.IPC.SharedMemory
         /// Indicates whether this instance and a specified object are equal.
         /// </summary>
         /// <param name="obj">Another object to compare to.</param>
-        /// <returns>true if <paramref name="obj" /> and this instance are the same type and represent the same value; otherwise, false.</returns>
+        /// <returns>`true` if <paramref name="obj" /> and this instance are the same type and represent the same value. Otherwise, `false`.</returns>
         public bool Equals(ArraySlice<T> obj)
         {
             return obj._list == _list && obj._offset == _offset && obj._count == _count;
         }
 
-        /// <summary>Indicates whether this instance and a specified object are equal.</summary>
+        /// <summary>
+        /// Indicates whether this instance and a specified object are equal.
+        /// </summary>
         /// <param name="a">The first object being compared.</param>
         /// <param name="b">The second object being compared.</param>
-        /// <returns>true if both objectscare equal, otherwise, false.</returns>
+        /// <returns>`true` if both objects are equal. Otherwise, `false`.</returns>
         public static bool operator ==(ArraySlice<T> a, ArraySlice<T> b)
         {
             return a.Equals(b);
         }
 
-        /// <summary>Indicates whether this instance and a specified object are not equal.</summary>
+        /// <summary>
+        /// Indicates whether this instance and a specified object are not equal.
+        /// </summary>
         /// <param name="a">The first object being compared.</param>
         /// <param name="b">The second object being compared.</param>
-        /// <returns>true if both objects are not equal, otherwise, false.</returns>
+        /// <returns>`true` if both objects are not equal. Otherwise, `false`.</returns>
         public static bool operator !=(ArraySlice<T> a, ArraySlice<T> b)
         {
             return !(a == b);
@@ -138,9 +142,9 @@ namespace Standard.IPC.SharedMemory
         /// <summary>
         /// Gets or sets the element at the specified index.
         /// </summary>
-        /// <param name="index">The zero-based index of the element to get or set is not a valid index in the <see cref="T:System.Collections.Generic.IList`1" />.</param>
-        /// <exception cref="T:System.ArgumentOutOfRangeException">index is less than 0 or has exceededthe number of items.</exception>
-        /// <exception cref="T:System.NotSupportedException">The property is set and the <see cref="T:System.Collections.Generic.IList`1" /> is read-only.</exception>
+        /// <param name="index">The zero-based index of the element to get or set is not a valid index in the <see cref="IList{T}" />.</param>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="index"/> is less than 0 or has exceeded the number of items.</exception>
+        /// <exception cref="NotSupportedException">The property is set and the <see cref="IList{T}" /> is read-only.</exception>
         /// <returns>The element at the specified index.</returns>
         public T this[int index]
         {
@@ -166,9 +170,11 @@ namespace Standard.IPC.SharedMemory
             }
         }
 
-        /// <summary>Determines the index of a specific item in the <see cref="T:System.Collections.Generic.IList`1" />.</summary>
-        /// <returns>The index of <paramref name="item" /> if found in the list; otherwise, -1.</returns>
-        /// <param name="item">The object to locate in the <see cref="T:System.Collections.Generic.IList`1" />.</param>
+        /// <summary>
+        /// Determines the index of a specific item in the <see cref="IList{T}" />.
+        /// </summary>
+        /// <param name="item">The object to locate in the <see cref="IList{T}" />.</param>
+        /// <returns>If found, the index position of <paramref name="item"/>. Otherwise, -1.</returns>
         public int IndexOf(T item)
         {
             if (_list == null)
@@ -182,11 +188,17 @@ namespace Standard.IPC.SharedMemory
             return -1;
         }
 
+        /// <summary>
+        /// This method is not implemented.
+        /// </summary>
         void IList<T>.Insert(int index, T item)
         {
             throw new NotSupportedException();
         }
 
+        /// <summary>
+        /// This method is not implemented.
+        /// </summary>
         void IList<T>.RemoveAt(int index)
         {
             throw new NotSupportedException();
@@ -196,6 +208,9 @@ namespace Standard.IPC.SharedMemory
 
         #region ICollection<T>
 
+        /// <summary>
+        /// This property always returns `true`.
+        /// </summary>
         bool ICollection<T>.IsReadOnly
         {
             get
@@ -206,16 +221,27 @@ namespace Standard.IPC.SharedMemory
             }
         }
 
+        /// <summary>
+        /// This method is not implemented.
+        /// </summary>
         void ICollection<T>.Add(T item)
         {
             throw new NotSupportedException();
         }
 
+        /// <summary>
+        /// This method is not implemented.
+        /// </summary>
         void ICollection<T>.Clear()
         {
             throw new NotSupportedException();
         }
 
+        /// <summary>
+        /// Determines whether the collection contains the item specified.
+        /// </summary>
+        /// <param name="item">The item to check.</param>
+        /// <returns>`true` if <paramref name="item"/> exists in the collection. Otherwise, `false`.</returns>
         bool ICollection<T>.Contains(T item)
         {
             if (_list == null)
@@ -224,11 +250,17 @@ namespace Standard.IPC.SharedMemory
             return IndexOf(item) >= 0;
         }
 
+        /// <summary>
+        /// This method is not implemented.
+        /// </summary>
         void ICollection<T>.CopyTo(T[] array, int arrayIndex)
         {
             throw new NotSupportedException();
         }
 
+        /// <summary>
+        /// This method is not implemented.
+        /// </summary>
         bool ICollection<T>.Remove(T item)
         {
             throw new NotSupportedException();
@@ -238,6 +270,10 @@ namespace Standard.IPC.SharedMemory
 
         #region IEnumerable<T>
 
+        /// <summary>
+        /// Returns the collection enumerator.
+        /// </summary>
+        /// <returns>The collection enumerator.</returns>
         IEnumerator<T> IEnumerable<T>.GetEnumerator()
         {
             if (_list == null)
@@ -250,6 +286,10 @@ namespace Standard.IPC.SharedMemory
 
         #region IEnumerable
 
+        /// <summary>
+        /// Returns the collection enumerator.
+        /// </summary>
+        /// <returns>The collection enumerator.</returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
             if (_list == null)

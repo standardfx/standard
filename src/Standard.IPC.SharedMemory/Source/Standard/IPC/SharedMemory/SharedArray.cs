@@ -6,7 +6,7 @@ using System.Security.Permissions;
 namespace Standard.IPC.SharedMemory
 {
     /// <summary>
-    /// A generic fixed-length shared memory array of structures with support for simple inter-process read/write synchronization.
+    /// A generic fixed-length shared memory array of structures, with support for simple inter-process read/write synchronization.
     /// </summary>
     /// <typeparam name="T">The structure type that will be stored in the elements of this fixed array buffer.</typeparam>
     [PermissionSet(SecurityAction.LinkDemand)]
@@ -17,7 +17,7 @@ namespace Standard.IPC.SharedMemory
         private int _elementSize;
 
         /// <summary>
-        /// Creates the shared memory array with the name specified by <paramref name="name"/>.
+        /// Creates the shared memory array with the specified name.
         /// </summary>
         /// <param name="name">The name of the shared memory array to be created.</param>
         /// <param name="length">The number of elements to make room for within the shared memory array.</param>
@@ -31,10 +31,13 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Opens an existing shared memory array with the name as specified by <paramref name="name"/>.
+        /// Opens an existing shared memory array with the name specified.
         /// </summary>
         /// <param name="name">The name of the shared memory array to open.</param>
-        /// <exception cref="ArgumentOutOfRangeException">If the shared memory location specified by <paramref name="name"/> does not have a <see cref="SharedBuffer.BufferSize"/> that is evenly divisible by the size of <typeparamref name="T"/>.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// The shared memory location specified by <paramref name="name"/> does not have a <see cref="SharedBuffer.BufferSize"/> that is evenly 
+        /// divisible by the size of <typeparamref name="T"/>.
+        /// </exception>
         public SharedArray(string name)
             : base(name, 0, false)
         {
@@ -44,16 +47,17 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Gets a 32-bit integer that represents the total number of elements in the <see cref="SharedArray{T}"/>
+        /// Gets a 32-bit integer that represents the total number of elements in the <see cref="SharedArray{T}"/>.
         /// </summary>
         public int Length { get; private set; }
-        
+
         /// <summary>
         /// Gets or sets the element at the specified index.
         /// </summary>
         /// <param name="index">The zero-based index of the element to get or set.</param>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="index"/> is less than 0, or <paramref name="index"/> is equal to or greater 
+        /// than <see cref="Length"/>.</exception>
         /// <returns>The element at the specified index.</returns>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="index"/> is less than 0 -or- index is equal to or greater than <see cref="Length"/>.</exception>
         public T this[int index]
         {
             get
@@ -71,7 +75,7 @@ namespace Standard.IPC.SharedMemory
         /// <summary>
         /// Perform any initialization required when opening the shared memory array.
         /// </summary>
-        /// <returns>true if successful</returns>
+        /// <returns>`true` if successful. Otherwise, `false`.</returns>
         protected override bool DoOpen()
         {
             if (!IsOwnerOfSharedMemory)
@@ -87,7 +91,7 @@ namespace Standard.IPC.SharedMemory
         #region Read/Write
 
         /// <summary>
-        /// Copy <paramref name="data"/> to the shared memory array element at index <paramref name="index"/>.
+        /// Copy <paramref name="data"/> to the shared memory array element at the specified index position.
         /// </summary>
         /// <param name="data">The data to be written.</param>
         /// <param name="index">The zero-based index of the element to set.</param>
@@ -100,12 +104,12 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Copy the elements of the array <paramref name="buffer"/> into the shared memory array starting at index <paramref name="startIndex"/>.
+        /// Copy the elements of an array into the shared memory array, starting at the index position.
         /// </summary>
         /// <param name="buffer">The source array to copy elements from.</param>
         /// <param name="startIndex">The zero-based index of the shared memory array element to begin writing to.</param>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="startIndex"/> is less than 0 -or- length of <paramref name="buffer"/> + <paramref name="startIndex"/> is greater than <see cref="Length"/>.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="buffer"/> must not be null</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="startIndex"/> is less than 0, or the total length of <paramref name="buffer"/> and <paramref name="startIndex"/> is greater than <see cref="Length"/>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="buffer"/> is `null`.</exception>
         public void Write(T[] buffer, int startIndex = 0)
         {
             if (buffer == null)
@@ -118,12 +122,12 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Reads a single element from the shared memory array into <paramref name="data"/> located at <paramref name="index"/>.
+        /// Reads a single element from the shared memory array into an element located at the specified index position.
         /// </summary>
         /// <param name="data">The element at the specified index.</param>
         /// <param name="index">The zero-based index of the element to get.</param>
         /// <returns>The element at the specified index.</returns>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="index"/> is less than 0 -or- index is equal to or greater than <see cref="Length"/>.</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="index"/> is less than 0, or <paramref name="index"/> is equal to or greater than <see cref="Length"/>.</exception>
         public void Read(out T data, int index)
         {
             if (index > Length - 1 || index < 0)
@@ -133,12 +137,13 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Reads buffer.Length elements from the shared memory array into <paramref name="buffer"/> starting at the shared memory array element located at <paramref name="startIndex"/>.
+        /// Reads a number of elements from the shared memory array into a buffer array <paramref name="buffer"/>, starting from the specified index position.
         /// </summary>
         /// <param name="buffer">The destination array to copy the elements into.</param>
         /// <param name="startIndex">The zero-based index of the shared memory array element to begin reading from.</param>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="startIndex"/> is less than 0 -or- length of <paramref name="buffer"/> + <paramref name="startIndex"/> is greater than <see cref="Length"/>.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="buffer"/> must not be null</exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="startIndex"/> is less than 0, or the total length of <paramref name="buffer"/> and 
+        /// <paramref name="startIndex"/> is greater than <see cref="Length"/>.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="buffer"/> is `null`.</exception>
         public void CopyTo(T[] buffer, int startIndex = 0)
         {
             if (buffer == null)
@@ -199,8 +204,8 @@ namespace Standard.IPC.SharedMemory
         /// <summary>
         /// Checks if the list contains the specified item.
         /// </summary>
-        /// <param name="item"></param>
-        /// <returns>True if found</returns>
+        /// <param name="item">The item to check.</param>
+        /// <returns>`true` if <paramref name="item"/> exists in the list. Otherwise, `false`.</returns>
         public bool Contains(T item)
         {
             return IndexOf(item) >= 0;
@@ -217,16 +222,15 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// The number of elements in the array
+        /// Returns the number of elements in the array.
         /// </summary>
         public int Count
         {
             get { return Length; }
         }
 
-
         /// <summary>
-        /// The elements are not read-only
+        /// The elements are not read-only. This property will always return `true`.
         /// </summary>
         public bool IsReadOnly
         {
@@ -236,8 +240,8 @@ namespace Standard.IPC.SharedMemory
         /// <summary>
         /// Return the index of the specified item.
         /// </summary>
-        /// <param name="item"></param>
-        /// <returns>The index of the item if found, otherwise -1.</returns>
+        /// <param name="item">The item to check.</param>
+        /// <returns>The index position of the item if found, otherwise -1.</returns>
         public int IndexOf(T item)
         {
             for (int i = 0; i < Count; i++)

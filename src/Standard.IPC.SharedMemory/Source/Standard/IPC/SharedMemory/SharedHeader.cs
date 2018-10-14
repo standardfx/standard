@@ -1,8 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 
 namespace Standard.IPC.SharedMemory
 {
@@ -17,18 +14,26 @@ namespace Standard.IPC.SharedMemory
     public struct SharedHeader
     {
         /// <summary>
-        /// The total size of the buffer including <see cref="SharedHeader"/>, i.e. <code>BufferSize + Marshal.SizeOf(typeof(SharedMemory.SharedHeader))</code>.
-        /// </summary>
-        public long SharedMemorySize;
-
-        /// <summary>
-        /// Flag indicating whether the owner of the buffer has closed its <see cref="System.IO.MemoryMappedFiles.MemoryMappedFile"/> and <see cref="System.IO.MemoryMappedFiles.MemoryMappedViewAccessor"/>.
-        /// </summary>
-        public volatile int Shutdown;
-
-        /// <summary>
         /// Pad to 16-bytes.
         /// </summary>
         private int _padding0;
+
+        /// <summary>
+        /// The total size of the buffer including <see cref="SharedHeader"/>.
+        /// </summary>
+        /// <remarks>
+        /// The size is calculated using the following formula:
+        /// 
+        /// ```C#
+        /// BufferSize + Marshal.SizeOf(typeof(SharedMemory.SharedHeader))
+        /// ```
+        /// </remarks>
+        public long SharedMemorySize;
+
+        /// <summary>
+        /// Flag indicating whether the owner of the buffer has closed its <see cref="System.IO.MemoryMappedFiles.MemoryMappedFile"/> 
+        /// and <see cref="System.IO.MemoryMappedFiles.MemoryMappedViewAccessor"/>.
+        /// </summary>
+        public volatile int Shutdown;
     }
 }

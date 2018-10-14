@@ -1,9 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
 using System.Security.Permissions;
-using System.Text;
 using System.Threading;
 
 namespace Standard.IPC.SharedMemory
@@ -36,9 +32,10 @@ namespace Standard.IPC.SharedMemory
         /// <summary>
         /// Create a new <see cref="LockableBuffer"/> instance with the specified name and buffer size.
         /// </summary>
-        /// <param name="name">The name of the shared memory</param>
+        /// <param name="name">The name of the shared memory.</param>
         /// <param name="bufferSize">The buffer size in bytes.</param>
-        /// <param name="ownsSharedMemory">Whether or not the current instance owns the shared memory. If true a new shared memory will be created and initialised otherwise an existing one is opened.</param>
+        /// <param name="ownsSharedMemory">Whether or not the current instance owns the shared memory. If `true`, a new shared memory will be created and 
+        /// initialized. Otherwise, an existing one is opened.</param>
         protected LockableBuffer(string name, long bufferSize, bool ownsSharedMemory)
             : base(name, bufferSize, ownsSharedMemory)
         {
@@ -47,10 +44,13 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// The Read/Write operation timeout in milliseconds (to prevent deadlocks). Defaults to 100ms and must be larger than -1.
-        /// If a Read or Write operation's WaitEvent does not complete within this timeframe a <see cref="TimeoutException"/> will be thrown.
-        /// If using AcquireReadLock/ReleaseReadLock and AcquireWriteLock/ReleaseWriteLock correctly this timeout will never occur.
+        /// The read/write operation timeout in milliseconds (to prevent deadlocks). Defaults to 100ms and must be larger than -1.
         /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">A read or write operation's <see cref="ReadWaitEvent"/> or <see cref="WriteWaitEvent"/> did not complete with the timeframe specified.</exception>
+        /// <remarks>
+        /// To avoid timeout errors, use <see cref="AcquireReadLock(int)"/> and <see cref="ReleaseReadLock"/>, or 
+        /// <see cref="AcquireWriteLock(int)"/> and <see cref="ReleaseWriteLock"/>.
+        /// </remarks>
         public virtual int ReadWriteTimeout
         {
             get 
@@ -67,13 +67,17 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Blocks the current thread until it is able to acquire a read lock. If successful all subsequent writes will be blocked until after a call to <see cref="ReleaseReadLock"/>.
+        /// Blocks the current thread until it is able to acquire a read lock. If successful, all subsequent writes will be blocked until after a 
+        /// call to <see cref="ReleaseReadLock"/>.
         /// </summary>
-        /// <param name="millisecondsTimeout">The number of milliseconds to wait, or <see cref="System.Threading.Timeout.Infinite" /> (-1) to wait indefinitely.</param>
-        /// <returns>true if the read lock was able to be acquired, otherwise false.</returns>
-        /// <exception cref="System.ArgumentOutOfRangeException"><paramref name="millisecondsTimeout"/> is a negative number other than -1, which represents an infinite time-out.</exception>
-        /// <remarks>If <paramref name="millisecondsTimeout"/> is <see cref="System.Threading.Timeout.Infinite" /> (-1), then attempting to acquire a read lock after acquiring a write lock on the same thread will result in a deadlock.</remarks>
-        public bool AcquireReadLock(int millisecondsTimeout = System.Threading.Timeout.Infinite)
+        /// <param name="millisecondsTimeout">The number of milliseconds to wait, or <see cref="Timeout.Infinite" /> to wait indefinitely.</param>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="millisecondsTimeout"/> is a negative number other than -1, which represents an infinite time-out.</exception>
+        /// <returns>`true` if the read lock was acquired successfully. Otherwise, `false`.</returns>
+        /// <remarks>
+        /// If <paramref name="millisecondsTimeout"/> is <see cref="Timeout.Infinite" />, then attempting to acquire a read lock after acquiring a write lock 
+        /// on the same thread will result in a deadlock.
+        /// </remarks>
+        public bool AcquireReadLock(int millisecondsTimeout = Timeout.Infinite)
         {
             if (!ReadWaitEvent.WaitOne(millisecondsTimeout))
                 return false;
@@ -91,13 +95,17 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Blocks the current thread until it is able to acquire a write lock. If successful all subsequent reads will be blocked until after a call to <see cref="ReleaseWriteLock"/>.
+        /// Blocks the current thread until it is able to acquire a write lock. If successful, all subsequent reads will be blocked until after a 
+        /// call to <see cref="ReleaseWriteLock"/>.
         /// </summary>
-        /// <param name="millisecondsTimeout">The number of milliseconds to wait, or System.Threading.Timeout.Infinite (-1) to wait indefinitely.</param>
+        /// <param name="millisecondsTimeout">The number of milliseconds to wait, or <see cref="Timeout.Infinite"/> to wait indefinitely.</param>
         /// <returns>true if the write lock was able to be acquired, otherwise false.</returns>
-        /// <exception cref="System.ArgumentOutOfRangeException"><paramref name="millisecondsTimeout"/> is a negative number other than -1, which represents an infinite time-out.</exception>
-        /// <remarks>If <paramref name="millisecondsTimeout"/> is <see cref="System.Threading.Timeout.Infinite" /> (-1), then attempting to acquire a write lock after acquiring a read lock on the same thread will result in a deadlock.</remarks>
-        public bool AcquireWriteLock(int millisecondsTimeout = System.Threading.Timeout.Infinite)
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="millisecondsTimeout"/> is a negative number other than -1, which represents an infinite time-out.</exception>
+        /// <remarks>
+        /// If <paramref name="millisecondsTimeout"/> is <see cref="Timeout.Infinite" />, then attempting to acquire a write lock after acquiring a read 
+        /// lock on the same thread will result in a deadlock.
+        /// </remarks>
+        public bool AcquireWriteLock(int millisecondsTimeout = Timeout.Infinite)
         {
             if (!WriteWaitEvent.WaitOne(millisecondsTimeout))
                 return false;
@@ -115,7 +123,8 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Prevents write operations from deadlocking by throwing a TimeoutException if the WriteWaitEvent is not available within <see cref="ReadWriteTimeout"/> milliseconds
+        /// Prevents write operations from deadlocking by throwing a <see cref="TimeoutException"/> if <see cref="WriteWaitEvent"/> is not available 
+        /// within <see cref="ReadWriteTimeout"/>.
         /// </summary>
         private void WriteWait()
         {
@@ -124,10 +133,10 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Writes an instance of <typeparamref name="T"/> into the buffer
+        /// Writes an instance of <typeparamref name="T"/> into the buffer.
         /// </summary>
-        /// <typeparam name="T">A structure type</typeparam>
-        /// <param name="data">A reference to an instance of <typeparamref name="T"/> to be written</param>
+        /// <typeparam name="T">A structure type.</typeparam>
+        /// <param name="data">A reference to an instance of <typeparamref name="T"/> to be written.</param>
         /// <param name="bufferPosition">The offset within the buffer region of the shared memory to write to.</param>
         protected override void Write<T>(ref T data, long bufferPosition = 0)
         {
@@ -136,9 +145,9 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Writes an array of <typeparamref name="T"/> into the buffer
+        /// Writes an array of <typeparamref name="T"/> into the buffer.
         /// </summary>
-        /// <typeparam name="T">A structure type</typeparam>
+        /// <typeparam name="T">A structure type.</typeparam>
         /// <param name="buffer">An array of <typeparamref name="T"/> to be written. The length of this array controls the number of elements to be written.</param>
         /// <param name="bufferPosition">The offset within the buffer region of the shared memory to write to.</param>
         protected override void Write<T>(T[] buffer, long bufferPosition = 0)
@@ -148,10 +157,10 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Writes <paramref name="length"/> bytes from the <paramref name="ptr"/> into the shared memory buffer.
+        /// Writes the specified number of bytes from the pointer position into the shared memory buffer.
         /// </summary>
-        /// <param name="ptr">A managed pointer to the memory location to be copied into the buffer</param>
-        /// <param name="length">The number of bytes to be copied</param>
+        /// <param name="ptr">A managed pointer to the memory location to be copied into the buffer.</param>
+        /// <param name="length">The number of bytes to be copied.</param>
         /// <param name="bufferPosition">The offset within the buffer region of the shared memory to write to.</param>
         protected override void Write(IntPtr ptr, int length, long bufferPosition = 0)
         {
@@ -160,9 +169,10 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Prepares an IntPtr to the buffer position and calls <paramref name="writeFunc"/> to perform the writing.
+        /// Prepares an <see cref="IntPtr"/> to the buffer position and calls an <see cref="Action"/> to perform the writing.
         /// </summary>
-        /// <param name="writeFunc">A function used to write to the buffer. The IntPtr parameter is a pointer to the buffer offset by <paramref name="bufferPosition"/>.</param>
+        /// <param name="writeFunc">A function used to write to the buffer. The <see cref="IntPtr"/> parameter is a pointer to the buffer 
+        /// offset by <paramref name="bufferPosition"/>.</param>
         /// <param name="bufferPosition">The offset within the buffer region to start writing from.</param>
         protected override void Write(Action<IntPtr> writeFunc, long bufferPosition = 0)
         {
@@ -171,7 +181,8 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Prevents read operations from deadlocking by throwing a TimeoutException if the ReadWaitEvent is not available within <see cref="ReadWriteTimeout"/> milliseconds
+        /// Prevents read operations from deadlocking by throwing a <see cref="TimeoutException"/> if <see cref="ReadWaitEvent"/> is not available
+        /// within <see cref="ReadWriteTimeout"/>.
         /// </summary>
         private void ReadWait()
         {
@@ -180,10 +191,10 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Reads an instance of <typeparamref name="T"/> from the buffer
+        /// Reads an instance of <typeparamref name="T"/> from the buffer.
         /// </summary>
-        /// <typeparam name="T">A structure type</typeparam>
-        /// <param name="data">Output parameter that will contain the value read from the buffer</param>
+        /// <typeparam name="T">A structure type.</typeparam>
+        /// <param name="data">Output parameter that will contain the value read from the buffer.</param>
         /// <param name="bufferPosition">The offset within the buffer region of the shared memory to read from.</param>
         protected override void Read<T>(out T data, long bufferPosition = 0)
         {
@@ -192,9 +203,9 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Reads an array of <typeparamref name="T"/> from the buffer
+        /// Reads an array of <typeparamref name="T"/> from the buffer.
         /// </summary>
-        /// <typeparam name="T">A structure type</typeparam>
+        /// <typeparam name="T">A structure type.</typeparam>
         /// <param name="buffer">Array that will contain the values read from the buffer. The length of this array controls the number of elements to read.</param>
         /// <param name="bufferPosition">The offset within the buffer region of the shared memory to read from.</param>
         protected override void Read<T>(T[] buffer, long bufferPosition = 0)
@@ -204,10 +215,10 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Reads <paramref name="length"/> bytes into the memory location <paramref name="destination"/> from the shared memory buffer.
+        /// Reads the specified number of bytes from the shared memory buffer into a memory location.
         /// </summary>
-        /// <param name="destination">A managed pointer to the memory location to copy data into from the buffer</param>
-        /// <param name="length">The number of bytes to be copied</param>
+        /// <param name="destination">A managed pointer to the memory location to copy data into from the buffer.</param>
+        /// <param name="length">The number of bytes to be copied.</param>
         /// <param name="bufferPosition">The offset within the buffer region of the shared memory to read from.</param>
         protected override void Read(IntPtr destination, int length, long bufferPosition = 0)
         {
@@ -216,9 +227,10 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Prepares an IntPtr to the buffer position and calls <paramref name="readFunc"/> to perform the reading.
+        /// Prepares an <see cref="IntPtr"/> to the buffer position and calls an <see cref="Action"/> to perform the reading.
         /// </summary>
-        /// <param name="readFunc">A function used to read from the buffer. The IntPtr parameter is a pointer to the buffer offset by <paramref name="bufferPosition"/>.</param>
+        /// <param name="readFunc">A function used to read from the buffer. The <see cref="IntPtr"/> parameter is a pointer to the buffer 
+        /// offset by <paramref name="bufferPosition"/>.</param>
         /// <param name="bufferPosition">The offset within the buffer region of the shared memory to read from.</param>
         protected override void Read(Action<IntPtr> readFunc, long bufferPosition = 0)
         {
@@ -229,9 +241,9 @@ namespace Standard.IPC.SharedMemory
         #region IDisposable
 
         /// <summary>
-        /// IDisposable pattern
+        /// Implements the <see cref="IDisposable"/> pattern to dispose of managed/unmanaged resources.
         /// </summary>
-        /// <param name="disposeManagedResources">true to release managed resources</param>
+        /// <param name="disposeManagedResources">`true` to dispose both managed and unmanaged resources. Otherwise, `false` to dispose unmanaged resources only.</param>
         protected override void Dispose(bool disposeManagedResources)
         {
             if (disposeManagedResources)

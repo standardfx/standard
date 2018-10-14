@@ -1,12 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.IO.MemoryMappedFiles;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Permissions;
-using System.Text;
 using System.Threading;
-using Standard.Win32;
 
 namespace Standard.IPC.SharedMemory
 {
@@ -19,27 +15,27 @@ namespace Standard.IPC.SharedMemory
     public abstract unsafe class SharedBuffer : IDisposable
     {
         /// <summary>
-        /// Memory mapped file
+        /// A <see cref="MemoryMappedFile"/> instance.
         /// </summary>
         protected MemoryMappedFile Mmf;
 
         /// <summary>
-        /// Memory mapped view
+        /// A <see cref="MemoryMappedViewAccessor"/> instance.
         /// </summary>
         protected MemoryMappedViewAccessor View;
 
         /// <summary>
-        /// Pointer to the memory mapped view
+        /// Pointer to the memory mapped view.
         /// </summary>
         protected byte* ViewPtr = null;
 
         /// <summary>
-        /// Pointer to the start of the buffer region of the memory mapped view
+        /// Pointer to the start of the buffer region of the memory mapped view.
         /// </summary>
         protected byte* BufferStartPtr = null;
 
         /// <summary>
-        /// Pointer to the header within shared memory
+        /// Pointer to the header within shared memory.
         /// </summary>
         protected SharedHeader* Header = null;
 
@@ -47,16 +43,22 @@ namespace Standard.IPC.SharedMemory
         /// Create a new <see cref="SharedBuffer"/> instance with the specified name and buffer size.
         /// </summary>
         /// <param name="name">The name of the shared memory</param>
-        /// <param name="bufferSize">The buffer size in bytes. The total shared memory size will be <code>Marshal.SizeOf(SharedMemory.SharedHeader) + bufferSize</code></param>
-        /// <param name="ownsSharedMemory">Whether or not the current instance owns the shared memory. If true a new shared memory will be created and initialised otherwise an existing one is opened.</param>
+        /// <param name="bufferSize">The buffer size in bytes. The total shared memory size will be <code></code></param>
+        /// <param name="ownsSharedMemory">Whether or not the current instance owns the shared memory. If `true`, a new shared memory will be created and initialized. Otherwise, an existing one is opened.</param>
         /// <remarks>
-        /// <para>The maximum total shared memory size is dependent upon the system and current memory fragmentation.</para>
-        /// <para>The shared memory layout on 32-bit and 64-bit is:<br />
-        /// <code>
-        /// |       Header       |    Buffer    |<br />
-        /// |      16-bytes      |  bufferSize  |
-        /// </code>
-        /// </para>
+        /// The total shared memory size will be calculated by the following formula:
+        /// 
+        /// ```C#
+        /// Marshal.SizeOf(SharedMemory.SharedHeader) + bufferSize
+        /// ```
+        /// 
+        /// The maximum total shared memory size is dependent upon the system and current memory fragmentation.
+        /// 
+        /// The shared memory layout on 32-bit and 64-bit architectures is:
+        /// 
+        /// | Header   | Buffer     |
+        /// |----------|------------|
+        /// | 16 bytes | bufferSize |
         /// </remarks>
         protected SharedBuffer(string name, long bufferSize, bool ownsSharedMemory)
         {
@@ -78,7 +80,7 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Destructor - for Dispose(false)
+        /// Destroys this instance of the <see cref="SharedBuffer"/> class.
         /// </summary>
         ~SharedBuffer()
         {
@@ -86,12 +88,12 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// The name of the Shared Memory instance
+        /// The name of the shared memory instance.
         /// </summary>
         public string Name { get; private set; }
         
         /// <summary>
-        /// The buffer size
+        /// The buffer size.
         /// </summary>
         public long BufferSize { get; private set; }
         
@@ -107,12 +109,12 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Indicates whether this instance owns the shared memory (i.e. creator of the shared memory)
+        /// Indicates whether this instance owns the shared memory (i.e. creator of the shared memory).
         /// </summary>
         public bool IsOwnerOfSharedMemory { get; private set; }
         
         /// <summary>
-        /// Returns true if the SharedMemory owner has/is shutting down
+        /// Returns `true` if the owner has/is shutting down.
         /// </summary>
         public bool ShuttingDown
         {
@@ -126,7 +128,7 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Where the header starts within the shared memory
+        /// Where the header starts within the shared memory.
         /// </summary>
         protected virtual long HeaderOffset
         {
@@ -137,7 +139,7 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Where the buffer is located within the shared memory
+        /// Where the buffer is located within the shared memory.
         /// </summary>
         protected virtual long BufferOffset
         {
@@ -150,11 +152,14 @@ namespace Standard.IPC.SharedMemory
         /// <summary>
         /// Creates a new or opens an existing shared memory buffer with the name of <see cref="Name"/> depending on the value of <see cref="IsOwnerOfSharedMemory"/>. 
         /// </summary>
-        /// <returns>True if the memory was successfully mapped</returns>
-        /// <remarks>If <see cref="IsOwnerOfSharedMemory"/> is true then the shared memory buffer will be created, opening will fail in this case if the shared memory already exists. Otherwise if IsOwnerOfSharedMemory is false then the shared memory buffer will be opened, which will fail if it doesn't already exist.</remarks>
-        /// <exception cref="System.IO.IOException">If trying to create a new shared memory buffer with a duplicate name as buffer owner.</exception>
-        /// <exception cref="System.IO.FileNotFoundException">If trying to open a new shared memory buffer that does not exist as a consumer of existing buffer.</exception>
-        /// <exception cref="System.ArgumentOutOfRangeException">If trying to create a new shared memory buffer with a size larger than the logical addressable space.</exception>
+        /// <exception cref="System.IO.IOException">Trying to create a new shared memory buffer with a duplicate name as buffer owner.</exception>
+        /// <exception cref="System.IO.FileNotFoundException">Trying to open a new shared memory buffer that does not exist as a consumer of existing buffer.</exception>
+        /// <exception cref="System.ArgumentOutOfRangeException">Trying to create a new shared memory buffer with a size larger than the logical addressable space.</exception>
+        /// <returns>`true` if the memory was successfully mapped. Otherwise, `false`.</returns>
+        /// <remarks>
+        /// If <see cref="IsOwnerOfSharedMemory"/> is `true`, the shared memory buffer will be created. Opening will fail in this case if the shared memory already 
+        /// exists. Otherwise, if <see cref="IsOwnerOfSharedMemory"/> is `false`, the shared memory buffer will be opened, which will fail if it doesn't already exist.
+        /// </remarks>
         protected bool Open()
         {
             Close();
@@ -224,17 +229,19 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Allows any classes that inherit from <see cref="SharedBuffer"/> to perform additional open logic. There is no need to call base.DoOpen() from these implementations.
+        /// Allows any classes that inherit from <see cref="SharedBuffer"/> to perform additional open logic. There is no need to call `base.DoOpen()` from these implementations.
         /// </summary>
-        /// <returns>True if successful, otherwise false.</returns>
-        /// <remarks>By throwing an exception or returning false, the call to <see cref="Open"/> will fail and <see cref="Close"/> will be called.</remarks>
+        /// <returns>`true` if successful. Otherwise, `false`.</returns>
+        /// <remarks>
+        /// By throwing an exception or returning false, the call to <see cref="Open"/> will fail and <see cref="Close"/> will be called.
+        /// </remarks>
         protected virtual bool DoOpen()
         {
             return true;
         }
 
         /// <summary>
-        /// Initialises the header within the shared memory. Only applicable if <see cref="IsOwnerOfSharedMemory"/> is true.
+        /// Initializes the header within the shared memory. Only applicable if <see cref="IsOwnerOfSharedMemory"/> is `true`.
         /// </summary>
         protected void InitializeHeader()
         {
@@ -248,8 +255,8 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Sets the <see cref="ShuttingDown"/> flag, and disposes of the MemoryMappedFile and MemoryMappedViewAccessor.<br />
-        /// Attempting to read/write to the buffer after closing will result in a <see cref="System.NullReferenceException"/>.
+        /// Sets the <see cref="ShuttingDown"/> flag, and disposes of the <see cref="MemoryMappedFile"/> and <see cref="MemoryMappedViewAccessor"/>.
+        /// Attempting to read/write to the buffer after closing will result in a <see cref="NullReferenceException"/>.
         /// </summary>
         public virtual void Close()
         {
@@ -282,18 +289,22 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Any classes that inherit from <see cref="SharedBuffer"/> should implement any <see cref="Close"/> logic here, <see cref="Mmf"/> and <see cref="View"/> are still active at this point. There is no need to call base.DoClose() from these classes.
+        /// Any classes that inherit from <see cref="SharedBuffer"/> should implement any <see cref="Close"/> logic here, <see cref="Mmf"/> 
+        /// and <see cref="View"/> are still active at this point. There is no need to call `base.DoClose()` from these classes.
         /// </summary>
-        /// <remarks>It is possible for <see cref="Close"/> to be called before <see cref="Open"/> has completed successfully, in this situation <see cref="DoClose"/> should fail gracefully.</remarks>
+        /// <remarks>
+        /// It is possible for <see cref="Close"/> to be called before <see cref="Open"/> has completed successfully, in this 
+        /// situation <see cref="DoClose"/> should fail gracefully.
+        /// </remarks>
         protected virtual void DoClose()
         {
         }
 
         /// <summary>
-        /// Writes an instance of <typeparamref name="T"/> into the buffer
+        /// Writes an instance of <typeparamref name="T"/> into the buffer.
         /// </summary>
-        /// <typeparam name="T">A structure type</typeparam>
-        /// <param name="source">A reference to an instance of <typeparamref name="T"/> to be written into the buffer</param>
+        /// <typeparam name="T">A structure type.</typeparam>
+        /// <param name="source">A reference to an instance of <typeparamref name="T"/> to be written into the buffer.</param>
         /// <param name="bufferPosition">The offset within the buffer region of the shared memory to write to.</param>
         protected virtual void Write<T>(ref T source, long bufferPosition = 0)
             where T : struct
@@ -302,9 +313,9 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Writes an array of <typeparamref name="T"/> into the buffer
+        /// Writes an array of <typeparamref name="T"/> into the buffer.
         /// </summary>
-        /// <typeparam name="T">A structure type</typeparam>
+        /// <typeparam name="T">A structure type.</typeparam>
         /// <param name="source">An array of <typeparamref name="T"/> to be written. The length of this array controls the number of elements to be written.</param>
         /// <param name="bufferPosition">The offset within the buffer region of the shared memory to write to.</param>
         protected virtual void Write<T>(T[] source, long bufferPosition = 0)
@@ -314,9 +325,9 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Writes an array of <typeparamref name="T"/> into the buffer
+        /// Writes an array of <typeparamref name="T"/> into the buffer.
         /// </summary>
-        /// <typeparam name="T">A structure type</typeparam>
+        /// <typeparam name="T">A structure type.</typeparam>
         /// <param name="source">An array of <typeparamref name="T"/> to be written. The length of this array controls the number of elements to be written.</param>
         /// <param name="index">The index within the array to start writing from.</param>
         /// <param name="bufferPosition">The offset within the buffer region of the shared memory to write to.</param>
@@ -327,10 +338,10 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Writes an array of <typeparamref name="T"/> into the buffer
+        /// Writes an array of <typeparamref name="T"/> into the buffer.
         /// </summary>
-        /// <typeparam name="T">A structure type</typeparam>
-        /// <param name="source">The source data to be written to the buffer</param>
+        /// <typeparam name="T">A structure type.</typeparam>
+        /// <param name="source">The source data to be written to the buffer.</param>
         /// <param name="index">The start index within <paramref name="source"/>.</param>
         /// <param name="count">The number of elements to write.</param>
         /// <param name="bufferPosition">The offset within the buffer region of the shared memory to write to.</param>
@@ -343,8 +354,8 @@ namespace Standard.IPC.SharedMemory
         /// <summary>
         /// Writes <paramref name="length"/> bytes from the <paramref name="source"/> into the shared memory buffer.
         /// </summary>
-        /// <param name="source">A managed pointer to the memory location to be copied into the buffer</param>
-        /// <param name="length">The number of bytes to be copied</param>
+        /// <param name="source">A managed pointer to the memory location to be copied into the buffer.</param>
+        /// <param name="length">The number of bytes to be copied.</param>
         /// <param name="bufferPosition">The offset within the buffer region of the shared memory to write to.</param>
         protected virtual void Write(IntPtr source, int length, long bufferPosition = 0)
         {
@@ -352,9 +363,10 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Prepares an IntPtr to the buffer position and calls <paramref name="writeFunc"/> to perform the writing.
+        /// Prepares an <see cref="IntPtr"/> to the buffer position and calls an <see cref="Action"/> to perform the writing.
         /// </summary>
-        /// <param name="writeFunc">A function used to write to the buffer. The IntPtr parameter is a pointer to the buffer location offset by <paramref name="bufferPosition"/>.</param>
+        /// <param name="writeFunc">A function used to write to the buffer. The <see cref="IntPtr"/> parameter is a pointer to the buffer 
+        /// location offset by <paramref name="bufferPosition"/>.</param>
         /// <param name="bufferPosition">The offset within the buffer region to start writing to.</param>
         protected virtual void Write(Action<IntPtr> writeFunc, long bufferPosition = 0)
         {
@@ -362,10 +374,10 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Reads an instance of <typeparamref name="T"/> from the buffer
+        /// Reads an instance of <typeparamref name="T"/> from the buffer.
         /// </summary>
-        /// <typeparam name="T">A structure type</typeparam>
-        /// <param name="data">Output parameter that will contain the value read from the buffer</param>
+        /// <typeparam name="T">A structure type.</typeparam>
+        /// <param name="data">Output parameter that will contain the value read from the buffer.</param>
         /// <param name="bufferPosition">The offset within the buffer region of the shared memory to read from.</param>
         protected virtual void Read<T>(out T data, long bufferPosition = 0)
             where T : struct
@@ -376,7 +388,7 @@ namespace Standard.IPC.SharedMemory
         /// <summary>
         /// Reads an array of <typeparamref name="T"/> from the buffer.
         /// </summary>
-        /// <typeparam name="T">A structure type</typeparam>
+        /// <typeparam name="T">A structure type.</typeparam>
         /// <param name="destination">Array that will contain the values read from the buffer. The length of this array controls the number of elements to read.</param>
         /// <param name="bufferPosition">The offset within the buffer region of the shared memory to read from.</param>
         protected virtual void Read<T>(T[] destination, long bufferPosition = 0)
@@ -388,7 +400,7 @@ namespace Standard.IPC.SharedMemory
         /// <summary>
         /// Reads a number of elements from a memory location into the provided buffer starting at the specified index.
         /// </summary>
-        /// <typeparam name="T">The structure type</typeparam>
+        /// <typeparam name="T">The structure type.</typeparam>
         /// <param name="destination">The destination buffer.</param>
         /// <param name="index">The start index within <paramref name="destination"/>.</param>
         /// <param name="count">The number of elements to read.</param>
@@ -402,8 +414,8 @@ namespace Standard.IPC.SharedMemory
         /// <summary>
         /// Reads <paramref name="length"/> bytes into the memory location <paramref name="destination"/> from the buffer region of the shared memory.
         /// </summary>
-        /// <param name="destination">A managed pointer to the memory location to copy data into from the buffer</param>
-        /// <param name="length">The number of bytes to be copied</param>
+        /// <param name="destination">A managed pointer to the memory location to copy data into from the buffer.</param>
+        /// <param name="length">The number of bytes to be copied.</param>
         /// <param name="bufferPosition">The offset within the buffer region of the shared memory to read from.</param>
         protected virtual void Read(IntPtr destination, int length, long bufferPosition = 0)
         {
@@ -411,9 +423,10 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// Prepares an IntPtr to the buffer position and calls <paramref name="readFunc"/> to perform the reading.
+        /// Prepares an <see cref="IntPtr"/> to the buffer position and calls an <see cref="Action"/> to perform the reading.
         /// </summary>
-        /// <param name="readFunc">A function used to read from the buffer. The IntPtr parameter is a pointer to the buffer offset by <paramref name="bufferPosition"/>.</param>
+        /// <param name="readFunc">A function used to read from the buffer. The <see cref="IntPtr"/> parameter is a pointer to the buffer 
+        /// offset by <paramref name="bufferPosition"/>.</param>
         /// <param name="bufferPosition">The offset within the buffer region of the shared memory to read from.</param>
         protected virtual void Read(Action<IntPtr> readFunc, long bufferPosition = 0)
         {
@@ -429,9 +442,9 @@ namespace Standard.IPC.SharedMemory
         }
 
         /// <summary>
-        /// IDisposable pattern - dispose of managed/unmanaged resources
+        /// Implements the <see cref="IDisposable"/> pattern to dispose of managed/unmanaged resources.
         /// </summary>
-        /// <param name="disposeManagedResources">true to dispose of managed resources as well as unmanaged.</param>
+        /// <param name="disposeManagedResources">`true` to dispose both managed and unmanaged resources. Otherwise, `false` to dispose unmanaged resources only.</param>
         protected virtual void Dispose(bool disposeManagedResources)
         {
             if (disposeManagedResources)
