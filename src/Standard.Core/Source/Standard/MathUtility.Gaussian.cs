@@ -4,42 +4,37 @@ namespace Standard
 {
     public static partial class MathUtility
     {
-        //<#
-        //  .SYNOPSIS
-        //      An implementation of [http://en.wikipedia.org/wiki/Gaussian_function#Two-dimensional_Gaussian_function](Gauss 2D function).
-        //
-        //  .PARAM amplitude
-        //      Curve amplitude.
-        //
-        //  .PARAM x
-        //      Position X-coordinate.
-        //
-        //  .PARAM y
-        //      Position Y-coordinate.
-        //
-        //  .PARAM centerX
-        //      X-coordinate of the center.
-        //
-        //  .PARAM centerY
-        //      Y-coordinate of the center.
-        //
-        //  .PARAM sigmaX
-        //      Curve sigma X.
-        //
-        //  .PARAM sigmaY
-        //      Curve sigma Y.
-        //
-        // .OUTPUT
-        //      Result of the Gauss function
-        //#>
+        /// <summary>
+        /// An implementation of [http://en.wikipedia.org/wiki/Gaussian_function#Two-dimensional_Gaussian_function](Gauss 2D function).
+        /// </summary>
+        /// <param name="amplitude">Curve amplitude.</param>
+        /// <param name="x">Position X-coordinate.</param>
+        /// <param name="y">Position Y-coordinate.</param>
+        /// <param name="centerX">X-coordinate of the center.</param>
+        /// <param name="centerY">Y-coordinate of the center.</param>
+        /// <param name="sigmaX">Curve sigma X.</param>
+        /// <param name="sigmaY">Curve sigma y.</param>
+        /// <returns>
+        /// Result of the Gauss function
+        /// </returns>
         public static float Gauss(float amplitude, float x, float y, float centerX, float centerY, float sigmaX, float sigmaY)
         {
             return (float)Gauss((double)amplitude, x, y, centerX, centerY, sigmaX, sigmaY);
         }
 
-        //<#
-        //  .INHERITS Gauss(float, float, float, float, float, float, float)
-        //#>
+        /// <summary>
+        /// An implementation of [http://en.wikipedia.org/wiki/Gaussian_function#Two-dimensional_Gaussian_function](Gauss 2D function).
+        /// </summary>
+        /// <param name="amplitude">Curve amplitude.</param>
+        /// <param name="x">Position X-coordinate.</param>
+        /// <param name="y">Position Y-coordinate.</param>
+        /// <param name="centerX">X-coordinate of the center.</param>
+        /// <param name="centerY">Y-coordinate of the center.</param>
+        /// <param name="sigmaX">Curve sigma X.</param>
+        /// <param name="sigmaY">Curve sigma y.</param>
+        /// <returns>
+        /// Result of the Gauss function
+        /// </returns>
         public static double Gauss(double amplitude, double x, double y, double centerX, double centerY, double sigmaX, double sigmaY)
         {
             double cx = x - centerX;

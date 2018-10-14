@@ -8,14 +8,33 @@ namespace Standard.Diagnostics
     {
         // Equals
 
+        /// <summary>
+        /// If an object is equal to a specified value, nothing happens. Otherwise, an <see cref="ArgumentException"/> exception is thrown.
+        /// </summary>
+        /// <param name="value">The object to evaluate.</param>
+        /// <param name="compareTo">The expected value.</param>
         [DebuggerStepThrough]
         public static void Equals(long value, long compareTo)
             => Equals(value, compareTo, null, null);
 
+        /// <summary>
+        /// If an object is equal to a specified value, nothing happens. Otherwise, an <see cref="ArgumentException"/> exception is thrown.
+        /// </summary>
+        /// <param name="value">The object to evaluate.</param>
+        /// <param name="compareTo">The expected value.</param>
+        /// <param name="paramName">When throwing an <see cref="ArgumentException"/>, set the argument parameter to this value.</param>
         [DebuggerStepThrough]
         public static void Equals(long value, long compareTo, string paramName)
             => Equals(value, compareTo, paramName, null);
 
+        /// <summary>
+        /// If an object is equal to a specified value, nothing happens. Otherwise, an <see cref="ArgumentException"/> exception is thrown.
+        /// </summary>
+        /// <param name="value">The object to evaluate.</param>
+        /// <param name="compareTo">The expected value.</param>
+        /// <param name="paramName">When throwing an <see cref="ArgumentException"/>, set the argument parameter to this value.</param>
+        /// <param name="message">When throwing an <see cref="ArgumentException"/>, set the argument message to this value.</param>
+        /// <param name="args">Format the <paramref name="message"/> string with the values set by this parameter.</param>
         [DebuggerStepThrough]
         public static void Equals(long value, long compareTo, string paramName, string message, params object[] args)
         {
@@ -36,14 +55,33 @@ namespace Standard.Diagnostics
 
         // NotEquals
 
+        /// <summary>
+        /// If an object is not equal to a specified value, nothing happens. Otherwise, an <see cref="ArgumentException"/> exception is thrown.
+        /// </summary>
+        /// <param name="value">The object to evaluate.</param>
+        /// <param name="compareTo">The expected value.</param>
         [DebuggerStepThrough]
         public static void NotEquals(long value, long compareTo)
             => NotEquals(value, compareTo, null, null);
 
+        /// <summary>
+        /// If an object is not equal to a specified value, nothing happens. Otherwise, an <see cref="ArgumentException"/> exception is thrown.
+        /// </summary>
+        /// <param name="value">The object to evaluate.</param>
+        /// <param name="compareTo">The expected value.</param>
+        /// <param name="paramName">When throwing an <see cref="ArgumentException"/>, set the argument parameter to this value.</param>
         [DebuggerStepThrough]
         public static void NotEquals(long value, long compareTo, string paramName)
             => NotEquals(value, compareTo, paramName, null);
 
+        /// <summary>
+        /// If an object is not equal to a specified value, nothing happens. Otherwise, an <see cref="ArgumentException"/> exception is thrown.
+        /// </summary>
+        /// <param name="value">The object to evaluate.</param>
+        /// <param name="compareTo">The expected value.</param>
+        /// <param name="paramName">When throwing an <see cref="ArgumentException"/>, set the argument parameter to this value.</param>
+        /// <param name="message">When throwing an <see cref="ArgumentException"/>, set the argument message to this value.</param>
+        /// <param name="args">Format the <paramref name="message"/> string with the values set by this parameter.</param>
         [DebuggerStepThrough]
         public static void NotEquals(long value, long compareTo, string paramName, string message, params object[] args)
         {
@@ -64,22 +102,51 @@ namespace Standard.Diagnostics
 
         // Greater Than
 
+        /// <summary>
+        /// If an object is greater than the specified value, nothing happens. Otherwise, an <see cref="ArgumentException"/> exception is thrown.
+        /// </summary>
+        /// <param name="value">The object to evaluate.</param>
+        /// <param name="compareTo">The expected value.</param>
         [DebuggerStepThrough]
         public static void GreaterThanOrEqualsTo(long value, long compareTo)
             => GreaterThanOrEqualsTo(value, compareTo, null, null);
-
+        /// <summary>
+        /// If an object is greater than or equal to the specified value, nothing happens. Otherwise, an <see cref="ArgumentException"/> exception is thrown.
+        /// </summary>
+        /// <param name="value">The object to evaluate.</param>
+        /// <param name="compareTo">The expected value.</param>
+        /// <param name="paramName">When throwing an <see cref="ArgumentException"/>, set the argument parameter to this value.</param>
         [DebuggerStepThrough]
         public static void GreaterThanOrEqualsTo(long value, long compareTo, string paramName)
             => GreaterThanOrEqualsTo(value, compareTo, paramName, null);
 
+        /// <summary>
+        /// If an object is greater than the specified value, nothing happens. Otherwise, an <see cref="ArgumentException"/> exception is thrown.
+        /// </summary>
+        /// <param name="value">The object to evaluate.</param>
+        /// <param name="compareTo">The expected value.</param>
         [DebuggerStepThrough]
         public static void GreaterThan(long value, long compareTo)
             => GreaterThan(value, compareTo, null, null);
 
+        /// <summary>
+        /// If an object is greater than the specified value, nothing happens. Otherwise, an <see cref="ArgumentException"/> exception is thrown.
+        /// </summary>
+        /// <param name="value">The object to evaluate.</param>
+        /// <param name="compareTo">The expected value.</param>
+        /// <param name="paramName">When throwing an <see cref="ArgumentException"/>, set the argument parameter to this value.</param>
         [DebuggerStepThrough]
         public static void GreaterThan(long value, long compareTo, string paramName)
             => GreaterThan(value, compareTo, paramName, null);
 
+        /// <summary>
+        /// If an object is greater than or equal to the specified value, nothing happens. Otherwise, an <see cref="ArgumentException"/> exception is thrown.
+        /// </summary>
+        /// <param name="value">The object to evaluate.</param>
+        /// <param name="compareTo">The expected value.</param>
+        /// <param name="paramName">When throwing an <see cref="ArgumentException"/>, set the argument parameter to this value.</param>
+        /// <param name="message">When throwing an <see cref="ArgumentException"/>, set the argument message to this value.</param>
+        /// <param name="args">Format the <paramref name="message"/> string with the values set by this parameter.</param>
         [DebuggerStepThrough]
         public static void GreaterThanOrEqualsTo(long value, long compareTo, string paramName, string message, params object[] args)
         {
@@ -97,6 +164,14 @@ namespace Standard.Diagnostics
                 throw new ArgumentException(message, paramName);            
         }
 
+        /// <summary>
+        /// If an object is greater than the specified value, nothing happens. Otherwise, an <see cref="ArgumentException"/> exception is thrown.
+        /// </summary>
+        /// <param name="value">The object to evaluate.</param>
+        /// <param name="compareTo">The expected value.</param>
+        /// <param name="paramName">When throwing an <see cref="ArgumentException"/>, set the argument parameter to this value.</param>
+        /// <param name="message">When throwing an <see cref="ArgumentException"/>, set the argument message to this value.</param>
+        /// <param name="args">Format the <paramref name="message"/> string with the values set by this parameter.</param>
         [DebuggerStepThrough]
         public static void GreaterThan(long value, long compareTo, string paramName, string message, params object[] args)
         {
@@ -117,22 +192,52 @@ namespace Standard.Diagnostics
 
         // Less Than
 
+        /// <summary>
+        /// If an object is less than or equal to the specified value, nothing happens. Otherwise, an <see cref="ArgumentException"/> exception is thrown.
+        /// </summary>
+        /// <param name="value">The object to evaluate.</param>
+        /// <param name="compareTo">The expected value.</param>
         [DebuggerStepThrough]
         public static void LessThanOrEqualsTo(long value, long compareTo)
             => LessThanOrEqualsTo(value, compareTo, null, null);
 
+        /// <summary>
+        /// If an object is less than or equal to the specified value, nothing happens. Otherwise, an <see cref="ArgumentException"/> exception is thrown.
+        /// </summary>
+        /// <param name="value">The object to evaluate.</param>
+        /// <param name="compareTo">The expected value.</param>
+        /// <param name="paramName">When throwing an <see cref="ArgumentException"/>, set the argument parameter to this value.</param>
         [DebuggerStepThrough]
         public static void LessThanOrEqualsTo(long value, long compareTo, string paramName)
             => LessThanOrEqualsTo(value, compareTo, paramName, null);
 
+        /// <summary>
+        /// If an object is less than the specified value, nothing happens. Otherwise, an <see cref="ArgumentException"/> exception is thrown.
+        /// </summary>
+        /// <param name="value">The object to evaluate.</param>
+        /// <param name="compareTo">The expected value.</param>
         [DebuggerStepThrough]
         public static void LessThan(long value, long compareTo)
             => LessThan(value, compareTo, null, null);
 
+        /// <summary>
+        /// If an object is less than the specified value, nothing happens. Otherwise, an <see cref="ArgumentException"/> exception is thrown.
+        /// </summary>
+        /// <param name="value">The object to evaluate.</param>
+        /// <param name="compareTo">The expected value.</param>
+        /// <param name="paramName">When throwing an <see cref="ArgumentException"/>, set the argument parameter to this value.</param>
         [DebuggerStepThrough]
         public static void LessThan(long value, long compareTo, string paramName)
             => LessThan(value, compareTo, paramName, null);
 
+        /// <summary>
+        /// If an object is less than or equal to the specified value, nothing happens. Otherwise, an <see cref="ArgumentException"/> exception is thrown.
+        /// </summary>
+        /// <param name="value">The object to evaluate.</param>
+        /// <param name="compareTo">The expected value.</param>
+        /// <param name="paramName">When throwing an <see cref="ArgumentException"/>, set the argument parameter to this value.</param>
+        /// <param name="message">When throwing an <see cref="ArgumentException"/>, set the argument message to this value.</param>
+        /// <param name="args">Format the <paramref name="message"/> string with the values set by this parameter.</param>
         [DebuggerStepThrough]
         public static void LessThanOrEqualsTo(long value, long compareTo, string paramName, string message, params object[] args)
         {
@@ -150,6 +255,14 @@ namespace Standard.Diagnostics
                 throw new ArgumentException(message, paramName);            
         }
 
+        /// <summary>
+        /// If an object is less than the specified value, nothing happens. Otherwise, an <see cref="ArgumentException"/> exception is thrown.
+        /// </summary>
+        /// <param name="value">The object to evaluate.</param>
+        /// <param name="compareTo">The expected value.</param>
+        /// <param name="paramName">When throwing an <see cref="ArgumentException"/>, set the argument parameter to this value.</param>
+        /// <param name="message">When throwing an <see cref="ArgumentException"/>, set the argument message to this value.</param>
+        /// <param name="args">Format the <paramref name="message"/> string with the values set by this parameter.</param>
         [DebuggerStepThrough]
         public static void LessThan(long value, long compareTo, string paramName, string message, params object[] args)
         {
@@ -170,14 +283,36 @@ namespace Standard.Diagnostics
 
         // Between
 
+        /// <summary>
+        /// If an object is between the specified range, nothing happens. Otherwise, an <see cref="ArgumentException"/> exception is thrown.
+        /// </summary>
+        /// <param name="value">The object to evaluate.</param>
+        /// <param name="min">The lower bound of the specified range. If the value is less than this value, an <see cref="ArgumentException"/> exception is thrown.</param>
+        /// <param name="max">The upper bound of the specified range. If the value is greater than this value, an <see cref="ArgumentException"/> exception is thrown.</param>
         [DebuggerStepThrough]
         public static void Between(long value, long min, long max)
             => Between(value, min, max, null, null);
 
+        /// <summary>
+        /// If an object is between the specified range, nothing happens. Otherwise, an <see cref="ArgumentException"/> exception is thrown.
+        /// </summary>
+        /// <param name="value">The object to evaluate.</param>
+        /// <param name="min">The lower bound of the specified range. If the value is less than this value, an <see cref="ArgumentException"/> exception is thrown.</param>
+        /// <param name="max">The upper bound of the specified range. If the value is greater than this value, an <see cref="ArgumentException"/> exception is thrown.</param>
+        /// <param name="paramName">When throwing an <see cref="ArgumentException"/>, set the argument parameter to this value.</param>
         [DebuggerStepThrough]
         public static void Between(long value, long min, long max, string paramName)
             => Between(value, min, max, paramName, null);
 
+        /// <summary>
+        /// If an object is between the specified range, nothing happens. Otherwise, an <see cref="ArgumentException"/> exception is thrown.
+        /// </summary>
+        /// <param name="value">The object to evaluate.</param>
+        /// <param name="min">The lower bound of the specified range. If the value is less than this value, an <see cref="ArgumentException"/> exception is thrown.</param>
+        /// <param name="max">The upper bound of the specified range. If the value is greater than this value, an <see cref="ArgumentException"/> exception is thrown.</param>
+        /// <param name="paramName">When throwing an <see cref="ArgumentException"/>, set the argument parameter to this value.</param>
+        /// <param name="message">When throwing an <see cref="ArgumentException"/>, set the argument message to this value.</param>
+        /// <param name="args">Format the <paramref name="message"/> string with the values set by this parameter.</param>
         [DebuggerStepThrough]
         public static void Between(long value, long min, long max, string paramName, string message, params object[] args)
         {

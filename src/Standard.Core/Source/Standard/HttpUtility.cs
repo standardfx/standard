@@ -6,7 +6,7 @@ using System.Text;
 namespace Standard
 {
     /// <summary>
-    /// HTTP related extensions
+    /// Utility class for HTTP related operations.
     /// </summary>
     public static class HttpUtility
     {

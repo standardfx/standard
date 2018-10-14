@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.IO;
 using System.Text;
 using Standard.Core;
@@ -12,27 +11,26 @@ namespace Standard
     /// </summary>
     public static class TextStreamExtension
     {
-        //<#
-        //  .SYNOPSIS
-        //      Returns all lines in @[stream] as a @String array, using UTF8 encoding.
-        // 
-        //  .PARAM stream
-        //      The stream to evaluate.
-        //#>
+        /// <summary>
+        /// Returns all lines in a stream as a string array, using UTF8 encoding.
+        /// </summary>
+        /// <param name="stream">The stream of text.</param>
+        /// <returns>
+        /// An array of strings.
+        /// </returns>
         public static string[] ReadAllLines(this Stream stream)
         {
             return ReadAllLines(stream, System.Text.Encoding.UTF8);
         }
 
-        //<#
-        //  .INHERIT ReadAllLines(Stream)
-        //
-        //  .SYNOPSIS
-        //      Returns all lines in @[stream] as a @String array.
-        // 
-        //  .PARAM encoding
-        //      The encoding to use.
-        //#>
+        /// <summary>
+        /// Returns all lines in a stream as a string array, using UTF8 encoding.
+        /// </summary>
+        /// <param name="stream">The stream of text.</param>
+        /// <param name="encoding">The encoding to use.</param>
+        /// <returns>
+        /// An array of strings.
+        /// </returns>
         public static string[] ReadAllLines(this Stream stream, Encoding encoding)
         {
             if (stream == null)

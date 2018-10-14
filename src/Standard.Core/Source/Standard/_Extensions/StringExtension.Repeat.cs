@@ -8,11 +8,22 @@ namespace Standard
 {
     partial class StringExtension
     {
+        /// <summary>
+        /// Repeat a string.
+        /// </summary>
+        /// <param name="value">A string value.</param>
+        /// <returns>The value of <paramref name="value"/> repeated twice.</returns>
         public static string Repeat(this string value)
         {
             return Repeat(value, 1);
         }
 
+        /// <summary>
+        /// Repeat a string the number of times specified.
+        /// </summary>
+        /// <param name="value">A string value.</param>
+        /// <param name="times">Determines how many times <paramref name="value"/> should be repeated.</param>
+        /// <returns>The value of <paramref name="value"/> repeated <paramref name="times"/> times.</returns>
         public static string Repeat(this string value, int times)
         {
             if (value == null)

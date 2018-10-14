@@ -9,8 +9,18 @@ namespace Standard
     // ref.
     // https://stackoverflow.com/questions/4502676/c-sharp-compare-two-securestrings-for-equality
 
+    /// <summary>
+    /// Extension methods for the <see cref="SecureString"/> class.
+    /// </summary>
     public static class SecureStringExtension
     {
+        /// <summary>
+        /// Decrypts the underlying value of a <see cref="SecureString"/>.
+        /// </summary>
+        /// <param name="s1">The <see cref="SecureString"/> object to decrypt.</param>
+        /// <returns>
+        /// The decrypted underlying value.
+        /// </returns>
         [SecuritySafeCritical]
         public static unsafe string GetValue(this SecureString s1)
         {
@@ -49,23 +59,14 @@ namespace Standard
             }
         }
 
-        //<#
-        // .SYNOPSIS
-        //      Checks that the underlying string value of a @[SecureString] instance is equal to another @[SecureString] instance.
-        //
-        // .PARAMETER s1
-        //      The first @[SecureString] instance.
-        //
-        // .PARAMETER s2
-        //      The second @[SecureString] instance.
-        //
-        // .OUTPUT
-        //      If the underlying string value of @[s1] is equal to @[s2], `true`. Otherwise, `false`.
-        //
-        // .REMARKS
-        //      The .NET Standard implementation uses @[SecureStringMarshal.SecureStringToGlobalAllocUnicode(SecureString)] internally, while 
-        //      implementation on .NET Framework uses @[Marshal.SecureStringToBSTR(SecureString)].
-        //#>
+        /// <summary>
+        /// Compares the underlying decrypted value of two <see cref="SecureString"/> objects.
+        /// </summary>
+        /// <param name="s1">The first <see cref="SecureString"/> object.</param>
+        /// <param name="s2">The second <see cref="SecureString"/> object.</param>
+        /// <returns>
+        /// `true` if the underlying value is equal; otherwise, `false`.
+        /// </returns>
         [SecuritySafeCritical]
         public static unsafe bool ValueEquals(this SecureString s1, SecureString s2)
         {

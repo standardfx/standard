@@ -14,6 +14,14 @@ namespace Standard
         // No need to implement this because .NET has already implemented:
         // Replace(this string value, string oldValue, string newValue)
 
+        /// <summary>
+        /// Replace the specified number of occurances of a substring with the value specified.
+        /// </summary>
+        /// <param name="value">The string being searched.</param>
+        /// <param name="oldValue">The substring which should be replaced.</param>
+        /// <param name="newValue">The replacement value for <paramref name="oldValue"/>.</param>
+        /// <param name="count">The number of occurances to replace.</param>
+        /// <returns>The value of <paramref name="value"/>, with the first <paramref name="count"/> occurances of <paramref name="oldValue"/> replaced by <paramref name="newValue"/>.</returns>
         public static string Replace(this string value, string oldValue, string newValue, int count)
         {
             if (value == null)
@@ -27,11 +35,28 @@ namespace Standard
                 return Replace(value, oldValue, newValue, StringComparison.Ordinal, count);
         }
 
+        /// <summary>
+        /// Replace the specified number of occurances of a substring with the value specified, using case-insensitive comparison.
+        /// </summary>
+        /// <param name="value">The string being searched.</param>
+        /// <param name="oldValue">The substring which should be replaced. Case-insensitive comparison is used.</param>
+        /// <param name="newValue">The replacement value for <paramref name="oldValue"/>.</param>
+        /// <param name="count">The number of occurances to replace. Defaults to -1, which means only the first occurance is replaced.</param>
+        /// <returns>The value of <paramref name="value"/>, with the first <paramref name="count"/> occurances of <paramref name="oldValue"/> replaced by <paramref name="newValue"/>.</returns>
         public static string ReplaceIgnoreCase(this string value, string oldValue, string newValue, int count = -1)
         {
             return Replace(value, oldValue, newValue, StringComparison.OrdinalIgnoreCase, count);
         }
 
+        /// <summary>
+        /// Replace the specified number of occurances of a substring with the value specified.
+        /// </summary>
+        /// <param name="value">The string being searched.</param>
+        /// <param name="oldValue">The substring which should be replaced.</param>
+        /// <param name="newValue">The replacement value for <paramref name="oldValue"/>.</param>
+        /// <param name="comparisonType">Controls how <paramref name="oldValue"/> is being searched.</param>
+        /// <param name="count">The number of occurances to replace.</param>
+        /// <returns>The value of <paramref name="value"/>, with the first <paramref name="count"/> occurances of <paramref name="oldValue"/> replaced by <paramref name="newValue"/>.</returns>
         public static string Replace(this string value, string oldValue, string newValue, StringComparison comparisonType, int count)
         {
             return ReplaceInternal(value, oldValue, newValue, comparisonType, -1, count);
@@ -39,21 +64,53 @@ namespace Standard
 
         // Replace from right
 
+        /// <summary>
+        /// Replaces the last occurance of a substring with the value specified.
+        /// </summary>
+        /// <param name="value">The string being searched.</param>
+        /// <param name="oldValue">The substring which should be replaced.</param>
+        /// <param name="newValue">The replacement value for <paramref name="oldValue"/>.</param>
+        /// <returns>The value of <paramref name="value"/>, with the last occurance of <paramref name="oldValue"/> replaced by <paramref name="newValue"/>.</returns>
         public static string ReplaceLast(this string value, string oldValue, string newValue)
         {
             return ReplaceLast(value, oldValue, newValue, StringComparison.Ordinal, -1);
         }
 
+        /// <summary>
+        /// Replaces occurances of a substring with the value specified, starting from the last occurance.
+        /// </summary>
+        /// <param name="value">The string being searched.</param>
+        /// <param name="oldValue">The substring which should be replaced.</param>
+        /// <param name="newValue">The replacement value for <paramref name="oldValue"/>.</param>
+        /// <param name="count">The number of occurances to replace.</param>
+        /// <returns>The value of <paramref name="value"/>, with the last <paramref name="count"/> occurances of <paramref name="oldValue"/> replaced by <paramref name="newValue"/>.</returns>
         public static string ReplaceLast(this string value, string oldValue, string newValue, int count)
         {
             return ReplaceLast(value, oldValue, newValue, StringComparison.Ordinal, count);
         }
 
+        /// <summary>
+        /// Replaces occurances of a substring with the value specified, starting from the last occurance and using case-insensitive comparison.
+        /// </summary>
+        /// <param name="value">The string being searched.</param>
+        /// <param name="oldValue">The substring which should be replaced. Case insensitive comparison is used.</param>
+        /// <param name="newValue">The replacement value for <paramref name="oldValue"/>.</param>
+        /// <param name="count">The number of occurances to replace. Defaults to -1, which means the last occurance only.</param>
+        /// <returns>The value of <paramref name="value"/>, with the last <paramref name="count"/> occurances of <paramref name="oldValue"/> replaced by <paramref name="newValue"/>.</returns>
         public static string ReplaceLastIgnoreCase(this string value, string oldValue, string newValue, int count = -1)
         {
             return ReplaceLast(value, oldValue, newValue, StringComparison.OrdinalIgnoreCase, count);
         }
 
+        /// <summary>
+        /// Replaces occurances of a substring with the value specified, starting from the last occurance.
+        /// </summary>
+        /// <param name="value">The string being searched.</param>
+        /// <param name="oldValue">The substring which should be replaced.</param>
+        /// <param name="newValue">The replacement value for <paramref name="oldValue"/>.</param>
+        /// <param name="comparisonType">Controls how <paramref name="oldValue"/> is being searched.</param>
+        /// <param name="count">The number of occurances to replace.</param>
+        /// <returns>The value of <paramref name="value"/>, with the last <paramref name="count"/> occurances of <paramref name="oldValue"/> replaced by <paramref name="newValue"/>.</returns>
         public static string ReplaceLast(this string value, string oldValue, string newValue, StringComparison comparisonType, int count)
         {
             if (value == null)

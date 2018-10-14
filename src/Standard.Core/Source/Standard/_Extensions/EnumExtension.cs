@@ -24,7 +24,9 @@ namespace Standard
     /// </remarks>
     public static class EnumExtension
     {
-        /// <summary>Tests for the presence of a enumerable member.</summary>
+        /// <summary>
+        /// Tests for the presence of a enumerable member.
+        /// </summary>
         /// <remarks>
         /// This is similar to 'Enum.HasFlag'.
         /// </remarks>
@@ -58,6 +60,9 @@ namespace Standard
             catch { return false; }
         }
 
+        /// <summary>
+        /// Tests whether an enum is equal to another enum.
+        /// </summary>
         public static bool Is<TEnum>(this System.Enum type, TEnum value)
         {
             try
@@ -88,6 +93,9 @@ namespace Standard
             catch { return false; }
         }
 
+        /// <summary>
+        /// Adds a flag to an enum.
+        /// </summary>
         public static TEnum Add<TEnum>(this System.Enum type, TEnum value)
         {
             try
@@ -121,6 +129,9 @@ namespace Standard
             }
         }
 
+        /// <summary>
+        /// Remove a flag from an enum.
+        /// </summary>
         public static TEnum Remove<TEnum>(this System.Enum type, TEnum value)
         {
             try
@@ -155,6 +166,9 @@ namespace Standard
             }
         }
 
+        /// <summary>
+        /// Converts an enum with flags into a list of enums.
+        /// </summary>
         public static IEnumerable<TEnum> ToList<TEnum>(this System.Enum type)
         {
             IEnumerable<TEnum> allMembers = EnumUtility.GetMembers<TEnum>();

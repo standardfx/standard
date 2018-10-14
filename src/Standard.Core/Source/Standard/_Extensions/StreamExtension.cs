@@ -1,18 +1,23 @@
 using System;
 using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Standard.Core;
 
 namespace Standard
 {
+    /// <summary>
+    /// Extension methods for working with <see cref="Stream"/> class.
+    /// </summary>
     public static class StreamExtension
     {
         private const int MIN_BUFFER_SIZE= 128;
 
+        /// <summary>
+        /// Tests whether a <see cref="Stream"/> is at its last position.
+        /// </summary>
+        /// <param name="stream">A <see cref="Stream"/> object.</param>
+        /// <returns>
+        /// `true` if the <paramref name="stream"/> object is at its last position; otherwise, `false`.
+        /// </returns>
         public static bool IsEndOfStream(this Stream stream)
         {
             if (stream == null)

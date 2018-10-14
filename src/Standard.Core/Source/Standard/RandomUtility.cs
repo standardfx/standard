@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Standard
 {
+    /// <summary>
+    /// Utility class for randomizing operations.
+    /// </summary>
     public static class RandomUtility
     {
         /// <summary>

@@ -4,7 +4,7 @@ using Standard.Core;
 
 namespace Standard
 {
-    public static partial class NumberExtension
+    partial class NumberExtension
     {
         /// <summary>
         /// Ensures that the specified value does not exceed a given range.
@@ -12,8 +12,12 @@ namespace Standard
         /// <param name="value">The value to clamp.</param>
         /// <param name="min">The minimum value permitted.</param>
         /// <param name="max">The maximum value permitted.</param>
-        /// <exception cref="ArgumentException"><paramref name="min"/> is greater than <paramref name="max"/>.</exception>
-        /// <returns>The result of clamping a value between the minimum and maximum values specified.</returns>
+        /// <exception cref="ArgumentException">
+        /// <paramref name="min"/> is greater than <paramref name="max"/>.
+        /// </exception>
+        /// <returns>
+        /// The result of clamping a value between the minimum and maximum values specified.
+        /// </returns>
         public static float Clamp(this float value, float min, float max)
         {
             if (min > max)
@@ -25,13 +29,8 @@ namespace Standard
         }
 
         /// <summary>
-        /// Ensures that the specified value does not exceed a given range.
+        /// @ref <see cref="Clamp(float, float, float)"/>
         /// </summary>
-        /// <param name="value">The value.</param>
-        /// <param name="min">The min.</param>
-        /// <param name="max">The max.</param>
-        /// <exception cref="ArgumentException"><paramref name="min"/> is greater than <paramref name="max"/>.</exception>
-        /// <returns>The result of clamping a value between the minimum and maximum values specified.</returns>
         public static int Clamp(this int value, int min, int max)
         {
             if (min > max)
@@ -73,10 +72,15 @@ namespace Standard
         /// <param name="min">The minimum value.</param>
         /// <param name="max">The maximum value.</param>
         /// <exception cref="ArgumentException"><paramref name="min"/> is greater than <paramref name="max"/>.</exception>
-        /// <returns>Result of the wrapping.</returns>
+        /// <returns>
+        /// Result of the wrapping.
+        /// </returns>
         /// <remarks>
-        /// <para>Any number that is not between the given range 'wraps' over to the other side and starts decrementing/incrementing. The wrapped value cannot exceed the given range.</para>
-        /// <code><![CDATA[
+        /// <![CDATA[
+        /// Any number that is not between the given range 'wraps' over to the other side and starts 
+        /// decrementing/incrementing. The wrapped value cannot exceed the given range.
+        /// 
+        /// ```c#
         /// Console.WriteLine("Wrapping between -3 to 3:\n");
         /// Console.WriteLine("Value | Int32 | Single");
         /// Console.WriteLine("----------------------");
@@ -103,7 +107,8 @@ namespace Standard
         /// //     4 |    -3 |     -2
         /// //     5 |    -2 |     -1
         /// //     6 |    -1 |      0
-        /// ]]></code>
+        /// ```
+        /// ]]>
         /// </remarks>
         public static int Wrap(this int value, int min, int max)
         {

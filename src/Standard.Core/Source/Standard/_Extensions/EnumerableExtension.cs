@@ -6,28 +6,24 @@ using Standard.Core;
 namespace Standard
 {
     /// <summary>
-    /// Extension methods for <c>IEnumerable</c>.
+    /// Extension methods for <c>IEnumerable</c> class.
     /// </summary>
     public static class EnumerableExtension
     {
-		//# .SYNOPSIS
-		//#		Determines if an enumerable is a subset of another enumerable.
-		//#
-		//# .PARAMETER !T
-		//#		The enumerable type.
-		//#
-		//# .PARAMETER source
-		//#		The enumerable that is being evaluated.
-		//#
-		//# .PARAMETER other
-		//#		The enumerable to be tested.
-		//#
-		//# .RETURNS
-		//#		`true` if the @source is a subset of @other, otherwise `false`.
-		//#
-		//# .DEVDOC
-		//#		Implements select ISet methods on IList and IDictionary
-		public static bool IsSubsetOf<T> (this IList<T> source, IEnumerable<T> other, IEqualityComparer<T> comparer)
+        /// <summary>
+        /// Determines if an enumerable is a subset of another enumerable.
+        /// </summary>
+        /// <typeparam name="T">The enumerable type.</typeparam>
+        /// <param name="source">The enumerable that is being evaluated.</param>
+        /// <param name="other">The enumerable to be tested.</param>
+        /// <param name="comparer">The equality comparer.</param>
+        /// <returns>
+        /// `true` if <paramref name="source"/> is a subset of <paramref name="other"/>; otherwise `false`.
+        /// </returns>
+        /// <remarks>
+        /// This extension implements selected ISet methods on <see cref="IList{T}"/> and <see cref="IDictionary{TKey, TValue}"/>.
+        /// </remarks>
+        public static bool IsSubsetOf<T> (this IList<T> source, IEnumerable<T> other, IEqualityComparer<T> comparer)
 		{
 			if (source == null)
 				throw new ArgumentNullException(nameof(source));
@@ -46,28 +42,19 @@ namespace Standard
 				return !source.Except(other, comparer).Any();
 		}
 
-		//# .INHERITDOC
+		/// <summary>
+        /// @ref <see cref="IsSubsetOf{T}(IList{T}, IEnumerable{T}, IEqualityComparer{T})"/>
+        /// </summary>
 		public static bool IsSubsetOf<T>(this IList<T> source, IEnumerable<T> other)
 			=> IsSubsetOf(source, other, null);
 
-		//# .SYNOPSIS
-		//#		Determines if an enumerable is a proper subset of another enumerable.
-		//#
-		//# .PARAMETER !T
-		//#		The enumerable type.
-		//#
-		//# .PARAMETER source
-		//#		The enumerable that is being evaluated.
-		//#
-		//# .PARAMETER other
-		//#		The enumerable to be tested.
-		//#
-		//# .RETURNS
-		//#		`true` if the @source is a proper subset of @other, otherwise `false`.
-		//#
-		//# .DEVDOC
-		//#		Implements select ISet methods on IList and IDictionary
-		public static bool IsProperSubsetOf<T>(this IList<T> source, IEnumerable<T> other, IEqualityComparer<T> comparer)
+        /// <summary>
+        /// Determines if an enumerable is a proper subset of another enumerable. @ref <see cref="IsSubsetOf{T}(IList{T}, IEnumerable{T}, IEqualityComparer{T})"/>
+        /// </summary>
+        /// <returns>
+        /// `true` if <paramref name="source"/> is a proper subset of <paramref name="other"/>; otherwise `false`.
+        /// </returns>
+        public static bool IsProperSubsetOf<T>(this IList<T> source, IEnumerable<T> other, IEqualityComparer<T> comparer)
 		{
 			if (source == null)
 				throw new ArgumentNullException(nameof(source));
@@ -86,27 +73,18 @@ namespace Standard
 				return other.Except(source, comparer).Any();
 		}
 
-		//# .INHERITDOC
+		/// <summary>
+        /// @ref <see cref="IsProperSubsetOf{T}(IList{T}, IEnumerable{T}, IEqualityComparer{T})"/>
+        /// </summary>
 		public static bool IsProperSubsetOf<T>(this IList<T> source, IEnumerable<T> other)
 			=> IsProperSubsetOf(source, other, null);
 
-		//# .SYNOPSIS
-		//#		Determines if an enumerable is a superset of another enumerable.
-		//#
-		//# .PARAMETER !T
-		//#		The enumerable type.
-		//#
-		//# .PARAMETER source
-		//#		The enumerable that is being evaluated.
-		//#
-		//# .PARAMETER other
-		//#		The enumerable to be tested.
-		//#
-		//# .RETURNS
-		//#		`true` if the @source is a superset of @other, otherwise `false`.
-		//#
-		//# .DEVDOC
-		//#		Implements select ISet methods on IList and IDictionary
+        /// <summary>
+        /// Determines whether an enumerable is a superset of another enumerable. @ref <see cref="IsSubsetOf{T}(IList{T}, IEnumerable{T}, IEqualityComparer{T})"/>
+        /// </summary>
+        /// <returns>
+        /// `true` if <paramref name="source"/> is a superset of <paramref name="other"/>; otherwise, `false`.
+        /// </returns>
 		public static bool IsSupersetOf<T>(this IList<T> source, IEnumerable<T> other, IEqualityComparer<T> comparer)
 		{
 			if (source == null)
@@ -126,28 +104,19 @@ namespace Standard
 				return !other.Except(source, comparer).Any();
 		}
 
-		//# .INHERITDOC
+		/// <summary>
+        /// @ref <see cref="IsSupersetOf{T}(IList{T}, IEnumerable{T}, IEqualityComparer{T})"/>
+        /// </summary>
 		public static bool IsSupersetOf<T>(this IList<T> source, IEnumerable<T> other)
 			=> IsSupersetOf(source, other, null);
 
-		//# .SYNOPSIS
-		//#		Determines if an enumerable is a superset of another enumerable.
-		//#
-		//# .PARAMETER !T
-		//#		The enumerable type.
-		//#
-		//# .PARAMETER source
-		//#		The enumerable that is being evaluated.
-		//#
-		//# .PARAMETER other
-		//#		The enumerable to be tested.
-		//#
-		//# .RETURNS
-		//#		`true` if the @source is a superset of @other, otherwise `false`.
-		//#
-		//# .DEVDOC
-		//#		Implements select ISet methods on IList and IDictionary
-		public static bool IsProperSupersetOf<T>(this IList<T> source, IEnumerable<T> other, IEqualityComparer<T> comparer)
+        /// <summary>
+        /// Determines whether an enumerable is a proper superset of another enumerable. @ref <see cref="IsSubsetOf{T}(IList{T}, IEnumerable{T}, IEqualityComparer{T})"/>
+        /// </summary>
+        /// <returns>
+        /// `true` if <paramref name="source"/> is a proper superset of <paramref name="other"/>; otherwise, `false`.
+        /// </returns>
+        public static bool IsProperSupersetOf<T>(this IList<T> source, IEnumerable<T> other, IEqualityComparer<T> comparer)
 		{
 			if (source == null)
 				throw new ArgumentNullException(nameof(source));
@@ -166,28 +135,19 @@ namespace Standard
 				return source.Except(other, comparer).Any();			
 		}
 
-		//# .INHERITDOC
+		/// <summary>
+        /// @ref <see cref="IsProperSubsetOf{T}(IList{T}, IEnumerable{T}, IEqualityComparer{T})"/>
+        /// </summary>
 		public static bool IsProperSupersetOf<T>(this IList<T> source, IEnumerable<T> other)
 			=> IsProperSupersetOf(source, other, null);
 
-		//# .SYNOPSIS
-		//#		Determines if two enumerables have common items.
-		//#
-		//# .PARAMETER !T
-		//#		The enumerable type.
-		//#
-		//# .PARAMETER source
-		//#		The enumerable that is being evaluated.
-		//#
-		//# .PARAMETER other
-		//#		The enumerable to be tested.
-		//#
-		//# .RETURNS
-		//#		`true` if the @source and @other have common items, otherwise `false`.
-		//#
-		//# .DEVDOC
-		//#		Implements select ISet methods on IList and IDictionary
-		public static bool Overlaps<T>(this IList<T> source, IEnumerable<T> other, IEqualityComparer<T> comparer)
+        /// <summary>
+        /// Determines whether two enumerables have common items. @ref <see cref="IsSubsetOf{T}(IList{T}, IEnumerable{T}, IEqualityComparer{T})"/>
+        /// </summary>
+        /// <returns>
+        /// `true` if <paramref name="source"/> and <paramref name="other"/> have common items; otherwise, `false`.
+        /// </returns>
+        public static bool Overlaps<T>(this IList<T> source, IEnumerable<T> other, IEqualityComparer<T> comparer)
 		{
 			if (source == null)
 				throw new ArgumentNullException(nameof(source));
@@ -213,19 +173,17 @@ namespace Standard
 				return source.Intersect(other, comparer).Any();
 		}
 
-		//# .INHERITDOC
-		public static bool Overlaps<T>(this IList<T> source, IEnumerable<T> other)
+        /// <summary>
+        /// @ref <see cref="Overlaps{T}(IList{T}, IEnumerable{T}, IEqualityComparer{T})"/>
+        /// </summary>
+        public static bool Overlaps<T>(this IList<T> source, IEnumerable<T> other)
 			=> Overlaps(source, other, null);
 
-
 		/// <summary>
-		/// <para>
 		/// Split an enumerable into N equal enumerables (to prevent issues with "multiple enumeration of IEnumerable"). After being split,
 		/// the original enumerable should not be used anywhere else, otherwise the tee enumerables may lose data.
-		/// </para>
-		/// <para>
-		/// This method is not thread-safe. Always use the <see cref="ConcurrentTee" /> method in a multi-thread scenario.
-		/// </para>
+        ///
+        /// This method is not thread-safe. Always use the <see cref="ConcurrentTee" /> method in a multi-thread scenario.
 		/// </summary>
 		/// <typeparam name="T">Type of object.</typeparam>
 		/// <param name="source">Source to split.</param>
@@ -245,21 +203,20 @@ namespace Standard
             return arr;
         }
 
-		/// <para>
-		/// Split an enumerable into N equal enumerables (to prevent issues with "multiple enumeration of IEnumerable"). After being split,
-		/// the original enumerable should not be used anywhere else, otherwise the tee enumerables may lose data.
-		/// </para>
-		/// <para>
-		/// This method is thread-safe. You can use the <see cref="Tee" /> method in a single-thread scenario.
-		/// </para>
-		/// <typeparam name="T">Type of object.</typeparam>
-		/// <param name="source">Source to split.</param>
-		/// <param name="subCount">Number of sub enumerables to create.</param>
-		/// <remarks>
-		/// Values consumed by the sub enumerables are cached in memory until ALL sub enumerables have consumed that value,
-		/// which may consume a significant amount of storage if one enumerable is evaluated many times more than the others. 
-		/// </remarks>
-		public static IEnumerable<T>[] ConcurrentTee<T>(this IEnumerable<T> source, int subCount)
+        /// <summary>
+        /// Split an enumerable into N equal enumerables (to prevent issues with "multiple enumeration of IEnumerable"). After being split,
+        /// the original enumerable should not be used anywhere else, otherwise the tee enumerables may lose data.
+        ///
+        /// This method is thread-safe. You can use the <see cref="Tee" /> method in a single-thread scenario.
+        /// </summary>
+        /// <typeparam name="T">Type of object.</typeparam>
+        /// <param name="source">Source to split.</param>
+        /// <param name="subCount">Number of sub enumerables to create.</param>
+        /// <remarks>
+        /// Values consumed by the sub enumerables are cached in memory until ALL sub enumerables have consumed that value,
+        /// which may consume a significant amount of storage if one enumerable is evaluated many times more than the others. 
+        /// </remarks>
+        public static IEnumerable<T>[] ConcurrentTee<T>(this IEnumerable<T> source, int subCount)
         {
             EnumerableCache<T> cache = new EnumerableCache<T>(source.GetEnumerator());
             IEnumerable<T>[] arr = new IEnumerable<T>[subCount];

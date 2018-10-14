@@ -9,6 +9,12 @@ namespace Standard
 
     partial class StringExtension
     {
+        /// <summary>
+        /// Determines whether two specified <see cref="string"/> object have the same value. Comparison is done using <see cref="StringComparison.OrdinalIgnoreCase"/>.
+        /// </summary>
+        /// <param name="value">The first string value to compare.</param>
+        /// <param name="compareTo">The second string value to compare.</param>
+        /// <returns>`true` if <paramref name="value"/> is equal to <paramref name="compareTo"/>, using <see cref="StringComparison.OrdinalIgnoreCase"/>. Otherwise, `false`.</returns>
         public static bool EqualsIgnoreCase(this string value, string compareTo)
         {
             if (value == null)

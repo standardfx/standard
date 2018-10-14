@@ -3,17 +3,20 @@ using Standard.Core;
 
 namespace Standard
 {
-    public static partial class NumberExtension
+    partial class NumberExtension
     {
         /// <summary>
-        /// Checks if a and b are almost equals, taking into account the magnitude of floating point numbers (unlike <see cref="WithinEpsilon"/> method).
+        /// Checks whether two numbers are almost equals, taking into account the magnitude of floating point 
+        /// numbers (unlike <see cref="WithinEpsilon(float, float, float)"/> method).
         /// </summary>
-        /// <param name="a">The left value to compare.</param>
-        /// <param name="b">The right value to compare.</param>
-        /// <returns><c>true</c> if a almost equal to b, <c>false</c> otherwise</returns>
+        /// <param name="a">The first value to compare.</param>
+        /// <param name="b">The second value to compare.</param>
+        /// <returns>
+        /// `true` if <paramref name="a"/> is almost equal to <paramref name="b"/>; otherwise, `false`.
+        /// </returns>
         /// <remarks>
         /// The code is using the technique described by Bruce Dawson in 
-        /// <a href="http://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/">Comparing Floating point numbers 2012 edition</a>. 
+        /// [http://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/](Comparing Floating point numbers 2012 edition). 
         /// </remarks>
         public unsafe static bool NearEquals(this float a, float b)
         {
@@ -43,7 +46,9 @@ namespace Standard
         /// Determines whether the specified value is close to zero (0.0f).
         /// </summary>
         /// <param name="a">The floating value.</param>
-        /// <returns><c>true</c> if the specified value is close to zero (0.0f); otherwise, <c>false</c>.</returns>
+        /// <returns>
+        /// `true` if the specified value is close to zero (0.0f); otherwise, `false`.
+        /// </returns>
         public static bool NearZero(this float a)
         {
             return Math.Abs(a) < MathUtility.ZeroTolerance;
@@ -53,19 +58,24 @@ namespace Standard
         /// Determines whether the specified value is close to one (1.0f).
         /// </summary>
         /// <param name="a">The floating value.</param>
-        /// <returns><c>true</c> if the specified value is close to one (1.0f); otherwise, <c>false</c>.</returns>
+        /// <returns>
+        /// `true` if the specified value is close to one (1.0f); otherwise, `false`.
+        /// </returns>
         public static bool NearOne(this float a)
         {
             return NearZero(a - 1.0f);
         }
 
         /// <summary>
-        /// Checks if a - b are almost equals within a float epsilon.
+        /// Checks whether the difference between two numbers are almost equals within an epsilon.
         /// </summary>
-        /// <param name="a">The left value to compare.</param>
-        /// <param name="b">The right value to compare.</param>
-        /// <param name="epsilon">Epsilon value</param>
-        /// <returns><c>true</c> if a almost equal to b within a float epsilon, <c>false</c> otherwise</returns>
+        /// <param name="a">The first value to compare.</param>
+        /// <param name="b">The second value to compare.</param>
+        /// <param name="epsilon">The epsilon value</param>
+        /// <returns>
+        /// `true` if <paramref name="a"/> is almost equal to <paramref name="b"/> within the <paramref name="epsilon"/>; 
+        /// otherwise, `false`.
+        /// </returns>
         public static bool WithinEpsilon(this float a, float b, float epsilon)
         {
             float num = a - b;

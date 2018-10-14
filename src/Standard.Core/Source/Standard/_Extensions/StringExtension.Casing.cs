@@ -7,39 +7,26 @@ namespace Standard
 {
     partial class StringExtension
     {
-        //<#
-        // .SYNOPSIS
-        //      Converts the input string to PascalCase.
-        //
-        // .PARAMETER value
-        //      The input string to be converted to PascalCase
-        //
-        // .OUTPUT
-        //      The pascal case equivilance of @[value].
-        //
-        // .REMARKS
-        //      <template name="ToPascalCaseRemarksShared">
-        //      Pascal case (aka. upper camel case, and more formally, upper medial capitals) format represents 
-        //      compound words without intervening spaces or punctuations. Instead, each word begins with a 
-        //      capital letter.
-        //
-        //      For example, "John Smith" will be written as "JohnSmith", and "End-of-File" will be written as 
-        //      "EndOfFile".
-        //
-        //      Pascal case is distinct from lower camel case, where the first letter is in lower case, such as 
-        //      "johnSmith" and "endOfFile". For lower camel case conversion, use the @"ToCamelCase(string)"
-        //      function.
-        //      </template>
-        //
-        //      <template name="MedialCaseDetectionRemark">
-        //      This function detect medial capitals (which consists of both pascal and lower camel case) internally
-        //      by testing for the presence of the following characters: (space), `-`, `_`. If any of these characters 
-        //      are detected, it is regarded as non-medial capital.
-        //      </template>
-        //
-        //      For performance sensitive operations, you can use the function @"ToPascalCase(string, bool)" to 
-        //      specify the format manually. Typical speed gain is about 2 to 3 times.
-        //#>
+        /// <summary>
+        /// Converts the input string to `PascalCase`.
+        /// </summary>
+        /// <param name="value">The <see cref="string"/> object to modify.</param>
+        /// <returns>The pascal case equivilance of <paramref name="value"/>.</returns>
+        /// <remarks>
+        /// Pascal case (aka. upper camel case, and more formally, upper medial capitals) format represents 
+        /// compound words without intervening spaces or punctuations. Instead, each word begins with a 
+        /// capital letter.
+        ///
+        /// For example, "John Smith" will be written as "JohnSmith", and "End-of-File" will be written as 
+        /// "EndOfFile".
+        ///
+        /// Pascal case is distinct from lower camel case, where the first letter is in lower case, such as 
+        /// "johnSmith" and "endOfFile". For lower camel case conversion, use the <see cref="ToCamelCase(string)"/>
+        /// function.
+        /// 
+        /// If you already know that <paramref name="value"/> is in medial capitals (either PascalCase or camelCase), use the 
+        /// <see cref="ToPascalCase(string, bool)"/> function. Typical speed gain is about 2-3 times.
+        /// </remarks>
         public static string ToPascalCase(this string value)
         {
             char[] sepchars = { ' ', '-', '_' };
@@ -56,25 +43,16 @@ namespace Standard
             return ToPascalCase(value, isMedial);
         }
 
-        //<#
-        // .SYNOPSIS
-        //      Converts the input string to PascalCase.
-        //
-        // .PARAMETER value
-        //      The input string to be converted to PascalCase
-        //
-        // .PARAMETER fromMedialCaps
-        //      `true` if @[value] is in either PascalCase or camelCase, otherwise `false`.
-        //
-        // .OUTPUT
-        //      The pascal case equivilance of @[value].
-        //
-        // .REMARKS
-        //      <include template="ToPascalCaseRemarksShared" />
-        //
-        //      This function requires you to manually specify whether the input @[value] is in medial capitals. If 
-        //      automatic detection is desired, use the @"ToPascalCase(string)" function.
-        //#>
+        /// <summary>
+        /// Converts the input string to `PascalCase`.
+        /// </summary>
+        /// <param name="value">The <see cref="string"/> object to modify.</param>
+        /// <param name="fromMedialCaps">If <paramref name="value"/> is already in either PascalCase or camelCase, `true`. Otherwise, `false`.</param>
+        /// <returns>The pascal case equivilance of <paramref name="value"/>.</returns>
+        /// <remarks>
+        /// This function requires you to manually specify whether <paramref name="value"/> is in medial capitals. If automatic detection is desired, 
+        /// use the <see cref="ToPascalCase(string)"/> function.
+        /// </remarks>
         [SecuritySafeCritical]
         public unsafe static string ToPascalCase(this string value, bool fromMedialCaps)
         {
@@ -128,35 +106,26 @@ namespace Standard
             }
         }
 
-        //<#
-        // .SYNOPSIS
-        //      Converts the input string to camelCase.
-        //
-        // .PARAMETER value
-        //      The input string to be converted to camelCase
-        //
-        // .OUTPUT
-        //      The camel case equivilance of @[value].
-        //
-        // .REMARKS
-        //      <template name="ToCamelCaseRemarksShared">
-        //      Camel case (aka. lower camel case, and more formally, lower medial capitals) format represents 
-        //      compound words without intervening spaces or punctuations. Instead, each word begins with a 
-        //      capital letter, except for the first letter, which must be in lower casing.
-        //
-        //      For example, "John Smith" will be written as "johnSmith", and "End-of-File" will be written as 
-        //      "endOfFile".
-        //
-        //      Lower camel case is distinct from upper camel case or pascal case, where the first letter is in 
-        //      upper case, such as "JohnSmith" and "EndOfFile". For pascal case conversion, use the 
-        //      @"ToPascalCase(string)" function.
-        //      </template>
-        //
-        //      <include template="MedialCaseDetectionRemark" />
-        //
-        //      For performance sensitive operations, you can use the function @"ToCamelCase(string, bool)" to 
-        //      specify the format manually. Typical speed gain is about 2 to 3 times.
-        //#>
+        /// <summary>
+        /// Converts the input string to `camelCase`.
+        /// </summary>
+        /// <param name="value">The <see cref="string"/> object to modify.</param>
+        /// <returns>The camel case equivilance of <paramref name="value"/>.</returns>
+        /// <remarks>
+        /// Camel case (aka. lower camel case, and more formally, lower medial capitals) format represents 
+        /// compound words without intervening spaces or punctuations. Instead, each word begins with a 
+        /// capital letter, except for the first letter, which must be in lower casing.
+        ///
+        /// For example, "John Smith" will be written as "johnSmith", and "End-of-File" will be written as 
+        /// "endOfFile".
+        ///
+        /// Lower camel case is distinct from upper camel case or pascal case, where the first letter is in 
+        /// upper case, such as "JohnSmith" and "EndOfFile". For pascal case conversion, use the <see cref="ToPascalCase(string)"/>
+        /// function.
+        /// 
+        /// If you already know that <paramref name="value"/> is in medial capitals (either PascalCase or camelCase), use the 
+        /// <see cref="ToCamelCase(string, bool)"/> function. Typical speed gain is about 2-3 times.
+        /// </remarks>
         public static string ToCamelCase(this string value)
         {
             char[] sepchars = { ' ', '-', '_' };
@@ -173,25 +142,16 @@ namespace Standard
             return ToCamelCase(value, isMedial);
         }
 
-        //<#
-        // .SYNOPSIS
-        //      Converts the input string to camelCase.
-        //
-        // .PARAMETER value
-        //      The input string to be converted to camelCase.
-        //
-        // .PARAMETER fromMedialCaps
-        //      `true` if @[value] is in either PascalCase or camelCase, otherwise `false`.
-        //
-        // .OUTPUT
-        //      The camel case equivilance of @[value].
-        //
-        // .REMARKS
-        //      <include template="ToCamelCaseRemarksShared" />
-        //
-        //      This function requires you to manually specify whether the input @[value] is in medial capitals. If 
-        //      automatic detection is desired, use the @"ToCamelCase(string)" function.
-        //#>
+        /// <summary>
+        /// Converts the input string to `camelCase`.
+        /// </summary>
+        /// <param name="value">The <see cref="string"/> object to modify.</param>
+        /// <param name="fromMedialCaps">If <paramref name="value"/> is already in either PascalCase or camelCase, `true`. Otherwise, `false`.</param>
+        /// <returns>The camel case equivilance of <paramref name="value"/>.</returns>
+        /// <remarks>
+        /// This function requires you to manually specify whether <paramref name="value"/> is in medial capitals. If automatic detection is desired, 
+        /// use the <see cref="ToCamelCase(string)"/> function.
+        /// </remarks>
         [SecuritySafeCritical]
         public unsafe static string ToCamelCase(this string value, bool fromMedialCaps)
         {
@@ -246,29 +206,20 @@ namespace Standard
             }
         }
 
-        //<#
-        // .SYNOPSIS
-        //      Converts the input string to TitleCase.
-        //
-        // .PARAMETER value
-        //      The input string to be converted to title case.
-        //
-        // .OUTPUT
-        //      The title case equivilance of @[value], using space as separator.
-        //
-        // .REMARKS
-        //      <template name="ToTitleCaseRemarksShared">
-        //      Title case represents compound words with one intervening space or punctuation. Each word begins with a 
-        //      capital letter.
-        //
-        //      For example, "EndOfFile" will be written as "End Of File".
-        //      </template>
-        //
-        //      <include template="MedialCaseDetectionRemark" />
-        //
-        //      For performance sensitive operations, you can use the function @"ToTitleCase(string, bool)" to 
-        //      specify the format manually. Typical speed gain is about 2 to 3 times.
-        //#>
+        /// <summary>
+        /// Converts the input string to title case. A space (` `) character is used to separate each word.
+        /// </summary>
+        /// <param name="value">The <see cref="string"/> object to modify.</param>
+        /// <returns>The title case equivilance of <paramref name="value"/>.</returns>
+        /// <remarks>
+        /// Title case represents compound words with one intervening space or punctuation. Each word begins 
+        /// with a capital letter.
+        ///
+        /// For example, "EndOfFile" will be written as "End Of File".
+        ///
+        /// If you already know that <paramref name="value"/> is in medial capitals (either PascalCase or camelCase), use the 
+        /// <see cref="ToTitleCase(string, bool)"/> function. Typical speed gain is about 2-3 times.
+        /// </remarks>
         public static string ToTitleCase(this string value)
         {
             char[] sepchars = { ' ', '-', '_' };
@@ -285,53 +236,35 @@ namespace Standard
             return ToTitleCase(value, isMedial, ' ');
         }
 
-        //<#
-        // .SYNOPSIS
-        //      Converts the input string to TitleCase.
-        //
-        // .PARAMETER value
-        //      The input string to be converted to title case.
-        //
-        // .PARAMETER fromMedialCaps
-        //      `true` if @[value] is in either PascalCase or camelCase, otherwise `false`.
-        //
-        // .OUTPUT
-        //      The title case equivilance of @[value], using space as separator.
-        //
-        // .REMARKS
-        //      <include template="ToTitleCaseRemarksShared" />
-        //
-        //      This function requires you to manually specify whether the input @[value] is in medial capitals. If 
-        //      automatic detection is desired, use the @"ToTitleCase(string)" function.
-        //#>
+        /// <summary>
+        /// Converts the input string to title case. A space (` `) character is used to separate each word.
+        /// </summary>
+        /// <param name="value">The <see cref="string"/> object to modify.</param>
+        /// <param name="fromMedialCaps">If <paramref name="value"/> is already in either PascalCase or camelCase, `true`. Otherwise, `false`.</param>
+        /// <returns>The title case equivilance of <paramref name="value"/>.</returns>
+        /// <remarks>
+        /// This function requires you to manually specify whether <paramref name="value"/> is in medial capitals. If automatic detection is desired, 
+        /// use the <see cref="ToTitleCase(string)"/> function.
+        /// </remarks>
         public static string ToTitleCase(this string value, bool fromMedialCaps)
         {
             return ToTitleCase(value, fromMedialCaps, ' ');
         }
 
-        //<#
-        // .SYNOPSIS
-        //      Converts the input string to sentence case.
-        //
-        // .PARAMETER value
-        //      The input string to be converted to sentence case.
-        //
-        // .OUTPUT
-        //      The sentence case equivilance of @[value], using space as separator.
-        //
-        // .REMARKS
-        //      <template name="ToSentenceCaseRemarksShared">
-        //      Sentence case represents compound words with one intervening space or punctuation. Only the first word begins 
-        //      with a capital letter.
-        //
-        //      For example, "EndOfFile" will be written as "End of file".
-        //      </template>
-        //
-        //      <include template="MedialCaseDetectionRemark" />
-        //
-        //      For performance sensitive operations, you can use the function @"ToSentenceCase(string, bool)" to 
-        //      specify the format manually. Typical speed gain is about 2 to 3 times.
-        //#>
+        /// <summary>
+        /// Converts the input string to sentence case. A space (` `) character is used to separate each word.
+        /// </summary>
+        /// <param name="value">The <see cref="string"/> object to modify.</param>
+        /// <returns>The sentence case equivilance of <paramref name="value"/>.</returns>
+        /// <remarks>
+        /// Sentence case represents compound words with one intervening space or punctuation. Only the first word begins 
+        /// with a capital letter.
+        ///
+        /// For example, "EndOfFile" will be written as "End of file".
+        ///
+        /// If you already know that <paramref name="value"/> is in medial capitals (either PascalCase or camelCase), use the 
+        /// <see cref="ToSentenceCase(string, bool)"/> function. Typical speed gain is about 2-3 times.
+        /// </remarks>
         public static string ToSentenceCase(this string value)
         {
             char[] sepchars = { ' ', '-', '_' };
@@ -348,52 +281,32 @@ namespace Standard
             return ToSentenceCase(value, isMedial, ' ');
         }
 
-        //<#
-        // .SYNOPSIS
-        //      Converts the input string to sentence case.
-        //
-        // .PARAMETER value
-        //      The input string to be converted to sentence case.
-        //
-        // .PARAMETER fromMedialCaps
-        //      `true` if @[value] is in either PascalCase or camelCase, otherwise `false`.
-        //
-        // .OUTPUT
-        //      The sentence case equivilance of @[value], using space as separator.
-        //
-        // .REMARKS
-        //      <include template="ToSentenceCaseRemarksShared" />
-        //
-        //      This function requires you to manually specify whether the input @[value] is in medial capitals. If 
-        //      automatic detection is desired, use the @"ToSentenceCase(string)" function.
-        //#>
+        /// <summary>
+        /// Converts the input string to sentence case. A space (` `) character is used to separate each word.
+        /// </summary>
+        /// <param name="value">The <see cref="string"/> object to modify.</param>
+        /// <param name="fromMedialCaps">If <paramref name="value"/> is already in either PascalCase or camelCase, `true`. Otherwise, `false`.</param>
+        /// <returns>The sentence case equivilance of <paramref name="value"/>.</returns>
+        /// <remarks>
+        /// This function requires you to manually specify whether <paramref name="value"/> is in medial capitals. If automatic detection is desired, 
+        /// use the <see cref="ToSentenceCase(string)"/> function.
+        /// </remarks>
         public static string ToSentenceCase(this string value, bool fromMedialCaps)
         {
             return ToSentenceCase(value, fromMedialCaps, ' ');
         }
 
-        //<#
-        // .SYNOPSIS
-        //      Converts the input string to TitleCase.
-        //
-        // .PARAMETER value
-        //      The input string to be converted to title case.
-        //
-        // .PARAMETER fromMedialCaps
-        //      `true` if @[value] is in either PascalCase or camelCase, otherwise `false`.
-        //
-        // .PARAMETER separatorChar
-        //      The character to use as separator between words.
-        //
-        // .OUTPUT
-        //      The title case equivilance of @[value].
-        //
-        // .REMARKS
-        //      <include template="ToTitleCaseRemarksShared" />
-        //
-        //      This function requires you to manually specify whether the input @[value] is in medial capitals. If 
-        //      automatic detection is desired, use the @"ToTitleCase(string)" function.
-        //#>
+        /// <summary>
+        /// Converts the input string to title case.
+        /// </summary>
+        /// <param name="value">The <see cref="string"/> object to modify.</param>
+        /// <param name="fromMedialCaps">If <paramref name="value"/> is already in either PascalCase or camelCase, `true`. Otherwise, `false`.</param>
+        /// <param name="separatorChar">The character to use as separator between words.</param>
+        /// <returns>The title case equivilance of <paramref name="value"/>.</returns>
+        /// <remarks>
+        /// This function requires you to manually specify whether <paramref name="value"/> is in medial capitals. If automatic detection is desired, 
+        /// use the <see cref="ToTitleCase(string)"/> function.
+        /// </remarks>
         [SecuritySafeCritical]
         public unsafe static string ToTitleCase(this string value, bool fromMedialCaps, char separatorChar)
         {
@@ -463,28 +376,17 @@ namespace Standard
             }
         }
 
-        //<#
-        // .SYNOPSIS
-        //      Converts the input string to sentence case.
-        //
-        // .PARAMETER value
-        //      The input string to be converted to sentence case.
-        //
-        // .PARAMETER fromMedialCaps
-        //      `true` if @[value] is in either PascalCase or camelCase, otherwise `false`.
-        //
-        // .PARAMETER separatorChar
-        //      The character to use as separator between words.
-        //
-        // .OUTPUT
-        //      The sentence case equivilance of @[value].
-        //
-        // .REMARKS
-        //      <include template="ToSentenceCaseRemarksShared" />
-        //
-        //      This function requires you to manually specify whether the input @[value] is in medial capitals. If 
-        //      automatic detection is desired, use the @"ToSentenceCase(string)" function.
-        //#>
+        /// <summary>
+        /// Converts the input string to sentence case.
+        /// </summary>
+        /// <param name="value">The <see cref="string"/> object to modify.</param>
+        /// <param name="fromMedialCaps">If <paramref name="value"/> is already in either PascalCase or camelCase, `true`. Otherwise, `false`.</param>
+        /// <param name="separatorChar">The character to use as separator between words.</param>
+        /// <returns>The sentence case equivilance of <paramref name="value"/>.</returns>
+        /// <remarks>
+        /// This function requires you to manually specify whether <paramref name="value"/> is in medial capitals. If automatic detection is desired, 
+        /// use the <see cref="ToSentenceCase(string)"/> function.
+        /// </remarks>
         [SecuritySafeCritical]
         public unsafe static string ToSentenceCase(this string value, bool fromMedialCaps, char separatorChar)
         {
@@ -557,19 +459,14 @@ namespace Standard
             }
         }
 
-        //<#
-        // .SYNOPSIS
-        //      Converts the first alphabetic character to upper casing.
-        //
-        // .PARAMETER value
-        //      The input string to be converted.
-        //
-        // .OUTPUT
-        //      The same as @[value], but with the first alphabetic character converted to upper casing.
-        //
-        // .REMARKS
-        //      Alphabetic character here means character from ANSI code 97 to 122 ('a' through 'z').
-        //#>
+        /// <summary>
+        /// Converts the first alphabetic character to upper casing.
+        /// </summary>
+        /// <param name="value">The <see cref="string"/> object to modify.</param>
+        /// <returns>The value of <paramref name="value"/>, with the first alphanetic character converted to upper casing where required.</returns>
+        /// <remarks>
+        /// Alphabetic character here means character from ANSI code 97 to 122 ('a' through 'z').
+        /// </remarks>
         [SecuritySafeCritical]      
         public static unsafe string FirstToUpperInvariant(this string value)
         {
@@ -619,19 +516,14 @@ namespace Standard
             return ret;
         }
 
-        //<#
-        // .SYNOPSIS
-        //      Converts the first alphabetic character to lower casing.
-        //
-        // .PARAMETER value
-        //      The input string to be converted.
-        //
-        // .OUTPUT
-        //      The same as @[value], but with the first alphabetic character converted to lower casing.
-        //
-        // .REMARKS
-        //      Alphabetic character here means character from ANSI code 64 to 90 ('A' through 'Z').
-        //#>
+        /// <summary>
+        /// Converts the first alphabetic character to lower casing.
+        /// </summary>
+        /// <param name="value">The <see cref="string"/> object to modify.</param>
+        /// <returns>The value of <paramref name="value"/>, with the first alphanetic character converted to lower casing where required.</returns>
+        /// <remarks>
+        /// Alphabetic character here means character from ANSI code 64 to 90 ('A' through 'Z').
+        /// </remarks>
         [SecuritySafeCritical]
         public static unsafe string FirstToLowerInvariant(this string value)
         {

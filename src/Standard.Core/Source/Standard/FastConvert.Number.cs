@@ -8,7 +8,13 @@ namespace Standard
     {
         // --- FromString ---
 
-        // proxied ToInt32
+        /// <summary>
+        /// Converts a string representation of byte value to <see cref="Byte"/>.
+        /// </summary>
+        /// <param name="str">The string to convert.</param>
+        /// <returns>
+        /// A <see cref="Byte"/> object.
+        /// </returns>
         [SecuritySafeCritical]
         public static unsafe byte ToByte(string str)
         {
@@ -18,7 +24,13 @@ namespace Standard
             }
         }
 
-        // proxied ToInt32
+        /// <summary>
+        /// Converts a string representation of 16-bit numeric value to <see cref="Int16"/>.
+        /// </summary>
+        /// <param name="str">The string to convert.</param>
+        /// <returns>
+        /// A <see cref="Int16"/> object.
+        /// </returns>
         [SecuritySafeCritical]
         public static unsafe short ToInt16(string str)
         {
@@ -28,7 +40,13 @@ namespace Standard
             }
         }
 
-        // proxied ToInt32
+        /// <summary>
+        /// Converts a string representation of 16-bit unsigned numeric value to <see cref="UInt16"/>.
+        /// </summary>
+        /// <param name="str">The string to convert.</param>
+        /// <returns>
+        /// A <see cref="UInt16"/> object.
+        /// </returns>
         [SecuritySafeCritical]
         [CLSCompliant(false)]
         public static unsafe ushort ToUInt16(string str)
@@ -39,6 +57,13 @@ namespace Standard
             }
         }
 
+        /// <summary>
+        /// Converts a string representation of 32-bit numeric value to <see cref="Int32"/>.
+        /// </summary>
+        /// <param name="strNum">The string to convert.</param>
+        /// <returns>
+        /// An <see cref="Int32"/> object.
+        /// </returns>
         [SecuritySafeCritical]
         public static unsafe int ToInt32(string strNum)
         {
@@ -61,6 +86,13 @@ namespace Standard
             return val * neg;
         }
 
+        /// <summary>
+        /// Converts a string representation of 32-bit unsigned numeric value to <see cref="UInt32"/>.
+        /// </summary>
+        /// <param name="strNum">The string to convert.</param>
+        /// <returns>
+        /// A <see cref="UInt32"/> object.
+        /// </returns>
         [CLSCompliant(false)]
         [SecuritySafeCritical]
         public static unsafe uint ToUInt32(string strNum)
@@ -83,6 +115,13 @@ namespace Standard
             return val;
         }
 
+        /// <summary>
+        /// Converts a string representation of 64-bit numeric value to <see cref="Int64"/>.
+        /// </summary>
+        /// <param name="strNum">The string to convert.</param>
+        /// <returns>
+        /// An <see cref="Int64"/> object.
+        /// </returns>
         [SecuritySafeCritical]
         public static unsafe long ToInt64(string strNum)
         {
@@ -105,6 +144,13 @@ namespace Standard
             return val * neg;
         }
 
+        /// <summary>
+        /// Converts a string representation of 64-bit unsigned numeric value to <see cref="UInt64"/>.
+        /// </summary>
+        /// <param name="strNum">The string to convert.</param>
+        /// <returns>
+        /// A <see cref="UInt64"/> object.
+        /// </returns>
         [CLSCompliant(false)]
         [SecuritySafeCritical]
         public static unsafe ulong ToUInt64(string strNum)
@@ -121,6 +167,13 @@ namespace Standard
             return val;
         }
 
+        /// <summary>
+        /// Converts a string to double precision floating point number.
+        /// </summary>
+        /// <param name="numStr">The string to convert.</param>
+        /// <returns>
+        /// A <see cref="Double"/> object.
+        /// </returns>
         [SecuritySafeCritical]
         public static unsafe double ToDouble(string numStr)
         {
@@ -181,13 +234,25 @@ namespace Standard
             return ((double)(decimal)val) * neg;
         }
 
-        // proxied ToDouble
+        /// <summary>
+        /// Converts a string to single precision floating point number.
+        /// </summary>
+        /// <param name="numStr">The string to convert.</param>
+        /// <returns>
+        /// A <see cref="Single"/> object.
+        /// </returns>
         public static unsafe float ToSingle(string numStr)
         {
             return (float)ToDouble(numStr);
         }
 
-        // proxied ToDouble
+        /// <summary>
+        /// Converts a string representation to a decimal number.
+        /// </summary>
+        /// <param name="numStr">The string to convert.</param>
+        /// <returns>
+        /// A <see cref="Decimal"/> object.
+        /// </returns>
         public static decimal ToDecimal(string numStr)
         {
             return new decimal(ToDouble(numStr));
@@ -196,6 +261,13 @@ namespace Standard
 
         // --- ToString ---
 
+        /// <summary>
+        /// Converts a number to string.
+        /// </summary>
+        /// <param name="snum">The number to convert.</param>
+        /// <returns>
+        /// A string representation of the <paramref name="snum"/> value.
+        /// </returns>
         [SecuritySafeCritical]
         public unsafe static string ToString(int snum)
         {
@@ -271,6 +343,13 @@ namespace Standard
             return new string(s);
         }
 
+        /// <summary>
+        /// Converts a number to string.
+        /// </summary>
+        /// <param name="snum">The number to convert.</param>
+        /// <returns>
+        /// A string representation of the <paramref name="snum"/> value.
+        /// </returns>
         [SecuritySafeCritical]
         [CLSCompliant(false)]
         public unsafe static string ToString(uint snum)
@@ -344,6 +423,13 @@ namespace Standard
             return new string(s);
         }
 
+        /// <summary>
+        /// Converts a number to string.
+        /// </summary>
+        /// <param name="snum">The number to convert.</param>
+        /// <returns>
+        /// A string representation of the <paramref name="snum"/> value.
+        /// </returns>
         [SecuritySafeCritical]
         public unsafe static string ToString(long snum)
         {
@@ -474,6 +560,13 @@ namespace Standard
             return new string(s);
         }
 
+        /// <summary>
+        /// Converts a number to string.
+        /// </summary>
+        /// <param name="snum">The number to convert.</param>
+        /// <returns>
+        /// A string representation of the <paramref name="snum"/> value.
+        /// </returns>
         [SecuritySafeCritical]
         [CLSCompliant(false)]
         public unsafe static string ToString(ulong snum)
@@ -602,32 +695,62 @@ namespace Standard
             return new string(s);
         }
 
-        // proxied system .ToString
+        /// <summary>
+        /// Converts a number to string.
+        /// </summary>
+        /// <param name="value">The number to convert.</param>
+        /// <returns>
+        /// A string representation of the <paramref name="value"/> value.
+        /// </returns>
         public static string ToString(float value)
         {
             return value.ToString(CultureInfo.InvariantCulture);
         }
 
-        // proxied system .ToString
+        /// <summary>
+        /// Converts a number to string.
+        /// </summary>
+        /// <param name="value">The number to convert.</param>
+        /// <returns>
+        /// A string representation of the <paramref name="value"/> value.
+        /// </returns>
         public static string ToString(double value)
         {
             return value.ToString(CultureInfo.InvariantCulture);
         }
 
-        // proxied system .ToString
+        /// <summary>
+        /// Converts a number to string.
+        /// </summary>
+        /// <param name="value">The number to convert.</param>
+        /// <returns>
+        /// A string representation of the <paramref name="value"/> value.
+        /// </returns>
         [CLSCompliant(false)]
         public static string ToString(sbyte value)
         {
             return value.ToString(CultureInfo.InvariantCulture);
         }
 
-        // proxied system .ToString
+        /// <summary>
+        /// Converts a number to string.
+        /// </summary>
+        /// <param name="value">The number to convert.</param>
+        /// <returns>
+        /// A string representation of the <paramref name="value"/> value.
+        /// </returns>
         public static string ToString(decimal value)
         {
             return value.ToString(CultureInfo.InvariantCulture);
         }
 
-        // proxied system .ToString
+        /// <summary>
+        /// Converts a character to string.
+        /// </summary>
+        /// <param name="chr">The character to convert to string.</param>
+        /// <returns>
+        /// A string representation of the <paramref name="chr"/> value.
+        /// </returns>
         public static string ToString(char chr)
         {
             return chr.ToString();

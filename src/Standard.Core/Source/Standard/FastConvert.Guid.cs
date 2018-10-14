@@ -86,24 +86,24 @@ namespace Standard
             return ToString(guid, "d");
         }
 
-        //<#
-        //      .SYNOPSIS
-        //          Converts a @Guid instance to string.
-        //
-        //      .PARAMETER guid
-        //          The @Guid instance to be converted.
-        //
-        //      .PARAMETER format
-        //          One of the following (not case sensitive): 
-        //
-        //          Code | Example
-        //          -----|--------
-        //          d    | 1314FAD4-7505-439D-ABD2-DBD89242928C
-        //          n    | 1314FAD47505439DABD2DBD89242928C
-        //          b    | {1314FAD4-7505-439D-ABD2-DBD89242928C}
-        //          p    | (1314FAD4-7505-439D-ABD2-DBD89242928C)
-        //          x    | {0x409cb578,0x5dfc,0x436c,{0xb0,0xaa,0x95,0x56,0x18,0x69,0x0e,0x38}}
-        //#>
+        /// <summary>
+        /// Converts a <see cref="Guid"/> to string.
+        /// </summary>
+        /// <param name="guid">The <see cref="Guid"/> instance to be converted.</param>
+        /// <param name="format">
+        /// One of the following (not case sensitive):
+        /// 
+        ///          Code | Example
+        ///          -----|--------
+        ///          d    | 1314FAD4-7505-439D-ABD2-DBD89242928C
+        ///          n    | 1314FAD47505439DABD2DBD89242928C
+        ///          b    | {1314FAD4-7505-439D-ABD2-DBD89242928C}
+        ///          p    | (1314FAD4-7505-439D-ABD2-DBD89242928C)
+        ///          x    | {0x409cb578,0x5dfc,0x436c,{0xb0,0xaa,0x95,0x56,0x18,0x69,0x0e,0x38}}
+        /// </param>
+        /// <returns>
+        /// String representation of a <see cref="Guid"/>.
+        /// </returns>
         [SecuritySafeCritical]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string ToString(Guid guid, string format)

@@ -2,14 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Standard.Core;
 
 namespace Standard
 {
     partial class StringExtension
     {
+        /// <summary>
+        /// Replace all variants of newlines contained in a string, using the newline character(s) defined by the operating system.
+        /// </summary>
+        /// <param name="input">A string which may contain different variants of newline characters.</param>
+        /// <returns>A string with all variants of newline characters replaced by the newline character(s) defined by the operating system.</returns>
         public static string NormalizeNewLine(this string input)
         {
             if (input == null)

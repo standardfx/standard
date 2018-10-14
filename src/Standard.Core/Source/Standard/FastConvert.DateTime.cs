@@ -15,78 +15,147 @@ namespace Standard
 
         // --- Serialize string to DateTime ---
 
-        //<#
-        //      .SYNOPSIS
-        //          Converts the specified string representation of a date and time to its @DateTime equivalent.
-        //
-        //      .PARAMETER s
-        //          A string containing a date and time to convert.
-        //
-        //      .PARAMETER format
-        //          Any formatting that is supported by `DateTime.ParseExact(string, string)`, or one of the following:
-        //
-        //          - `e`: Epoch format. This is the number of ticks from Jan 1, 1970 (the epoch date). Dates prior to the 
-        //            epoch date are represented by negative numbers.
-        //
-        //          - `E`: Microsoft JavaScript Serializer epoch format. This is the same as `e`, but supports millisecond 
-        //            precision only. It also records the OS timezone at the time of serialization, although this information 
-        //            is not used when deserializing.
-        //
-        //      .OUTPUT
-        //          The @DateTime value equivalent to the date and time contained in @[s].
-        //#>
+        /// <summary>
+        /// Converts the specified string representation of a date and time to its <see cref="DateTime"/> equivalent.
+        /// </summary>
+        /// <param name="s">A string containing a date and time to convert.</param>
+        /// <param name="format">
+        /// <para>Any formatting that is supported by <see cref="DateTime.ParseExact(string, string, IFormatProvider)"/>, or one of the following:</para>
+        /// <list type="bullet">
+        /// <item>`e`: Epoch format. This is the number of ticks from Jan 1, 1970 (the epoch date). Dates prior to the epoch date are represented by negative numbers.</item>
+        /// <item>`E`: Microsoft JavaScript Serializer epoch format. This is the same as `e`, but supports millisecond precision only. It also records the OS timezone 
+        /// at the time of serialization, although this information is not used when deserializing.</item>
+        /// <item>`i`: The format defined by ISO8601. UTC is not used.</item>
+        /// </list>
+        /// </param>
+        /// <returns>
+        /// The <see cref="DateTime"/> value equivalent to the date and time contained in <paramref name="s"/>.
+        /// </returns>
         public static DateTime ToDateTime(string s, string format)
         {
             return ToDateTime(s, format, CultureInfo.CurrentCulture, DateTimeStyles.AllowWhiteSpaces);
         }
 
-        //<#
-        //      .SYNOPSIS
-        //          Converts the specified string representation of a date and time to its @DateTimeSet equivalent.
-        //
-        //      .PARAMETER s
-        //          A string containing a date and time to convert.
-        //
-        //      .PARAMETER format
-        //          Any formatting that is supported by `DateTimeOffset.ParseExact(string, string)`, or one of the following:
-        //
-        //          - `e`: Epoch format. This is the number of ticks from Jan 1, 1970 (the epoch date). Dates prior to the 
-        //            epoch date are represented by negative numbers.
-        //
-        //          - `E`: Microsoft JavaScript Serializer epoch format. This is the same as `e`, but supports millisecond 
-        //            precision only. It also records the OS timezone at the time of serialization, although this information 
-        //            is not used when deserializing.
-        //
-        //          - `i`: The format defined by ISO8601. UTC is not used.
-        //
-        //      .OUTPUT
-        //          The @DateTimeSet value equivalent to the date and time contained in @[s].
-        //#>
+        /// <summary>
+        /// Converts the specified string representation of a date and time to its <see cref="DateTimeOffset"/> equivalent.
+        /// </summary>
+        /// <param name="s">A string containing a date and time to convert.</param>
+        /// <param name="format">
+        /// <para>Any formatting that is supported by <see cref="DateTimeOffset.ParseExact(string, string, IFormatProvider)"/>, or one of the following:</para>
+        /// <list type="bullet">
+        /// <item>`e`: Epoch format. This is the number of ticks from Jan 1, 1970 (the epoch date). Dates prior to the epoch date are represented by negative numbers.</item>
+        /// <item>`E`: Microsoft JavaScript Serializer epoch format. This is the same as `e`, but supports millisecond precision only. It also records the OS timezone 
+        /// at the time of serialization, although this information is not used when deserializing.</item>
+        /// <item>`i`: The format defined by ISO8601. UTC is not used.</item>
+        /// </list>
+        /// </param>
+        /// <returns>
+        /// The <see cref="DateTimeOffset"/> value equivalent to the date and time contained in <paramref name="s"/>.
+        /// </returns>
         public static DateTimeOffset ToDateTimeOffset(string s, string format)
         {
             return ToDateTimeOffset(s, format, CultureInfo.CurrentCulture, DateTimeStyles.AllowWhiteSpaces);
         }
 
+        /// <summary>
+        /// Converts the specified string representation of a date and time to its <see cref="DateTime"/> equivalent.
+        /// </summary>
+        /// <param name="s">A string containing a date and time to convert.</param>
+        /// <param name="format">
+        /// <para>Any formatting that is supported by <see cref="DateTime.ParseExact(string, string, IFormatProvider)"/>, or one of the following:</para>
+        /// <list type="bullet">
+        /// <item>`e`: Epoch format. This is the number of ticks from Jan 1, 1970 (the epoch date). Dates prior to the epoch date are represented by negative numbers.</item>
+        /// <item>`E`: Microsoft JavaScript Serializer epoch format. This is the same as `e`, but supports millisecond precision only. It also records the OS timezone 
+        /// at the time of serialization, although this information is not used when deserializing.</item>
+        /// <item>`i`: The format defined by ISO8601. UTC is not used.</item>
+        /// </list>
+        /// </param>
+        /// <param name="provider">The formatting provider.</param>
+        /// <returns>
+        /// The <see cref="DateTime"/> value equivalent to the date and time contained in <paramref name="s"/>.
+        /// </returns>
         public static DateTime ToDateTime(string s, string format, IFormatProvider provider)
         {
             return ToDateTime(s, format, provider, DateTimeStyles.AllowWhiteSpaces);
         }
 
+        /// <summary>
+        /// Converts the specified string representation of a date and time to its <see cref="DateTimeOffset"/> equivalent.
+        /// </summary>
+        /// <param name="s">A string containing a date and time to convert.</param>
+        /// <param name="format">
+        /// <para>Any formatting that is supported by <see cref="DateTimeOffset.ParseExact(string, string, IFormatProvider)"/>, or one of the following:</para>
+        /// <list type="bullet">
+        /// <item>`e`: Epoch format. This is the number of ticks from Jan 1, 1970 (the epoch date). Dates prior to the epoch date are represented by negative numbers.</item>
+        /// <item>`E`: Microsoft JavaScript Serializer epoch format. This is the same as `e`, but supports millisecond precision only. It also records the OS timezone 
+        /// at the time of serialization, although this information is not used when deserializing.</item>
+        /// <item>`i`: The format defined by ISO8601. UTC is not used.</item>
+        /// </list>
+        /// </param>
+        /// <param name="provider">The formatting provider.</param>
+        /// <returns>
+        /// The <see cref="DateTimeOffset"/> value equivalent to the date and time contained in <paramref name="s"/>.
+        /// </returns>
         public static DateTimeOffset ToDateTimeOffset(string s, string format, IFormatProvider provider)
         {
             return ToDateTimeOffset(s, format, provider, DateTimeStyles.AllowWhiteSpaces);
         }
 
+        /// <summary>
+        /// Converts the specified string representation of a date and time to its <see cref="DateTime"/> equivalent.
+        /// </summary>
+        /// <param name="s">A string containing a date and time to convert.</param>
+        /// <param name="format">
+        /// <para>Any formatting that is supported by <see cref="DateTime.ParseExact(string, string, IFormatProvider)"/>, or one of the following:</para>
+        /// <list type="bullet">
+        /// <item>`e`: Epoch format. This is the number of ticks from Jan 1, 1970 (the epoch date). Dates prior to the epoch date are represented by negative numbers.</item>
+        /// <item>`E`: Microsoft JavaScript Serializer epoch format. This is the same as `e`, but supports millisecond precision only. It also records the OS timezone 
+        /// at the time of serialization, although this information is not used when deserializing.</item>
+        /// <item>`i`: The format defined by ISO8601. UTC is not used.</item>
+        /// </list>
+        /// </param>
+        /// <param name="style">The formatting style.</param>
+        /// <returns>
+        /// The <see cref="DateTime"/> value equivalent to the date and time contained in <paramref name="s"/>.
+        /// </returns>
         public static DateTime ToDateTime(string s, string format, DateTimeStyles style)
         {
             return ToDateTime(s, format, CultureInfo.CurrentCulture, style);
         }
+
+        /// <summary>
+        /// Converts the specified string representation of a date and time to its <see cref="DateTimeOffset"/> equivalent.
+        /// </summary>
+        /// <param name="s">A string containing a date and time to convert.</param>
+        /// <param name="format">
+        /// <para>Any formatting that is supported by <see cref="DateTimeOffset.ParseExact(string, string, IFormatProvider)"/>, or one of the following:</para>
+        /// <list type="bullet">
+        /// <item>`e`: Epoch format. This is the number of ticks from Jan 1, 1970 (the epoch date). Dates prior to the epoch date are represented by negative numbers.</item>
+        /// <item>`E`: Microsoft JavaScript Serializer epoch format. This is the same as `e`, but supports millisecond precision only. It also records the OS timezone 
+        /// at the time of serialization, although this information is not used when deserializing.</item>
+        /// <item>`i`: The format defined by ISO8601. UTC is not used.</item>
+        /// </list>
+        /// </param>
+        /// <param name="style">The formatting style.</param>
+        /// <returns>
+        /// The <see cref="DateTimeOffset"/> value equivalent to the date and time contained in <paramref name="s"/>.
+        /// </returns>
 
         public static DateTimeOffset ToDateTimeOffset(string s, string format, DateTimeStyles style)
         {
             return ToDateTimeOffset(s, format, CultureInfo.CurrentCulture, style);
         }
 
+        /// <summary>
+        /// Converts a string to <see cref="DateTimeOffset"/>.
+        /// </summary>
+        /// <param name="s">The string to convert.</param>
+        /// <param name="format">The format of the string representation of <see cref="DateTimeOffset"/>.</param>
+        /// <param name="provider">The <see cref="DateTimeOffset"/> formatting provider.</param>
+        /// <param name="style">The formatting style.</param>
+        /// <returns>
+        /// A <see cref="DateTimeOffset"/> object converted from string.
+        /// </returns>
         public static DateTimeOffset ToDateTimeOffset(string s, string format, IFormatProvider provider, DateTimeStyles style)
         {
             if (s == null)
@@ -119,6 +188,16 @@ namespace Standard
             return new DateTimeOffset(dt, offset);
         }
 
+        /// <summary>
+        /// Converts a string to <see cref="DateTime"/>.
+        /// </summary>
+        /// <param name="s">The string to convert.</param>
+        /// <param name="format">The format of the string representation of <see cref="DateTime"/>.</param>
+        /// <param name="provider">The <see cref="DateTime"/> formatting provider.</param>
+        /// <param name="style">The formatting style.</param>
+        /// <returns>
+        /// A <see cref="DateTime"/> object converted from string.
+        /// </returns>
         public static DateTime ToDateTime(string s, string format, IFormatProvider provider, DateTimeStyles style)
         {
             if (s == null)
@@ -409,16 +488,41 @@ namespace Standard
 
         // --- Deserialize DateTime to string ---
 
+        /// <summary>
+        /// Converts a <see cref="DateTime"/> object to string.
+        /// </summary>
+        /// <param name="date">The <see cref="DateTime"/> object to convert.</param>
+        /// <param name="format">The output string format.</param>
+        /// <returns>
+        /// A string representation of the <paramref name="date"/> value.
+        /// </returns>
         public static string ToString(DateTime date, string format)
         {
             return ToString(date, format, DateTimeStyles.AssumeLocal);
         }
 
+        /// <summary>
+        /// Converts a <see cref="DateTimeOffset"/> object to string.
+        /// </summary>
+        /// <param name="offset">The <see cref="DateTimeOffset"/> object to convert.</param>
+        /// <param name="format">The output string format.</param>
+        /// <returns>
+        /// A string representation of the <paramref name="offset"/> value.
+        /// </returns>
         public static string ToString(DateTimeOffset offset, string format)
         {
             return ToString(offset, format, DateTimeStyles.AssumeLocal);
         }
 
+        /// <summary>
+        /// Converts a <see cref="DateTime"/> object to string.
+        /// </summary>
+        /// <param name="date">The <see cref="DateTime"/> object to convert.</param>
+        /// <param name="format">The output string format.</param>
+        /// <param name="style">The formatting style.</param>
+        /// <returns>
+        /// A string representation of the <paramref name="date"/> value.
+        /// </returns>
         public static string ToString(DateTime date, string format, DateTimeStyles style)
         {
             if (date == null)
@@ -458,6 +562,15 @@ namespace Standard
             return date.ToString(format);
         }
 
+        /// <summary>
+        /// Converts a <see cref="DateTimeOffset"/> object to string.
+        /// </summary>
+        /// <param name="offset">The <see cref="DateTimeOffset"/> object to convert.</param>
+        /// <param name="format">The output string format.</param>
+        /// <param name="style">The formatting style.</param>
+        /// <returns>
+        /// A string representation of the <paramref name="offset"/> value.
+        /// </returns>
         public static string ToString(DateTimeOffset offset, string format, DateTimeStyles style)
         {
             if (offset == null)
@@ -566,7 +679,9 @@ namespace Standard
 #if NETSTANDARD
             return TimeZoneInfo.Local.GetUtcOffset(date);
 #else
+#pragma warning disable CS0618 // Type or member is obsolete
             return TimeZone.CurrentTimeZone.GetUtcOffset(date);
+#pragma warning restore CS0618 // Type or member is obsolete
 #endif
         }
 

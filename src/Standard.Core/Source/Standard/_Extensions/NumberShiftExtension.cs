@@ -1,5 +1,8 @@
 namespace Standard
 {
+    /// <summary>
+    /// Extensions for binary shifting operations on integers.
+    /// </summary>
     public static class NumberShiftExtension
     {
         /// <summary>

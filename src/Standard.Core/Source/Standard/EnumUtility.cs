@@ -8,19 +8,19 @@ using Standard.Core;
 
 namespace Standard
 {
+    /// <summary>
+    /// Utility class for working with <see cref="Enum"/> objects.
+    /// </summary>
 	public static class EnumUtility
 	{
-		//<#
-		// 	.SYNOPSIS
-		// 		Test whether a given type is an @Enum.
-		// 
-		// 	.PARAM enumType
-		// 		The object type to test.
-		//
-		// 	.OUTPUT
-		// 		If `true`, indicates that @[enumType] is an @Enum. Otherwise, `false`.
-		//#>
-		public static bool IsEnum(Type enumType)
+        /// <summary>
+        /// Tests whether a given type is an <see cref="Enum"/>.
+        /// </summary>
+        /// <param name="enumType">The object type to test.</param>
+        /// <returns>
+        /// `true` means that the <paramref name="enumType"/> is an <see cref="Enum"/>; otherwise, `false`.
+        /// </returns>
+        public static bool IsEnum(Type enumType)
 		{
 #if NETSTANDARD
             if (enumType.GetTypeInfo().BaseType == typeof(Enum))
@@ -36,17 +36,14 @@ namespace Standard
 			return false;
 		}
 
-		//<#
-		// 	.SYNOPSIS
-		// 		Returns all members of an @Enum.
-		// 
-		// 	.PARAM <TEnum>
-		// 		The object type.
-		//
-		// 	.OUTPUT
-		// 		A list of all members of @<TEnum>.
-		//#>
-		public static IEnumerable<TEnum> GetMembers<TEnum>()
+        /// <summary>
+        /// Returns all members of an <see cref="Enum"/>.
+        /// </summary>
+        /// <typeparam name="TEnum">The object type.</typeparam>
+        /// <returns>
+        /// A list of all members of an <see cref="Enum"/>.
+        /// </returns>
+        public static IEnumerable<TEnum> GetMembers<TEnum>()
 		{
 			Type enumType = typeof(TEnum);
 			bool isEnumType = IsEnum(enumType);
@@ -130,9 +127,13 @@ namespace Standard
 		}
 
 #if !NETSTANDARD
-        /// <summary>Gets an attribute on an enum field value.</summary>
-        /// <returns>The description belonging to the enum option, as a string</returns>
+        /// <summary>
+        /// Gets an attribute on an enum field value.
+        /// </summary>
         /// <param name="enumValue">An enum type.</param>
+        /// <returns>
+        /// The description belonging to the enum option, as a string.
+        /// </returns>
         public static string GetDescription(Enum enumValue)
         {
             FieldInfo fi = enumValue.GetType().GetField(enumValue.ToString());

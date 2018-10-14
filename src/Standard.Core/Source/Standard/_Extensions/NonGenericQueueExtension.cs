@@ -5,15 +5,15 @@ using Standard.Core;
 namespace Standard
 {
     /// <summary>
-    /// Extensions to <see cref="Queue" />.
+    /// Common extensions to the <see cref="Queue" /> class.
     /// </summary>
     public static class QueueExtension
     {
         /// <summary>
-        /// Predicate for searching inside a queue
+        /// Predicate for searching inside a queue.
         /// </summary>
-        /// <param name="item">Item of the queue</param>
-        /// <returns>Result of predicate</returns>
+        /// <param name="item">Item of the queue.</param>
+        /// <returns>Result of predicate.</returns>
         public delegate bool QueuePredicate(object item);
 
         /// <summary>
@@ -21,7 +21,9 @@ namespace Standard
         /// </summary>
         /// <param name="queue">A <see cref="Queue"/> to return an element from.</param>
         /// <param name="predicate">A predicate to test each element for a condition.</param>
-        /// <returns>The first element in <paramref name="queue"/> that passes the test in the <paramref name="predicate"/> specified.</returns>
+        /// <returns>
+        /// The first element in <paramref name="queue"/> that passes the test in the <paramref name="predicate"/> specified.
+        /// </returns>
         public static object First(this Queue queue, QueuePredicate predicate)
         {
             if (queue == null)
@@ -43,11 +45,15 @@ namespace Standard
         }
 
         /// <summary>
-        /// Returns the first item in a <see cref="Queue"/> that satisfies a specified condition, or <c>null</c> if no item can be found that satisfies such condition.
+        /// Returns the first item in a <see cref="Queue"/> that satisfies a specified condition, or `null` if no item 
+        /// can be found that satisfies such condition.
         /// </summary>
         /// <param name="queue">A <see cref="Queue"/> to return an element from.</param>
         /// <param name="predicate">A predicate to test each element for a condition.</param>
-        /// <returns>The first element in <paramref name="queue"/> that passes the test in the <paramref name="predicate"/> specified, or null if no item can be found that satisfies such condition.</returns>
+        /// <returns>
+        /// The first element in <paramref name="queue"/> that passes the test in the <paramref name="predicate"/> specified, 
+        /// or `null` if no item can be found that satisfies such condition.
+        /// </returns>
         public static object FirstOrDefault(this Queue queue, QueuePredicate predicate)
         {
             if (queue == null)

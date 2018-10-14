@@ -11,16 +11,35 @@ namespace Standard
     {
         // Trim
 
+        /// <summary>
+        /// Removes all leading and trailing substrings specified from the current <see cref="string"/> object. 
+        /// </summary>
+        /// <param name="value">The string object.</param>
+        /// <param name="trimStrings">An array of substrings that should be removed from the leading and trailing positions of <paramref name="value"/>.</param>
+        /// <returns>All leading and trailing substrings specified by <paramref name="trimStrings"/> removed from <paramref name="value"/>.</returns>
         public static string Trim(this string value, params string[] trimStrings)
         {
             return Trim(value, trimStrings, StringComparison.Ordinal);
         }
 
+        /// <summary>
+        /// Removes all leading and trailing substrings specified from the current <see cref="string"/> object. 
+        /// </summary>
+        /// <param name="value">The string object.</param>
+        /// <param name="trimStrings">An array of substrings that should be removed from the leading and trailing positions of <paramref name="value"/>. The substring comparision operation is case insensitive.</param>
+        /// <returns>All leading and trailing substrings specified by <paramref name="trimStrings"/> removed from <paramref name="value"/>.</returns>
         public static string TrimIgnoreCase(this string value, params string[] trimStrings)
         {
             return Trim(value, trimStrings, StringComparison.OrdinalIgnoreCase);
         }
 
+        /// <summary>
+        /// Removes all leading and trailing substrings specified from the current <see cref="string"/> object. 
+        /// </summary>
+        /// <param name="value">The string object.</param>
+        /// <param name="trimStrings">An array of substrings that should be removed from the leading and trailing positions of <paramref name="value"/>.</param>
+        /// <param name="comparisonType">Controls how substrings are being compared.</param>
+        /// <returns>All leading and trailing substrings specified by <paramref name="trimStrings"/> removed from <paramref name="value"/>.</returns>
         public static string Trim(this string value, string[] trimStrings, StringComparison comparisonType)
         {
             if (value == null)
@@ -55,16 +74,35 @@ namespace Standard
 
         // TrimStart
 
+        /// <summary>
+        /// Removes all leading substrings specified from the current <see cref="string"/> object. 
+        /// </summary>
+        /// <param name="value">The string object.</param>
+        /// <param name="prefix">An array of substrings that should be removed from the leading positions of <paramref name="value"/>.</param>
+        /// <returns>All leading substrings specified by <paramref name="prefix"/> removed from <paramref name="value"/>.</returns>
         public static string TrimStart(this string value, params string[] prefix)
         {
             return TrimStart(value, prefix, StringComparison.Ordinal);
         }
 
+        /// <summary>
+        /// Removes all leading substrings specified from the current <see cref="string"/> object. 
+        /// </summary>
+        /// <param name="value">The string object.</param>
+        /// <param name="prefix">An array of substrings that should be removed from the leading positions of <paramref name="value"/>. The substring comparision operation is case insensitive.</param>
+        /// <returns>All leading substrings specified by <paramref name="prefix"/> removed from <paramref name="value"/>.</returns>
         public static string TrimStartIgnoreCase(this string value, params string[] prefix)
         {
             return TrimStart(value, prefix, StringComparison.OrdinalIgnoreCase);
         }
 
+        /// <summary>
+        /// Removes all leading substrings specified from the current <see cref="string"/> object. 
+        /// </summary>
+        /// <param name="value">The string object.</param>
+        /// <param name="prefix">An array of substrings that should be removed from the leading positions of <paramref name="value"/>.</param>
+        /// <param name="comparisonType">Controls how substrings are being compared.</param>
+        /// <returns>All leading substrings specified by <paramref name="prefix"/> removed from <paramref name="value"/>.</returns>
         public static string TrimStart(this string value, string[] prefix, StringComparison comparisonType)
         {
             if (value == null)
@@ -98,16 +136,35 @@ namespace Standard
 
         // TrimEnd
 
+        /// <summary>
+        /// Removes all leading substrings specified from the current <see cref="string"/> object. 
+        /// </summary>
+        /// <param name="value">The string object.</param>
+        /// <param name="suffix">An array of substrings that should be removed from the trailing positions of <paramref name="value"/>.</param>
+        /// <returns>All trailing substrings specified by <paramref name="suffix"/> removed from <paramref name="value"/>.</returns>
         public static string TrimEnd(this string value, params string[] suffix)
         {
             return TrimEnd(value, suffix, StringComparison.Ordinal);
         }
 
+        /// <summary>
+        /// Removes all leading substrings specified from the current <see cref="string"/> object. 
+        /// </summary>
+        /// <param name="value">The string object.</param>
+        /// <param name="suffix">An array of substrings that should be removed from the trailing positions of <paramref name="value"/>.</param>
+        /// <returns>All trailing substrings specified by <paramref name="suffix"/> removed from <paramref name="value"/>. The substring comparision operation is case insensitive.</returns>
         public static string TrimEndIgnoreCase(this string value, params string[] suffix)
         {
             return TrimEnd(value, suffix, StringComparison.OrdinalIgnoreCase);
         }
 
+        /// <summary>
+        /// Removes all leading substrings specified from the current <see cref="string"/> object. 
+        /// </summary>
+        /// <param name="value">The string object.</param>
+        /// <param name="suffix">An array of substrings that should be removed from the trailing positions of <paramref name="value"/>.</param>
+        /// <param name="comparisonType">Controls how substrings are being compared.</param>
+        /// <returns>All trailing substrings specified by <paramref name="suffix"/> removed from <paramref name="value"/>.</returns>
         public static string TrimEnd(this string value, string[] suffix, StringComparison comparisonType)
         {
             if (value == null)

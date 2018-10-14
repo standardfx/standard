@@ -2,6 +2,9 @@ using System;
 
 namespace System.Text
 {
+    /// <summary>
+    /// Categorizes ASCII characters for various encoding and encryption purposes.
+    /// </summary>
     [Flags]
     public enum ASCIICharacterGroup
     {

@@ -10,6 +10,12 @@ namespace Standard
 {
     partial class StringExtension
     {
+        /// <summary>
+        /// Removes characters from a string.
+        /// </summary>
+        /// <param name="value">A string value.</param>
+        /// <param name="oldChars">Characters which should be removed from <paramref name="value"/>.</param>
+        /// <returns>A new string which is the same as <paramref name="value"/>, but with all occurances of characters in <paramref name="oldChars"/> removed.</returns>
         [SecuritySafeCritical]
         public static unsafe string Remove(this string value, char[] oldChars)
         {
@@ -51,16 +57,35 @@ namespace Standard
             return new string(newChars, 0, (int)(currentChar - newChars));
         }
 
+        /// <summary>
+        /// Removes substrings from a string.
+        /// </summary>
+        /// <param name="value">A string value.</param>
+        /// <param name="substring">Substrings which should be removed from <paramref name="value"/>.</param>
+        /// <returns>A new string which is the same as <paramref name="value"/>, but with all occurances of substrings in <paramref name="substring"/> removed.</returns>
         public static string Remove(this string value, string[] substring)
         {
             return Remove(value, substring, StringComparison.Ordinal);
         }
 
+        /// <summary>
+        /// Removes substrings from a string.
+        /// </summary>
+        /// <param name="value">A string value.</param>
+        /// <param name="substring">Substrings which should be removed from <paramref name="value"/>. Casing is ignored when searching for substrings.</param>
+        /// <returns>A new string which is the same as <paramref name="value"/>, but with all occurances of substrings in <paramref name="substring"/> removed.</returns>
         public static string RemoveIgnoreCase(this string value, string[] substring)
         {
             return Remove(value, substring, StringComparison.OrdinalIgnoreCase);
         }
 
+        /// <summary>
+        /// Removes substrings from a string.
+        /// </summary>
+        /// <param name="value">A string value.</param>
+        /// <param name="substring">Substrings which should be removed from <paramref name="value"/>.</param>
+        /// <param name="comparisonType">Defines how substrings are searched.</param>
+        /// <returns>A new string which is the same as <paramref name="value"/>, but with all occurances of substrings in <paramref name="substring"/> removed.</returns>
         public static string Remove(this string value, string[] substring, StringComparison comparisonType)
         {
             if (value == null)
@@ -83,6 +108,12 @@ namespace Standard
             return newValue;
         }
 
+        /// <summary>
+        /// Removes all occurances of substrings that matches the regular expression specified.
+        /// </summary>
+        /// <param name="value">A string value.</param>
+        /// <param name="searchExpr">The regular expression to search.</param>
+        /// <returns>All substrings that matches <paramref name="searchExpr"/> removed.</returns>
         public static string Remove(this string value, Regex searchExpr)
         {
             return searchExpr.Replace(value, string.Empty);

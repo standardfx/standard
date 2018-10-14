@@ -4,15 +4,24 @@ using Standard.Core;
 
 namespace Standard
 {
-    // http://stackoverflow.com/questions/6651554/random-number-in-long-range-is-this-the-way
+    /// <summary>
+    /// Common extensions for the <see cref="Random"/> class.
+    /// </summary>
+    /// <remarks>
+    /// See [http://stackoverflow.com/questions/6651554/random-number-in-long-range-is-this-the-way](this stackoverflow article) 
+    /// for inspirations.
+    /// </remarks>
     public static class RandomExtension
     {
         /// <summary>
-        /// Returns a random long from min (inclusive) to max (exclusive)
+        /// Returns a random long from min (inclusive) to max (exclusive).
         /// </summary>
         /// <param name="random">The given random instance</param>
         /// <param name="minValue">The inclusive minimum bound</param>
         /// <param name="maxValue">The exclusive maximum bound. Must be greater than min.</param>
+        /// <returns>
+        /// A number between <paramref name="minValue"/> and <paramref name="maxValue"/>, or <paramref name="minValue"/>.
+        /// </returns>
         public static long NextInt64(this Random random, long minValue, long maxValue)
         {
             if (maxValue <= minValue)
@@ -38,7 +47,11 @@ namespace Standard
         /// Returns a non-negative random integer that is less than the specified maximum.
         /// </summary>
         /// <param name="random">The given random instance.</param>
-        /// <param name="maxValue">The exclusive upper bound of the random number to be generated. <c>maxValue</c> must be greater than or equal to 0.</param>
+        /// <param name="maxValue">The exclusive upper bound of the random number to be generated. This value must be 
+        /// greater than or equal to 0.</param>
+        /// <returns>
+        /// A ramdom non-negative ramdom integer.
+        /// </returns>
         public static long NextInt64(this Random random, long maxValue)
         {
             return random.NextInt64(0, maxValue);
@@ -48,42 +61,89 @@ namespace Standard
         /// Returns a non-negative random <see cref="System.Int64" />.
         /// </summary>
         /// <param name="random">The given random instance.</param>
-        /// <return>A 64-bit signed integer that is greater than or equal to 0 and less than <see cref="Int64.MaxValue">MaxValue</see>.</return>
+        /// <return>
+        /// A 64-bit signed integer that is greater than or equal to 0 and less 
+        /// than <see cref="Int64.MaxValue"/>.
+        /// </return>
         /// <remarks>
-        /// Random.NextInt64 generates a random number whose value ranges from 0 to less than <see cref="Int64.MaxValue" />. To generate a random number 
-        /// whose value ranges from 0 to some other positive number, use the <c>NextInt64(Int64)</c> method overload. To generate a 
-        /// random number within a different range, use the <c>NextInt64(Int64, Int64)</c> method overload.
+        /// This function generates a random number whose value ranges from 0 to less than <see cref="Int64.MaxValue" />. 
+        /// To generate a random number whose value ranges from 0 to some other positive number, use the 
+        /// <see cref="NextInt64(Random, long)"/> overload. To generate a random number within a different range, use 
+        /// the <see cref="NextInt64(Random, long, long)"/> overload.
         /// </remarks>
         public static long NextInt64(this Random random)
         {
             return random.NextInt64(long.MinValue, long.MaxValue);
         }
 
+        /// <summary>
+        /// Returns a random string using one of the characters specified.
+        /// </summary>
+        /// <param name="random">The given random instance.</param>
+        /// <param name="chars">The characters that the output string may contain.</param>
+        /// <returns>
+        /// A string consisting of the characters specified by <paramref name="chars"/>.
+        /// </returns>
         public static string NextString(this Random random, char[] chars)
         {
             return NextString(random, chars, 1);
         }
 
+        /// <summary>
+        /// Returns a random string using one of the alphanumeric characters.
+        /// </summary>
+        /// <param name="random">The given random instance.</param>
+        /// <returns>
+        /// A string consisting of a character in the <see cref="ASCIICharacterGroup.Alphanumeric"/> character set.
+        /// </returns>
         public static string NextString(this Random random)
         {
-                return NextString(random, ASCIICharacterGroup.Alphanumeric, 1, null, null);
+            return NextString(random, ASCIICharacterGroup.Alphanumeric, 1, null, null);
         }
 
+        /// <summary>
+        /// Returns a random string consisting of random alphanumeric characters.
+        /// </summary>
+        /// <param name="random">The given random instance.</param>
+        /// <param name="length">The length of the output string.</param>
+        /// <returns>A string of the length specified by <paramref name="length"/> and consisting of characters in the <see cref="ASCIICharacterGroup.Alphanumeric"/> character set.</returns>
         public static string NextString(this Random random, int length)
         {
-                return NextString(random, ASCIICharacterGroup.Alphanumeric, length, null, null);
+            return NextString(random, ASCIICharacterGroup.Alphanumeric, length, null, null);
         }
 
+        /// <summary>
+        /// Generates a string consisting of random characters.
+        /// </summary>
+        /// <param name="random">The given random instance.</param>
+        /// <param name="charGroup">The group of characters which the output string may contain.</param>
+        /// <param name="length">The length of the output string.</param>
+        /// <returns>A random string of the specified length and satisfying the character set constrains.</returns>
         public static string NextString(this Random random, ASCIICharacterGroup charGroup, int length)
         {
-                return NextString(random, charGroup, length, null, null);
+            return NextString(random, charGroup, length, null, null);
         }
 
+        /// <summary>
+        /// Generates a string consisting of random characters.
+        /// </summary>
+        /// <param name="random">The given random instance.</param>
+        /// <param name="charGroup">The group of characters which the output string may contain.</param>
+        /// <param name="length">The length of the output string.</param>
+        /// <param name="include">Additional characters which the output string may contain.</param>
+        /// <returns>A random string of the specified length and satisfying the character set constrains.</returns>
         public static string NextString(this Random random, ASCIICharacterGroup charGroup, int length, char[] include)
         {
-                return NextString(random, charGroup, length, include, null);
+            return NextString(random, charGroup, length, include, null);
         }
 
+        /// <summary>
+        /// Generates a string consisting of random characters.
+        /// </summary>
+        /// <param name="random">The given random instance.</param>
+        /// <param name="chars">The characters which the output string may contain.</param>
+        /// <param name="length">The length of the output string.</param>
+        /// <returns>A random string of the specified length and satisfying the character set constrains.</returns>
         public static string NextString(this Random random, char[] chars, int length)
         {
             if (length < 0)
@@ -105,6 +165,18 @@ namespace Standard
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Generates a string consisting of random characters.
+        /// </summary>
+        /// <param name="random">The given random instance.</param>
+        /// <param name="charGroup">The group of characters which the output string may contain.</param>
+        /// <param name="length">The length of the output string.</param>
+        /// <param name="include">Additional characters which the output string may contain.</param>
+        /// <param name="exclude">Characters which the output string must not contain.</param>
+        /// <returns>A random string of the specified length and satisfying the character set constrains.</returns>
+        /// <remarks>
+        /// Any character specified by <paramref name="exclude"/> will always take priority over the allowed character sets.
+        /// </remarks>
         public static string NextString(this Random random, ASCIICharacterGroup charGroup, int length, char[] include, char[] exclude)
         {
             string charMap = string.Empty;
@@ -145,6 +217,15 @@ namespace Standard
             return NextString(random, charMap.ToCharArray(), length);
         }
 
+        /// <summary>
+        /// Shuffle the items in an array.
+        /// </summary>
+        /// <typeparam name="T">The type of item contained by the array.</typeparam>
+        /// <param name="random">The given random instance.</param>
+        /// <param name="array">The array to shuffle.</param>
+        /// <remarks>
+        /// This operation modifies the <paramref name="array"/> by shuffling its items randomly.
+        /// </remarks>
         public static void Shuffle<T>(this Random random, T[] array)
         {
             if (array == null)

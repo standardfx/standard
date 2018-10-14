@@ -7,6 +7,11 @@ namespace Standard
 {
     partial class StringExtension
     {
+        /// <summary>
+        /// Reverse a string. For unicode culture sensitive reversing, use the <see cref="Reverse(string, bool)"/> function.
+        /// </summary>
+        /// <param name="value">The string to reverse.</param>
+        /// <returns>The value of <paramref name="value"/> reversed.</returns>
         public static string Reverse(this string value)
         {
             if (value == null)
@@ -19,6 +24,12 @@ namespace Standard
             return new string(arr);
         }
 
+        /// <summary>
+        /// Reverse a string.
+        /// </summary>
+        /// <param name="value">The string to reverse.</param>
+        /// <param name="unicode">Consider unicode characters when reversing.</param>
+        /// <returns>The value of <paramref name="value"/> reversed.</returns>
         public static string Reverse(this string value, bool unicode)
         {
             if (value == null)

@@ -1,15 +1,19 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Standard.Core;
 
 namespace Standard
 {
+    /// <summary>
+    /// Extension methods for the <see cref="DateTime"/> class.
+    /// </summary>
     public static class DateTimeExtension
     {
+        /// <summary>
+        /// Converts a <see cref="DateTime"/> object to Unix epoch time.
+        /// </summary>
+        /// <param name="dateTime">A <see cref="DateTime"/> object.</param>
+        /// <returns>
+        /// The Unix epoch time.
+        /// </returns>
         public static long ToUnixTimeSeconds(this DateTime dateTime)
         {
             if (dateTime == null)   
@@ -18,6 +22,13 @@ namespace Standard
             return ((DateTimeOffset)dateTime).ToUnixTimeSeconds();
         }
 
+        /// <summary>
+        /// Converts a <see cref="DateTime"/> object to Unix epoch time, using high precision milliseconds.
+        /// </summary>
+        /// <param name="dateTime">A <see cref="DateTime"/> object.</param>
+        /// <returns>
+        /// The Unix epoch time in milliseconds.
+        /// </returns>
         public static long ToUnixTimeMilliseconds(this DateTime dateTime)
         {
             if (dateTime == null)   

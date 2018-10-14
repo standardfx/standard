@@ -3,6 +3,9 @@ using Standard.Core;
 
 namespace Standard
 {
+    /// <summary>
+    /// Extension methods for the <see cref="Array"/> class.
+    /// </summary>
     public static class ArrayExtension
     {
         /// <summary>

@@ -9,6 +9,11 @@ namespace Standard
     {
         // Match
 
+        /// <summary>
+        /// Determines whether a string matches the regular expression specified.
+        /// </summary>
+        /// <param name="value">The string to search.</param>
+        /// <param name="pattern">The regular expression to match <paramref name="value"/>.</param>
         public static bool IsMatch(this string value, string pattern)
         {
             if (string.IsNullOrEmpty(value))
@@ -19,6 +24,12 @@ namespace Standard
             return Regex.IsMatch(value, pattern);
         }
 
+        /// <summary>
+        /// Determines whether a string matches the regular expression specified.
+        /// </summary>
+        /// <param name="value">The string to search.</param>
+        /// <param name="pattern">The regular expression to match <paramref name="value"/>.</param>
+        /// <param name="options">Options to control the regular expression engine.</param>
         public static bool IsMatch(this string value, string pattern, RegexOptions options)
         {
             if (string.IsNullOrEmpty(value))
@@ -29,6 +40,14 @@ namespace Standard
             return Regex.IsMatch(value, pattern, options);
         }
 
+        /// <summary>
+        /// Determines whether a string matches the regular expression specified.
+        /// </summary>
+        /// <param name="value">The string to search.</param>
+        /// <param name="pattern">The regular expression to match <paramref name="value"/>.</param>
+        /// <param name="options">Options to control the regular expression engine.</param>
+        /// <param name="matchTimeout">The maximum time limit when conducting the regular expression matching operation.</param>
+        /// <returns></returns>
         public static bool IsMatch(this string value, string pattern, RegexOptions options, TimeSpan matchTimeout)
         {
             if (string.IsNullOrEmpty(value))
@@ -45,12 +64,17 @@ namespace Standard
         /// <summary>
         /// Compares a string against a wildcard pattern. The comparison is case sensitive.
         /// </summary>
+        /// <param name="value">The string to search.</param>
+        /// <param name="wildcard">The wildcard pattern which <paramref name="value"/> should match.</param>
         public static bool IsLike(this string value, string wildcard)
             => IsLike(value, wildcard, false);
 
         /// <summary>
         /// Compares a string against a wildcard pattern.
         /// </summary>
+        /// <param name="value">The string to search.</param>
+        /// <param name="wildcard">The wildcard pattern which <paramref name="value"/> should match.</param>
+        /// <param name="ignoreCase">Determines whether casing should be considered when comparing.</param>
         /// <remarks>
         /// Wildcard pattern match has less features than regular expressions, but performs significantly faster.
         /// </remarks>

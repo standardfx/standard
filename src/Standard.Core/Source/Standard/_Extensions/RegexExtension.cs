@@ -5,11 +5,21 @@ using Standard.Core;
 
 namespace Standard
 {
+    /// <summary>
+    /// Common extensions for the <see cref="Regex"/> class.
+    /// </summary>
     public static class RegexExtension
     {
         // GroupValue vs GroupValues
         // violate Standard design guideline for plural form, but in line with regex Match/Matches.
         
+        /// <summary>
+        /// Returns the first group that matches the regular expression specified.
+        /// </summary>
+        /// <param name="regex">The given <see cref="Regex"/> instance.</param>
+        /// <param name="matchExpr">The regular expression to match.</param>
+        /// <param name="groupName">Name of the group to select.</param>
+        /// <returns>The value of the group specified by <paramref name="groupName"/> and matching the regular expression specified by <paramref name="matchExpr"/>.</returns>
         public static string GroupValue(this Regex regex, string matchExpr, string groupName)
         {
             if (regex == null)
@@ -25,6 +35,13 @@ namespace Standard
             return m.Groups[groupName].Value;
         }
 
+        /// <summary>
+        /// Returns the first group that matches the regular expression specified.
+        /// </summary>
+        /// <param name="regex">The given <see cref="Regex"/> instance.</param>
+        /// <param name="matchExpr">The regular expression to match.</param>
+        /// <param name="groupIndex">Index position of the group to select.</param>
+        /// <returns>The value of the group specified by <paramref name="groupIndex"/> and matching the regular expression specified by <paramref name="matchExpr"/>.</returns>
         public static string GroupValue(this Regex regex, string matchExpr, int groupIndex)
         {
             if (regex == null)
@@ -40,6 +57,13 @@ namespace Standard
             return m.Groups[groupIndex].Value;
         }
 
+        /// <summary>
+        /// Returns the values of all groups that matches the regular expression specified.
+        /// </summary>
+        /// <param name="regex">The given <see cref="Regex"/> instance.</param>
+        /// <param name="matchExpr">The regular expression to match.</param>
+        /// <param name="groupName">Name of the group to select.</param>
+        /// <returns>The values of the group specified by <paramref name="groupName"/> and matching the regular expression specified by <paramref name="matchExpr"/>.</returns>
         public static List<string> GroupValues(this Regex regex, string matchExpr, string groupName)
         {
             if (regex == null)
@@ -63,6 +87,13 @@ namespace Standard
             return values;
         }
 
+        /// <summary>
+        /// Returns the values of all groups that matches the regular expression specified.
+        /// </summary>
+        /// <param name="regex">The given <see cref="Regex"/> instance.</param>
+        /// <param name="matchExpr">The regular expression to match.</param>
+        /// <param name="groupIndex">Index position of the group to select.</param>
+        /// <returns>The values of the group specified by <paramref name="groupIndex"/> and matching the regular expression specified by <paramref name="matchExpr"/>.</returns>
         public static List<string> GroupValues(this Regex regex, string matchExpr, int groupIndex)
         {
             if (regex == null)

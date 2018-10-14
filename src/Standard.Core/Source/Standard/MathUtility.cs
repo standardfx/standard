@@ -2,6 +2,9 @@ using System;
 
 namespace Standard
 {
+    /// <summary>
+    /// Utility class for mathematical operations.
+    /// </summary>
     public static partial class MathUtility
     {
         /// <summary>

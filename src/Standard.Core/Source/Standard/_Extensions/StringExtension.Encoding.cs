@@ -11,6 +11,8 @@ namespace Standard
         /// <summary>
         /// Converts non-ASCII characters in a string to the question mark character '?'.
         /// </summary>
+        /// <param name="value">A string which may contain non-ASCII characters.</param>
+        /// <returns>All non-ASCII characters replaced by the question mark character '?'.</returns>
         public static string ToASCII(this string value)
         {
             if (value == null)

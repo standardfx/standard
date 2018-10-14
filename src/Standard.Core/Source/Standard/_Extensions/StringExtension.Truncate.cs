@@ -7,7 +7,7 @@ using Standard.Core;
 
 namespace Standard
 {
-    public static partial class StringExtension
+    partial class StringExtension
     {
         // Truncate
 

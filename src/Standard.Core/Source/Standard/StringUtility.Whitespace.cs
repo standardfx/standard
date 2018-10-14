@@ -2,6 +2,9 @@ using System;
 
 namespace Standard
 {
+    /// <summary>
+    /// Utility class for string manipulation.
+    /// </summary>
     public static partial class StringUtility
     {
         /// <summary>
