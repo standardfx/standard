@@ -21,7 +21,7 @@ namespace Standard.Data.JsonPlus
     /// also use single quotes around the element `b.a'r`, but the single quote inside must be escaped: 
     /// 
     /// ```json+
-    //  foo.'b.a\'r'.tar
+    /// foo.'b.a\'r'.tar
     /// ```
     /// 
     /// Note that the backslash symbol is only interpreted as an escape sequence if the character immediately 
