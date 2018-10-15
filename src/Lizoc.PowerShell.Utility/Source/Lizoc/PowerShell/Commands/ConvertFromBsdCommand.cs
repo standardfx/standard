@@ -113,7 +113,6 @@ namespace Lizoc.PowerShell.Commands
                 throw new ArgumentNullException(nameof(context));
 
             error = null;
-            PSObject psObject = new PSObject();
 
             if (context.IsEmpty)
                 return null;
@@ -124,16 +123,105 @@ namespace Lizoc.PowerShell.Commands
                 return null;
             }
 
-            // direct decendents of root
-            IList<string> keys = context.GetChildNodeNames();
-            foreach (string key in keys)
+            return PopulateConfonObject(context.Root, context, null, out error);
+        }
+
+        private static object PopulateConfonLeaf(ConfonValue jv, string path, out ErrorRecord error)
+        {
+            if (jv == null)
+                throw new ArgumentNullException(nameof(jv));
+
+            error = null;
+
+            if (!jv.IsString())
+                throw new ArgumentException("Internal error: Non-leaf object has entered `PopulateConfonLeaf`.");
+
+            try { return jv.GetBoolean(); }
+            catch {}
+
+            try { return jv.GetInt32(); }
+            catch {}
+
+            try { return jv.GetInt64(); }
+            catch {}
+
+            try { return jv.GetSingle(); }
+            catch {}
+            
+            try { return jv.GetDouble(); }
+            catch {}
+
+            try { return jv.GetDecimal(); }
+            catch {}
+
+            try { return jv.GetTimeSpan(); }
+            catch {}
+
+            try { return jv.GetByteSize(); }
+            catch {}
+
+            try
             {
+                return jv.GetString();
+            }
+            catch
+            {
+                error = new ErrorRecord(new FormatException(string.Format("Err_UnrecognizedLeafValue: {0}", path)), "BadBsdValue", ErrorCategory.ParserError, null);
+                return null;
+            }
+        }
+
+        private static PSObject PopulateConfonObject(ConfonValue jv, ConfonContext context, string path, out ErrorRecord error)
+        {
+            if (jv == null)
+                throw new ArgumentNullException(nameof(jv));
+
+            error = null;
+
+            if (!jv.IsObject())
+                throw new ArgumentException("Internal error: Non-container object has entered `PopulateConfonObject`.");
+
+            PSObject psObject = new PSObject();
+            ConfonObject confonObject = jv.GetObject();
+
+            foreach (string key in confonObject.Items.Keys)
+            {
+                ConfonValue child = confonObject.Items[key];
+
+                // escape quotes in key
                 string safeKey = key;
-                if (key.Contains("."))
+                if (key.Contains(".") || key.Contains("[") || key.Contains("]"))
                     safeKey = "'" + key.Replace("'", "\\'") + "'";
 
-                ConfonValue child = context.GetValue(safeKey);
-                psObject.Properties.Add(new PSNoteProperty(key, PopulateConfonValue(child, context, safeKey, out error)));                
+                string childPath = (path == null) 
+                    ? safeKey 
+                    : (path + "." + safeKey);
+
+                if (child.IsEmpty)
+                {
+                    psObject.Properties.Add(new PSNoteProperty(key, null));
+                }
+                else if (child.IsString())
+                {
+                    // populate a leaf
+                    psObject.Properties.Add(new PSNoteProperty(key, PopulateConfonLeaf(child, childPath, out error)));
+                }
+                else if (child.IsObject())
+                {
+                    // populate an object. recurse!
+                    psObject.Properties.Add(new PSNoteProperty(key, PopulateConfonObject(child, context, childPath, out error)));
+                }
+                else if (child.IsArray())
+                {
+                    // quote the safeKey
+
+                    psObject.Properties.Add(new PSNoteProperty(key, PopulateConfonArray(child, context, path, safeKey, out error)));
+                }
+                else
+                {
+                    error = new ErrorRecord(new NotImplementedException(string.Format("Unable to determine object type at {0}", childPath)), "UnhandledDataType", ErrorCategory.ParserError, null);
+                }
+
                 if (error != null)
                     return null;
             }
@@ -141,81 +229,53 @@ namespace Lizoc.PowerShell.Commands
             return psObject;
         }
 
-        private static object PopulateConfonValue(ConfonValue jv, ConfonContext context, string path, out ErrorRecord error)
+        private static object[] PopulateConfonArray(ConfonValue jv, ConfonContext context, string parentPath, string childName, out ErrorRecord error)
         {
             if (jv == null)
                 throw new ArgumentNullException(nameof(jv));
+
             error = null;
 
-            if (jv.IsEmpty)
-                return null;
+            if (!jv.IsArray())
+                throw new ArgumentException("Internal error: Non-array object has entered `PopulateConfonObject`.");
 
-            if (jv.IsString())
+            IList<ConfonValue> values = jv.GetArray();
+            List<object> results = new List<object>();
+
+            int indexPosition = 0;
+            foreach (ConfonValue current in values)
             {
-                try { return jv.GetBoolean(); }
-                catch {}
+                string indexedItemPath = string.Format("{0}.'{1}[{2}]'", parentPath, childName, indexPosition);
 
-                try { return jv.GetInt32(); }
-                catch {}
-
-                try { return jv.GetInt64(); }
-                catch {}
-
-                try { return jv.GetSingle(); }
-                catch {}
-                
-                try { return jv.GetDouble(); }
-                catch {}
-
-                try { return jv.GetDecimal(); }
-                catch {}
-
-                try { return jv.GetTimeSpan(); }
-                catch {}
-
-                try { return jv.GetByteSize(); }
-                catch {}
-
-                return jv.GetString();
-            }
-            else if (jv.IsArray())
-            {
-                IList<ConfonValue> values = jv.GetArray();
-                List<object> results = new List<object>();
-
-                foreach (ConfonValue current in values)
+                if (current.IsEmpty)
                 {
-                    results.Add(PopulateConfonValue(current, context, path, out error));
-                    if (error != null)
-                        return null;
+                    results.Add(null);
+                }
+                else if (current.IsString())
+                {
+                    results.Add(PopulateConfonLeaf(current, indexedItemPath, out error));
+                }
+                else if (current.IsObject())
+                {
+                    results.Add(PopulateConfonObject(current, context, indexedItemPath, out error));
+                }
+                else if (current.IsArray())
+                {
+                    // array in array...
+                    results.Add(PopulateConfonArray(current, context, parentPath, indexPosition.ToString(), out error));
+                }
+                else
+                {
+                    error = new ErrorRecord(new NotImplementedException(string.Format("Unable to determine object type at {0}", indexedItemPath)), "UnhandledDataType", ErrorCategory.ParserError, null);
                 }
 
-                return results.ToArray();
-            }
-            else if (jv.IsObject())
-            {
-                PSObject psObject = new PSObject();
-                IList<string> keys = context.GetChildNodeNames(path);
+                if (error != null)
+                    return null;
 
-                foreach (string key in keys)
-                {
-                    string safeKey = key;
-                    if (key.Contains("."))
-                        safeKey = "'" + key.Replace("'", "\\'") + "'";
-                    string safePath = path + "." + safeKey;
-
-                    ConfonValue child = context.GetValue(safePath);
-                    psObject.Properties.Add(new PSNoteProperty(key, PopulateConfonValue(child, context, safePath, out error)));
-                    if (error != null)
-                        return null;
-                }
-
-                return psObject;
+                indexPosition += 1;
             }
-            else
-            {
-                return null;
-            }
+
+            return results.ToArray();
         }
     }
 }
