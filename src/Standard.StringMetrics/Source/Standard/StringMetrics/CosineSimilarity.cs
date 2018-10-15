@@ -5,7 +5,7 @@ namespace Standard.StringMetrics
     /// <summary>
     /// Cosine Similarity algorithm provides a similarity measure between two strings from the angular divergence within term based vector space.
     /// </summary>
-    public sealed class CosineSimilarity : AbstractStringMetric
+    internal sealed class CosineSimilarity : AbstractStringMetric
     {
         private double estimatedTimingConstant;
         private ITokenizer tokenizer;

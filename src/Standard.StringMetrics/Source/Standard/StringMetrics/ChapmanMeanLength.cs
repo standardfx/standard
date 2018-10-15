@@ -5,7 +5,7 @@ namespace Standard.StringMetrics
     /// <summary>
     /// The Chapman Mean Length algorithm provides a similarity measure between two strings from size of the mean length of the vectors. This approach is supposed to be used to determine which metrics may be best to apply rather than giveing a valid response itself.
     /// </summary>
-    public sealed class ChapmanMeanLength : AbstractStringMetric
+    internal sealed class ChapmanMeanLength : AbstractStringMetric
     {
         private const int chapmanMeanLengthMaxString = 500;
         private const double defaultMismatchScore = 0.0;
