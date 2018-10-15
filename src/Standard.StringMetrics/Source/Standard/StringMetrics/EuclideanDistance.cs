@@ -6,7 +6,7 @@ namespace Standard.StringMetrics
     /// <summary>
     /// Euclidean Distancey algorithm provides a similarity measure between two strings using the vector space of combined terms as the dimensions.
     /// </summary>
-    internal sealed class EuclideanDistance : AbstractStringMetric
+    public sealed class EuclideanDistance : AbstractStringMetric
     {
         private const double defaultMismatchScore = 0.0;
         private double estimatedTimingConstant;

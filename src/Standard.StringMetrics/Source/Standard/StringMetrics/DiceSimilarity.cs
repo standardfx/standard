@@ -5,7 +5,7 @@ namespace Standard.StringMetrics
     /// <summary>
     /// Dice Similarity algorithm provides a similarity measure between two strings using the vector space of present terms.
     /// </summary>
-    internal sealed class DiceSimilarity : AbstractStringMetric
+    public sealed class DiceSimilarity : AbstractStringMetric
     {
         private double estimatedTimingConstant;
         private ITokenizer tokenizer;
