@@ -5,7 +5,7 @@ namespace Standard.StringMetrics
     /// <summary>
     /// Chapman Length Deviation algorithm uses the length deviation of the word strings to determine if the strings are similar in size. This apporach is not intended to be used single handedly but rather alongside other approaches.
     /// </summary>
-    internal sealed class ChapmanLengthDeviation : AbstractStringMetric
+    public sealed class ChapmanLengthDeviation : AbstractStringMetric
     {
         /// <see cref="AbstractStringMetric.GetSimilarity(string, string)"/>
         public override double GetSimilarity(string firstWord, string secondWord)

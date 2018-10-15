@@ -6,7 +6,7 @@ namespace Standard.StringMetrics
     /// <summary>
     /// Block distance algorithm uses vector space block distance to determine a similarity.
     /// </summary>
-    internal sealed class BlockDistance : AbstractStringMetric
+    public sealed class BlockDistance : AbstractStringMetric
     {
         private double estimatedTimingConstant;
         private ITokenizer tokenizer;
