@@ -65,3 +65,7 @@ Err_CollectionPredicateFailureAny = No item in the collection satisfies the pred
 Err_ExpectPositiveInteger = Expects an integer value that is larger than zero.
 Err_StringIsNullWildcardMismatch = The string values does not match the wildcard pattern specified because it is null (or "Nothing" in Visual Basic).
 Err_WildcardMismatch = The string value "{0}" does not match the wildcard pattern specified: {1}
+Err_InvalidOffsetLength = The number of elements in the collection is less than the sum of the offset and count.
+Err_ArrayIsNull = Expects an array that is not null (not "Nothing" in Visual Basic).
+EnumeratorNotStarted = An internal error has occured: attempting to enumerate before the emumerator has started.
+EnumeratorEnded = An internal error has occured: the enumerator has already finished all operations.

@@ -1,4 +1,4 @@
-#include cslib,net462,netstandard1_3,netstandard1_5,netstandard1_6,netstandard2_0
+#include cslib,net45,net462,netstandard1_3,netstandard1_5,netstandard1_6,netstandard2_0
 assemblyDescription = 'Enhancements and utility classes for primitive types and some commonly used types in the mscorlib and System.Core libraries. Extension methods are available for string, DateTime, enum, StringBuilder, SecureString, RegEx, event handlers, random, array, Enumberable, IList, collections, stream and various derivatives. Utility classes include the SortUtility class for topological sorting, the Assert class for argument validation, and FastConvert class for performance optimized serialization between various primitive types and string. Also include various utility classes for DateTime, enum, HTTP, mathematics, random and string. A ConcurrentSortedList generic collection type is implemented in this library, which expands on the SortedList type to support multi-threading.'
 #assemblyAlias
 #comGuid
@@ -9,16 +9,10 @@ compiler {
 	allowUnsafe = true
     # CS0618 - timezone is obsolete
     nowarn = [ 'CS0618' ]
-    configuration {
-        Release {
-            # CS1591 Missing XML comment
-            nowarn = [ 'CS1591' ]
-        }
-    }
 }
 
 frameworks {
-	net462 {
+	net45 {
 		compiler {
 			configuration {
 				Release {
@@ -33,6 +27,21 @@ frameworks {
 			}
 		}
 	}
+    net462 {
+        compiler {
+            configuration {
+                Release {
+                    strongNameKey = ${strongNameKey.testsign}
+                }
+            }
+        }
+        dependencies {
+            'System.Net.Http' {
+                version = '4.0.0'
+                type = 'gac'
+            }
+        }
+    }
     'netstandard1.3' {
         disableDefaultDependencyPackages = true
         dependencies {

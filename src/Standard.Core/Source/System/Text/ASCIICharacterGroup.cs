@@ -14,62 +14,62 @@ namespace System.Text
         Digit = 1,
 
         /// <summary>
-        /// Upper case letters from 'A' to 'F'.
+        /// Upper case letters from `A` to `F`.
         /// </summary>
         UpperCaseAToF = 2,
 
         /// <summary>
-        /// Upper case letters from 'G' to 'Z'.
+        /// Upper case letters from `G` to `Z`.
         /// </summary>
         UpperCaseGToZ = 4,
 
         /// <summary>
-        /// All lower case letters from 'a' to 'z'.
+        /// All lower case letters from `a` to `z`.
         /// </summary>
         LowerCase = 8,
 
         /// <summary>
-        /// Space (' ') character.
+        /// Space (` `) character.
         /// </summary>
         Space = 16,
 
         /// <summary>
-        /// The symbols '!', '"', '#', '$', '&amp;', ''', '*', ',', '-', '.', /', ';', ':', '?', '@', '\', '^', _', `' , '|', and '~'.
+        /// The symbols `!`, `"`, `#`, `$`, `&amp;`, `'`, `*`, `,`, `-`, `.`, `/`, `;`, `:`, `?`, `@`, `\`, `^`, `_`, ```` , `|`, and `~`.
         /// </summary>
         Punctuation = 32,
 
         /// <summary>
-        /// Characters '%', '+', '&lt;', '=', and '&gt;'.
+        /// Characters `%`, `+`, `&lt;`, `=`, and `&gt;`.
         /// </summary>
         MathOperator = 64,
 
         /// <summary>
-        /// Characters '(', ')', '[', ']', '{', and '}'.
+        /// Characters `(`, `)`, `[`, `]`, `{`, and `}`.
         /// </summary>
         Bracket = 128,
 
         /// <summary>
-        /// The 'backspace' control character.
+        /// The backspace control character.
         /// </summary>
         Backspace = 256,
 
         /// <summary>
-        /// The 'horizontal tab' control character.
+        /// The horizontal tab control character.
         /// </summary>
         HorizontalTab = 512,
 
         /// <summary>
-        /// The 'line feed' control character.
+        /// The line feed control character.
         /// </summary>
         LineFeed = 1024,
 
         /// <summary>
-        /// The 'vertical tab' control character.
+        /// The vertical tab control character.
         /// </summary>
         VerticalTab = 2048,
 
         /// <summary>
-        /// The 'carriage return' control character.
+        /// The carriage return control character.
         /// </summary>
         CarriageReturn = 4096,
 
@@ -79,12 +79,12 @@ namespace System.Text
         LegacyControl = 8192,
 
         /// <summary>
-        /// The 'carriage return' + 'line feed' control characters sequence, which is used on Windows systems to denote newlines.
+        /// The carriage return control character, followed by the line feed control character. This sequence is used on Windows systems to denote new lines.
         /// </summary>
         CarriageReturnLineFeed = CarriageReturn | LineFeed,
 
         /// <summary>
-        /// Commonly used control characters: 'backspace', 'horizontal tab', 'line feed', 'vertical tab', and 'carriage return'.
+        /// Commonly used control characters: backspace, horizontal tab, line feed, vertical tab, and carriage return.
         /// </summary>
         CommonControl = Backspace | HorizontalTab | LineFeed | VerticalTab | CarriageReturn,
 
@@ -94,33 +94,34 @@ namespace System.Text
         Control = CommonControl | LegacyControl,
 
         /// <summary>
-        /// Upper case letters from 'A' to 'Z'.
+        /// Upper case letters from `A` to `Z`.
         /// </summary>
         UpperCase = UpperCaseAToF | UpperCaseGToZ,
 
         /// <summary>
-        /// Numbers from 0 to 9, and upper case letters from 'A' to 'F'.
+        /// Numbers from 0 to 9, and upper case letters from `A` to `F`.
         /// </summary>
         Hexadecimal = Digit | UpperCaseAToF,
 
         /// <summary>
-        /// Numberd from 0 to 9, upper case letters from 'A' to 'Z', and lower case letters from 'a' to 'z'.
+        /// Numberd from 0 to 9, upper case letters from `A` to `Z`, and lower case letters from `a` to `z`.
         /// </summary>
         Alphanumeric = Digit | UpperCase | LowerCase,
 
         /// <summary>
-        /// Numberd from 0 to 9, and lower case letters from 'a' to 'z'.
+        /// Numberd from 0 to 9, and lower case letters from `a` to `z`.
         /// </summary>
         AlphanumericLowerCase = Digit | LowerCase,
 
         /// <summary>
-        /// Numberd from 0 to 9, and upper case letters from 'A' to 'Z'.
+        /// Numberd from 0 to 9, and upper case letters from `A` to `Z`.
         /// </summary>
         AlphanumericUpperCase = Digit | UpperCase,
 
         /// <summary>
-        /// Upper case and lower case letters ('A' to 'Z', 'a' to 'z', and 0 to 9), space (' '), 
-        /// plus symbols defined under the 'Punctuation', 'MathOperator', and 'Bracket' enum members.
+        /// Upper case and lower case letters (`A` to `Z`, `a` to 'z', and 0 to 9), space (` `), 
+        /// as well as symbols defined under the <see cref="Punctuation"/>, <see cref="MathOperator"/>, and 
+        /// <see cref="Bracket"/> enum members.
         /// </summary>
         Printable = UpperCase | LowerCase | Digit | Space | Punctuation | MathOperator | Bracket,
     }    
