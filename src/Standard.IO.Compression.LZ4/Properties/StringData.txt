@@ -1,0 +1,16 @@
+﻿FeatureNotImplementedInType = The feature "{0}" is not implemented in "{1}".
+BlockSizeLargerThanExpected = The block size is greater than the declared value.
+BadBlockSizeInType = Invalid block size ({0}) in "{1}".
+OperationNotAllowedInType = The operation "{0}" is not allowed in "{1}".
+ExpectLZ4MagicNumber = The LZ4 frame magic number was not found.
+LZ4VersionNotSupported = LZ4 frame version {0} is not supported in this assembly.
+BadLZ4FrameHeaderChecksum = Invalid LZ4 frame header checksum.
+UnexpectedEndOfStream = Unexpected end of stream. Data may be irrecoverably corrupted.
+CannotBeNegativeNumber = Expects a value that is greater than or equal to 0.
+OffsetSelectionLargerThanLength = The sum of source offset and length cannot be greater than the entire source length.
+TargetOffsetSelectionLargerThanLength = The sum of target offset and length cannot be greater than the entire target length.
+SourceBufferTooSmall = A data corruption error has occured. Source buffer is too small.
+InvalidLengthDescriptor = A data corruption error has occured. The length descriptor is invalid.
+UnexpectedDecodeSize = Expected {0} bytes but {1} bytes were decoded.
+LZ4CompressVersionNotSupported = LZ4 compress version {0} is not supported in this assembly.
+EncodeChunkTargetBufferTooSmall = Failed to encode chunk. The target buffer is too small.

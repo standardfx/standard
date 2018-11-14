@@ -1,0 +1,72 @@
+#include cslib,net462,netstandard1_3,netstandard2_0
+assemblyDescription = 'Compress and expand data using the LZ4 algorithm. LZ4 is a fast codec with decent compression ratio.'
+#assemblyAlias
+#comGuid
+clsCompliant = true
+allowPartialTrust = false
+compiler {
+	allowUnsafe = true
+	cslang = 7
+}
+dependencies {
+	'System.Memory' {
+		type = 'package'
+		version = '4.5.1'
+	}
+	'Standard.Security.Cryptography.HashAlgorithms' {
+		type = 'project'
+	}
+}
+frameworks {
+	# [!] #TODO NET45 target
+	# Polyfill required for Buffer.MemoryCopy()
+	#net45 {
+	#	compiler {
+	#		configuration {
+	#			Release {
+	#				strongNameKey = ${strongNameKey.testsign}
+	#			}
+	#		}
+	#	}
+	#}
+	
+	net462 {
+		compiler {
+			configuration {
+				Release {
+					strongNameKey = ${strongNameKey.testsign}
+				}
+			}
+		}
+	}
+    'netstandard1.3' {
+        disableDefaultDependencyPackages = true
+        dependencies {
+        	'System.Security.Cryptography.Primitives' {
+        		type = 'package'
+        		version = '4.3.0'
+        	}
+        }
+    }
+}
+internalsVisibleTo {
+	'Standard.IO.Compression.LZ4.Tests' {
+		'DEBUG' = null
+		'!DEBUG,NETFX' = 'PublicKey='${frameworks.net462.compiler.configuration.Release.strongNameKey.hash}
+		'!DEBUG,!NETFX' = null
+	}
+}
+package {
+	output {
+		nuget {
+			tags = ["standard", "io", "compression", "lz4"]
+			summary = ${assemblyDescription}
+		}
+	}
+}
+#scripts {
+#	preCompile = []
+#	postCompile = []
+#	prePublish = []
+#	postPublish = []
+#}

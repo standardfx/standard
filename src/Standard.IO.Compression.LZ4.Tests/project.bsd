@@ -1,0 +1,37 @@
+#include cslib,net462,xunit,xunit-net462,xunit-netcoreapp2
+clsCompliant = false
+allowPartialTrust = false
+dependencies {
+	'Standard.IO.Compression.LZ4' {
+		type = 'project'
+	}
+	'lz4net' {
+		type = 'package'
+		version = '1.0.15.93'
+	}
+	'System.Data.HashFunction.xxHash' {
+		type = 'package'
+		version = '2.0.0'
+	}
+}
+compiler {
+	noWarn = ['CS1591', 'CS0168']
+	allowUnsafe = true
+	cslang = 7
+}
+frameworks {
+	'netcoreapp2.0' {
+		compiler {
+			constants = ['NETSTANDARD']
+		}
+	}
+	net462 {
+		compiler {
+			configuration {
+				Release {
+					strongNameKey = ${strongNameKey.testsign}
+				}
+			}
+		}
+	}
+}
