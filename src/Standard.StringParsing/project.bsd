@@ -1,0 +1,53 @@
+#include cslib,net462,net45,netstandard1_3
+assemblyDescription = 'A general purpose string parser that is compatible with LINQ.'
+#assemblyAlias
+#comGuid
+clsCompliant = true
+allowPartialTrust = true
+compiler {
+	cslang = 7
+}
+frameworks {
+	net462 {
+		compiler {
+			configuration {
+				Release {
+					strongNameKey = ${strongNameKey.testsign}
+				}
+			}
+		}
+	}
+	net45 {
+		compiler {
+			configuration {
+				Release {
+					strongNameKey = ${strongNameKey.testsign}
+				}
+			}
+		}
+	}
+	'netstandard1.3' {
+		disableDefaultDependencyPackages = true
+	}
+}
+internalsVisibleTo {
+	'Standard.StringParsing.Tests' {
+		'DEBUG' = null
+		'!DEBUG,NETFX' = 'PublicKey='${frameworks.net462.compiler.configuration.Release.strongNameKey.hash}
+		'!DEBUG,!NETFX' = null
+	}
+}
+package {
+	output {
+		nuget {
+			tags = ["standard", "string", "parsing", "parser"]
+			summary = ${assemblyDescription}
+		}
+	}
+}
+#scripts {
+#	preCompile = []
+#	postCompile = []
+#	prePublish = []
+#	postPublish = []
+#}
