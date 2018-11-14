@@ -840,7 +840,7 @@ task Build -depends Discover -precondition { $Subcommand -eq 'Build' } {
             say ($sr.TestingForConfiguration -f $projectName, $buildConfiguration)
             Push-Location
             cd $testProjectDir
-            exec { dotnet test }
+            exec { dotnet test --logger:"console;verbosity=detailed" }
             Pop-Location
         }
         else

@@ -125,9 +125,15 @@
   if localized_file_exists == true
     localized_data = localized_data_file | include | object.from_string
     for prop_name in (localized_data | object.keys)
+      cdata_start_tag = ''
+      cdata_end_tag = ''
+      if (localized_data[prop_name] | string.strip) == ""
+        cdata_start_tag = '<![CDATA['
+        cdata_end_tag = ']]>'
+      end
 ~}}
   <data name="{{ prop_name | string.capitalize | string.append "_en_us" | html.xmlattrib }}" xml:space="preserve">
-    <value>{{ localized_data[prop_name] | html.xmltext }}</value>
+    <value>{{ cdata_start_tag }}{{ localized_data[prop_name] | html.xmltext }}{{ cdata_end_tag }}</value>
   </data>
 {{~ 
     end
@@ -138,9 +144,15 @@
       localization_code = localization_file | string.split '\' | array.last | string.split '.' | array.first | string.replace_first "StringData-" ""
       localized_data = localization_file | include | object.from_string
       for prop_name in (localized_data | object.keys)
+        cdata_start_tag = ''
+        cdata_end_tag = ''
+        if (localized_data[prop_name] | string.strip) == ""
+          cdata_start_tag = '<![CDATA['
+          cdata_end_tag = ']]>'
+        end
 ~}}
   <data name="{{ prop_name | string.capitalize | string.append ("_" + (localization_code | string.replace '-' '_')) | html.xmlattrib }}" xml:space="preserve">
-    <value>{{ localized_data[prop_name] | html.xmltext }}</value>
+    <value>{{ cdata_start_tag }}{{ localized_data[prop_name] | html.xmltext }}{{ cdata_end_tag }}</value>
   </data>
 {{~
       end
