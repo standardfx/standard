@@ -1,5 +1,0 @@
-﻿root {
-  some-property {
-    include ""External.cfon"" 
-  }
-}

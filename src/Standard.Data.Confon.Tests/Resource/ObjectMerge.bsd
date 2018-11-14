@@ -1,7 +1,0 @@
-root {
-  some-object.property1 = 123
-  some-object.property2 = 456
-  some-object {
-     property3 = 789
-  }
-}
