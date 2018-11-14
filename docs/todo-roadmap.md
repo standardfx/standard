@@ -7,7 +7,7 @@ To port
 [ ] humanizer
 [ ] logging
 [ ] zip
-[ ] lzma
+[x] lz4
 [ ] iso
 [ ] vhd
 [ ] mailclient
@@ -15,12 +15,12 @@ To port
 [ ] sharpdx
 [ ] mtk
 [ ] cudafy
-[ ] sharedmemory
+[x] sharedmemory
 [ ] inputdevice
 [ ] search
 [ ] json
 [ ] bson
-[x] markdown
+[ ] markdown
 [ ] wifi
 [ ] bluetooth
 [ ] javascript
