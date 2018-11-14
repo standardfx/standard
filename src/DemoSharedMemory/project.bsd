@@ -10,8 +10,15 @@ dependencies {
 package {
 	output {
 		nuget {
-			tags = ["standard", "demo", "mqtt"]
+			tags = ["standard", "demo", "ipc", "sharedmemory"]
 			summary = ${assemblyDescription}
 		}
+	}
+}
+frameworks {
+	'netcoreapp2.0' {
+        compiler {
+            constants = ['NETCOREAPP2', 'NETCOREAPP2_0']
+        }	
 	}
 }

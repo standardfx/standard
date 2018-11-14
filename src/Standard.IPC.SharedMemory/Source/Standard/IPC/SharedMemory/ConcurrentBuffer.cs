@@ -1,12 +1,17 @@
 using System;
+
+#if NETFX
 using System.Security.Permissions;
+#endif
 
 namespace Standard.IPC.SharedMemory
 {
     /// <summary>
     /// Read/Write buffer with support for simple inter-process read/write synchronization.
     /// </summary>
+#if NETFX
     [PermissionSet(SecurityAction.LinkDemand)]
+#endif
     public unsafe class ConcurrentBuffer : LockableBuffer
     {
         /// <summary>

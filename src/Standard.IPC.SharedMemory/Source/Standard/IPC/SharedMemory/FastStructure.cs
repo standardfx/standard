@@ -108,7 +108,11 @@ namespace Standard.IPC.SharedMemory
 
             void* ptr = source.ToPointer();
             byte* p = (byte*)FastStructure.GetPtr<T>(ref buffer[0]);
+#if NETFX
             UnsafeNativeMethods.CopyMemoryPtr(p + (index * elementSize), ptr, (uint)(elementSize * count));
+#else
+            Buffer.MemoryCopy(ptr, p + (index * elementSize), elementSize * count, elementSize * count);
+#endif
         }
 
         /// <summary>
@@ -135,7 +139,11 @@ namespace Standard.IPC.SharedMemory
 
             void* ptr = destination.ToPointer();
             byte* p = (byte*)FastStructure.GetPtr<T>(ref buffer[0]);
+#if NETFX
             UnsafeNativeMethods.CopyMemoryPtr(ptr, p + (index * elementSize), (uint)(elementSize * count));
+#else
+            Buffer.MemoryCopy(p + (index * elementSize), ptr, elementSize * count, elementSize * count);
+#endif
         }
     }
 
@@ -190,7 +198,7 @@ namespace Standard.IPC.SharedMemory
         /// <summary>
         /// Cached size of T as determined by <see cref="System.Runtime.InteropServices.Marshal.SizeOf(Type)"/>.
         /// </summary>
-        public static readonly int Size = System.Runtime.InteropServices.Marshal.SizeOf(typeof(T));
+        public static readonly int Size = Polyfill.GetMarshalSizeOf<T>();
         
         private static DynamicMethod method;
         private static DynamicMethod methodLoad;

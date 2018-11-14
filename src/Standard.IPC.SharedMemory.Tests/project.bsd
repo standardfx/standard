@@ -1,11 +1,16 @@
-#include cslib,net462,xunit,xunit-net462
+#include cslib,net462,xunit,xunit-net462,xunit-netcoreapp2
 clsCompliant = false
 allowPartialTrust = false
-dependencies {
-  'Standard.IPC.SharedMemory' {
-  	type = 'project'
-  }
-}
 compiler {
+	cslang = 7
+	allowUnsafe = true
 	noWarn = ['CS1591', 'CS0168']
+}
+dependencies {
+	'Standard.IPC.SharedMemory' {
+		type = 'project'
+	}
+	'Standard.Core' {
+		type = 'project'
+	}
 }

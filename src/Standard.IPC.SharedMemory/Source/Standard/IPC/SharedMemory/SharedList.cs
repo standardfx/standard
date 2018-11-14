@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+
+#if NETFX
 using System.Security.Permissions;
+#endif
 
 namespace Standard.IPC.SharedMemory
 {
@@ -9,9 +12,11 @@ namespace Standard.IPC.SharedMemory
     /// A generic fixed-length shared memory array of structures, with support for simple inter-process read/write synchronization.
     /// </summary>
     /// <typeparam name="T">The structure type that will be stored in the elements of this fixed array buffer.</typeparam>
+#if NETFX
     [PermissionSet(SecurityAction.LinkDemand)]
     [PermissionSet(SecurityAction.InheritanceDemand)]
-    public class SharedArray<T> : LockableBuffer, IList<T>
+#endif
+    public class SharedList<T> : LockableBuffer, IList<T>
         where T : struct
     {
         private int _elementSize;
@@ -21,11 +26,11 @@ namespace Standard.IPC.SharedMemory
         /// </summary>
         /// <param name="name">The name of the shared memory array to be created.</param>
         /// <param name="length">The number of elements to make room for within the shared memory array.</param>
-        public SharedArray(string name, int length)
-            : base(name, Marshal.SizeOf(typeof(T)) * length, true)
+        public SharedList(string name, int length)
+            : base(name, Polyfill.GetMarshalSizeOf<T>() * length, true)
         {
             Length = length;
-            _elementSize = Marshal.SizeOf(typeof(T));
+            _elementSize = Polyfill.GetMarshalSizeOf<T>();
 
             Open();
         }
@@ -38,16 +43,16 @@ namespace Standard.IPC.SharedMemory
         /// The shared memory location specified by <paramref name="name"/> does not have a <see cref="SharedBuffer.BufferSize"/> that is evenly 
         /// divisible by the size of <typeparamref name="T"/>.
         /// </exception>
-        public SharedArray(string name)
+        public SharedList(string name)
             : base(name, 0, false)
         {
-            _elementSize = Marshal.SizeOf(typeof(T));
+            _elementSize = Polyfill.GetMarshalSizeOf<T>();
 
             Open();
         }
 
         /// <summary>
-        /// Gets a 32-bit integer that represents the total number of elements in the <see cref="SharedArray{T}"/>.
+        /// Gets a 32-bit integer that represents the total number of elements in the <see cref="SharedList{T}"/>.
         /// </summary>
         public int Length { get; private set; }
 

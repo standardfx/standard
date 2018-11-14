@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if NETFX
+
+using System;
 using System.Runtime.InteropServices;
 using System.Security;
 
@@ -16,3 +18,5 @@ namespace Standard.IPC.SharedMemory
         public static extern unsafe void CopyMemoryPtr(void* dest, void* src, uint count);
     }
 }
+
+#endif

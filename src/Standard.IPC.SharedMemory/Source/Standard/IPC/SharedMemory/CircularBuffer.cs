@@ -1,16 +1,21 @@
 using System;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 using System.Threading;
 using System.IO.MemoryMappedFiles;
+
+#if NETFX
+using System.Security.Permissions;
+#endif
 
 namespace Standard.IPC.SharedMemory
 {
     /// <summary>
     /// A lock-free FIFO shared memory circular buffer (or ring buffer) utilizing a <see cref="MemoryMappedFile"/>.
     /// </summary>
+#if NETFX
     [PermissionSet(SecurityAction.LinkDemand)]
     [PermissionSet(SecurityAction.InheritanceDemand)]
+#endif
     public unsafe class CircularBuffer : SharedBuffer
     {
         private NodeHeader* _nodeHeader = null;
@@ -54,11 +59,11 @@ namespace Standard.IPC.SharedMemory
         }
 
         private CircularBuffer(string name, int nodeCount, int nodeBufferSize, bool ownsSharedMemory)
-            : base(name, Marshal.SizeOf(typeof(NodeHeader)) + (Marshal.SizeOf(typeof(Node)) * nodeCount) + (nodeCount * (long)nodeBufferSize), ownsSharedMemory)
+            : base(name, Polyfill.GetMarshalSizeOf<NodeHeader>() + (Polyfill.GetMarshalSizeOf<Node>() * nodeCount) + (nodeCount * (long)nodeBufferSize), ownsSharedMemory)
         {
             if (ownsSharedMemory && nodeCount < 2)
                 throw new ArgumentOutOfRangeException(nameof(nodeCount), nodeCount, RS.NodeCountRequireGeTwo);
-#if DEBUG
+#if DEBUG && NETFX
             else if (!ownsSharedMemory && (nodeCount != 0 || nodeBufferSize > 0))
                 System.Diagnostics.Debug.Write("Node count and nodeBufferSize are ignored when opening an existing shared memory circular buffer.", "Warning");
 #endif
@@ -108,7 +113,7 @@ namespace Standard.IPC.SharedMemory
         {
             get
             {
-                return NodeHeaderOffset + Marshal.SizeOf(typeof(NodeHeader));
+                return NodeHeaderOffset + Polyfill.GetMarshalSizeOf<NodeHeader>();
             }
         }
 
@@ -119,7 +124,7 @@ namespace Standard.IPC.SharedMemory
         {
             get
             {
-                return NodeOffset + (Marshal.SizeOf(typeof(Node)) * NodeCount);
+                return NodeOffset + (Polyfill.GetMarshalSizeOf<Node>() * NodeCount);
             }
         }
 
@@ -191,12 +196,12 @@ namespace Standard.IPC.SharedMemory
         public struct Node
         {
             /// <summary>
-            /// The previous node.
+            /// The next node.
             /// </summary>
             public int Next;
 
             /// <summary>
-            /// The next node.
+            /// The previous node.
             /// </summary>
             public int Prev;
 
@@ -466,7 +471,7 @@ namespace Standard.IPC.SharedMemory
         public virtual int Write<T>(ref T source, int timeout = 1000)
             where T : struct
         {
-            int structSize = Marshal.SizeOf(typeof(T));
+            int structSize = Polyfill.GetMarshalSizeOf<T>();
 
             if (structSize > NodeBufferSize)
                 throw new ArgumentOutOfRangeException("T", string.Format(RS.StructureSizeGtNodeBufferSize, typeof(T).Name));
@@ -552,7 +557,7 @@ namespace Standard.IPC.SharedMemory
         /// </summary>
         public NodeHeader ReadNodeHeader()
         {
-            return (NodeHeader)Marshal.PtrToStructure(new IntPtr(_nodeHeader), typeof(NodeHeader));
+            return (Polyfill.GetMarshalPtrToStructure<NodeHeader>(new IntPtr(_nodeHeader)));
         }
 
         /// <summary>
@@ -695,7 +700,7 @@ namespace Standard.IPC.SharedMemory
         public virtual int Read<T>(out T destination, int timeout = 1000)
             where T: struct
         {
-            int structSize = Marshal.SizeOf(typeof(T));
+            int structSize = Polyfill.GetMarshalSizeOf<T>();
             if (structSize > NodeBufferSize)
                 throw new ArgumentOutOfRangeException("T", string.Format(RS.StructureSizeGtNodeBufferSize, typeof(T).Name));
 

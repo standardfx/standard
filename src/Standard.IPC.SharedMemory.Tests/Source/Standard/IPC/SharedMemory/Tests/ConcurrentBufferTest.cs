@@ -11,8 +11,9 @@ namespace Standard.IPC.SharedMemory.Tests
 		[Fact]
 		public void ProducerCanWriteAndConsumerCanRead()
 		{
-			using (var producer = new ConcurrentBuffer(name: "MySharedBuffer", bufferSize: 1024))
-			using (var consumer = new ConcurrentBuffer(name: "MySharedBuffer"))
+            var name = Guid.NewGuid().ToString();
+			using (var producer = new ConcurrentBuffer(name, 1024))
+			using (var consumer = new ConcurrentBuffer(name))
 			{
 				int data = 123;
 				producer.Write<int>(ref data);

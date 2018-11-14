@@ -1,8 +1,11 @@
 using System;
 using System.IO.MemoryMappedFiles;
 using System.Runtime.InteropServices;
-using System.Security.Permissions;
 using System.Threading;
+
+#if NETFX
+using System.Security.Permissions;
+#endif
 
 namespace Standard.IPC.SharedMemory
 {
@@ -10,8 +13,10 @@ namespace Standard.IPC.SharedMemory
     /// Abstract base class that provides client/server support for reading/writing structures to a buffer within a <see cref="MemoryMappedFile" />.
     /// A header structure allows clients to open the buffer without knowing the size.
     /// </summary>
+#if NETFX
     [PermissionSet(SecurityAction.LinkDemand)]
     [PermissionSet(SecurityAction.InheritanceDemand)]
+#endif
     public abstract unsafe class SharedBuffer : IDisposable
     {
         /// <summary>
@@ -37,7 +42,7 @@ namespace Standard.IPC.SharedMemory
         /// <summary>
         /// Pointer to the header within shared memory.
         /// </summary>
-        protected SharedHeader* Header = null;
+        protected SharedBufferHeader* Header = null;
 
         /// <summary>
         /// Create a new <see cref="SharedBuffer"/> instance with the specified name and buffer size.
@@ -67,7 +72,7 @@ namespace Standard.IPC.SharedMemory
 
             if (ownsSharedMemory && bufferSize <= 0)
                 throw new ArgumentOutOfRangeException("bufferSize", bufferSize, RS.BufferSizeRequireGtZero);
-#if DEBUG
+#if DEBUG && NETFX
             else if (!ownsSharedMemory && bufferSize > 0)
                 System.Diagnostics.Debug.Write("Buffer size is ignored when opening an existing shared memory buffer.", "Warning");
 #endif
@@ -104,7 +109,7 @@ namespace Standard.IPC.SharedMemory
         {
             get
             {
-                return HeaderOffset + Marshal.SizeOf(typeof(SharedHeader)) + BufferSize;
+                return HeaderOffset + Polyfill.GetMarshalSizeOf<SharedBufferHeader>() + BufferSize;
             }
         }
 
@@ -145,7 +150,7 @@ namespace Standard.IPC.SharedMemory
         {
             get
             {
-                return HeaderOffset + Marshal.SizeOf(typeof(SharedHeader));
+                return HeaderOffset + Polyfill.GetMarshalSizeOf<SharedBufferHeader>();
             }
         }
 
@@ -175,7 +180,7 @@ namespace Standard.IPC.SharedMemory
                     // Create a view to the entire region of the shared memory
                     View = Mmf.CreateViewAccessor(0, SharedMemorySize, MemoryMappedFileAccess.ReadWrite);
                     View.SafeMemoryMappedViewHandle.AcquirePointer(ref ViewPtr);
-                    Header = (SharedHeader*)(ViewPtr + HeaderOffset);
+                    Header = (SharedBufferHeader*)(ViewPtr + HeaderOffset);
                     BufferStartPtr = ViewPtr + BufferOffset;
                     // Initialise the header
                     InitializeHeader();
@@ -186,20 +191,20 @@ namespace Standard.IPC.SharedMemory
                     Mmf = MemoryMappedFile.OpenExisting(Name);
 
                     // Retrieve the header from the shared memory in order to initialise the correct size
-                    using (var headerView = Mmf.CreateViewAccessor(0, HeaderOffset + Marshal.SizeOf(typeof(SharedHeader)), MemoryMappedFileAccess.Read))
+                    using (var headerView = Mmf.CreateViewAccessor(0, HeaderOffset + Polyfill.GetMarshalSizeOf<SharedBufferHeader>(), MemoryMappedFileAccess.Read))
                     {
                         byte* headerPtr = null;
                         headerView.SafeMemoryMappedViewHandle.AcquirePointer(ref headerPtr);
-                        var header = (SharedHeader*)(headerPtr + HeaderOffset);
-                        BufferSize = header->SharedMemorySize - Marshal.SizeOf(typeof(SharedHeader));
+                        var header = (SharedBufferHeader*)(headerPtr + HeaderOffset);
+                        BufferSize = header->SharedMemorySize - Polyfill.GetMarshalSizeOf<SharedBufferHeader>();
                         headerView.SafeMemoryMappedViewHandle.ReleasePointer();
                     }
 
                     // Create a view to the entire region of the shared memory
                     View = Mmf.CreateViewAccessor(0, SharedMemorySize, MemoryMappedFileAccess.ReadWrite);
                     View.SafeMemoryMappedViewHandle.AcquirePointer(ref ViewPtr);
-                    Header = (SharedHeader*)(ViewPtr + HeaderOffset);
-                    BufferStartPtr = ViewPtr + HeaderOffset + Marshal.SizeOf(typeof(SharedHeader));
+                    Header = (SharedBufferHeader*)(ViewPtr + HeaderOffset);
+                    BufferStartPtr = ViewPtr + HeaderOffset + Polyfill.GetMarshalSizeOf<SharedBufferHeader>();
                 }
             }
             catch
@@ -248,10 +253,10 @@ namespace Standard.IPC.SharedMemory
             if (!IsOwnerOfSharedMemory)
                 return;
 
-            SharedHeader header = new SharedHeader();
+            SharedBufferHeader header = new SharedBufferHeader();
             header.SharedMemorySize = SharedMemorySize;
             header.Shutdown = 0;
-            View.Write<SharedHeader>(HeaderOffset, ref header);
+            View.Write<SharedBufferHeader>(HeaderOffset, ref header);
         }
 
         /// <summary>
@@ -359,7 +364,11 @@ namespace Standard.IPC.SharedMemory
         /// <param name="bufferPosition">The offset within the buffer region of the shared memory to write to.</param>
         protected virtual void Write(IntPtr source, int length, long bufferPosition = 0)
         {
+#if NETFX
             UnsafeNativeMethods.CopyMemory(new IntPtr(BufferStartPtr + bufferPosition), source, (uint)length);
+#else
+            Buffer.MemoryCopy((void*)source, BufferStartPtr + bufferPosition, BufferSize - bufferPosition, length);
+#endif
         }
 
         /// <summary>
@@ -419,7 +428,11 @@ namespace Standard.IPC.SharedMemory
         /// <param name="bufferPosition">The offset within the buffer region of the shared memory to read from.</param>
         protected virtual void Read(IntPtr destination, int length, long bufferPosition = 0)
         {
+#if NETFX
             UnsafeNativeMethods.CopyMemory(destination, new IntPtr(BufferStartPtr + bufferPosition), (uint)length);
+#else
+            Buffer.MemoryCopy(BufferStartPtr + bufferPosition, (void*)destination, length, length);
+#endif
         }
 
         /// <summary>

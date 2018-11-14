@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 using System.Security;
 using Standard.IPC.SharedMemory;
 
-namespace DemoCli
+namespace SharedMemoryDemo
 {
     partial class Program
     {
         [SecuritySafeCritical]
-        internal static void RunSingleProcess(int serverCount, int clientCount, int elements, int bufferSize, int count)
+        internal static void RunSingleProcess(int serverCount, int clientCount, int elements = 100000, int bufferSize = 1048576, int count = 50)
         {
             int clientWaitCount = 0;
             int serverWaitCount = 0;
@@ -20,7 +20,11 @@ namespace DemoCli
 
             int size = sizeof(byte) * bufferSize;
 
-            Console.WriteLine("Node buffer size: {0}, count: {1}, writers: {2}, readers {3}, elements: {4}", size, count, serverCount, clientCount, elements);
+            Console.WriteLine("Node buffer size: {0}", size);
+            Console.WriteLine("Number of nodes: {0}", count);
+            Console.WriteLine("Number of readers: {0}", clientCount);
+            Console.WriteLine("Number of writers: {0}", serverCount);
+            Console.WriteLine("Number of elements to process: {0}", elements);
 
             int dataListCount = 256;
             // Generate random data to be written
@@ -73,7 +77,11 @@ namespace DemoCli
 
             for (int c = 0; c < clientCount; c++)
             {
+#if NETFX
                 Task c1 = Task.Factory.StartNew(clientAction);
+#else
+                ThreadPool.QueueUserWorkItem((o) => { clientAction(); });
+#endif
             }
 
             bool wait = true;
@@ -107,7 +115,11 @@ namespace DemoCli
 
                     if (serverIndex == 1 && sw.ElapsedTicks - lastTick > 1000000)
                     {
-                        Console.WriteLine("Write: {0}, Read: {1}, Diff: {5}, Wait(cli/svr): {3}/{2}, {4}MB/s", writeCount, readCount, serverWaitCount, clientWaitCount, (int)((((bytesWritten + bytesRead) / 1048576.0) / sw.ElapsedMilliseconds) * 1000), writeCount - readCount);
+                        Console.WriteLine("Write: {0}, Read: {1}, Diff: {5}, Wait(cli/svr): {3}/{2}, {4}MB/s", 
+                            writeCount, readCount, serverWaitCount, clientWaitCount, 
+                            (int)((((bytesWritten + bytesRead) / 1048576.0) / sw.ElapsedMilliseconds) * 1000), 
+                            writeCount - readCount);
+
                         lastTick = sw.ElapsedTicks;
                         if (writeCount > elements && writeCount - readCount == 0)
                         {
@@ -121,7 +133,11 @@ namespace DemoCli
 
             for (int s = 0; s < serverCount; s++)
             {
+#if NETFX
                 Task s1 = Task.Factory.StartNew(serverWrite);
+#else
+                ThreadPool.QueueUserWorkItem((o) => { serverWrite(); });
+#endif
             }
 
             while (wait)

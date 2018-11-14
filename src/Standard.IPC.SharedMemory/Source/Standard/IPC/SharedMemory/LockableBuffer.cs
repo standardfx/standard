@@ -1,20 +1,28 @@
 using System;
-using System.Security.Permissions;
 using System.Threading;
+
+#if NETFX
+using System.Security.Permissions;
+#endif
 
 namespace Standard.IPC.SharedMemory
 {
     /// <summary>
-    /// <para>Extends <see cref="SharedBuffer"/> to support simple thread-synchronisation for read/write 
-    /// to the buffer by allowing callers to acquire and release read/write locks.</para>
-    /// <para>All buffer read/write operations have been overloaded to first perform a <see cref="System.Threading.WaitHandle.WaitOne()"/> 
-    /// using the <see cref="ReadWaitEvent"/> and <see cref="WriteWaitEvent"/> respectively.</para>
-    /// <para>By default all read/write operations will not block, it is necessary to first acquire locks 
-    /// through calls to <see cref="AcquireReadLock"/> and <see cref="AcquireWriteLock"/> as appropriate, with corresponding 
-    /// calls to <see cref="ReleaseReadLock"/> and <see cref="ReleaseWriteLock"/> to release the locks.</para>
+    /// Extends <see cref="SharedBuffer"/> to support simple thread-synchronisation for read/write 
+    /// to the buffer by allowing callers to acquire and release read/write locks.
     /// </summary>
+    /// <remarks>
+    /// All buffer read/write operations have been overloaded to first perform a <see cref="System.Threading.WaitHandle.WaitOne()"/> 
+    /// using the <see cref="ReadWaitEvent"/> and <see cref="WriteWaitEvent"/> respectively.
+    /// 
+    /// By default all read/write operations will not block, it is necessary to first acquire locks 
+    /// through calls to <see cref="AcquireReadLock"/> and <see cref="AcquireWriteLock"/> as appropriate, with corresponding 
+    /// calls to <see cref="ReleaseReadLock"/> and <see cref="ReleaseWriteLock"/> to release the locks.
+    /// </remarks>
+#if NETFX
     [PermissionSet(SecurityAction.LinkDemand)]
     [PermissionSet(SecurityAction.InheritanceDemand)]
+#endif
     public abstract class LockableBuffer : SharedBuffer
     {
         private int _readWriteTimeout = 100;
@@ -99,8 +107,9 @@ namespace Standard.IPC.SharedMemory
         /// call to <see cref="ReleaseWriteLock"/>.
         /// </summary>
         /// <param name="millisecondsTimeout">The number of milliseconds to wait, or <see cref="Timeout.Infinite"/> to wait indefinitely.</param>
-        /// <returns>true if the write lock was able to be acquired, otherwise false.</returns>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="millisecondsTimeout"/> is a negative number other than -1, which represents an infinite time-out.</exception>
+        /// <returns>
+        /// `true` if the write lock was able to be acquired; otherwise `false`.</returns>
         /// <remarks>
         /// If <paramref name="millisecondsTimeout"/> is <see cref="Timeout.Infinite" />, then attempting to acquire a write lock after acquiring a read 
         /// lock on the same thread will result in a deadlock.

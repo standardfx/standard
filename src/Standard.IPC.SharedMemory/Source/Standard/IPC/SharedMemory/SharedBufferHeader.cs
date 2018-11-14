@@ -11,7 +11,7 @@ namespace Standard.IPC.SharedMemory
     /// This structure is the same size on 32-bit and 64-bit architectures.
     /// </remarks>
     [StructLayout(LayoutKind.Sequential)]
-    public struct SharedHeader
+    public struct SharedBufferHeader
     {
         /// <summary>
         /// Pad to 16-bytes.
@@ -19,7 +19,7 @@ namespace Standard.IPC.SharedMemory
         private int _padding0;
 
         /// <summary>
-        /// The total size of the buffer including <see cref="SharedHeader"/>.
+        /// The total size of the buffer including <see cref="SharedBufferHeader"/>.
         /// </summary>
         /// <remarks>
         /// The size is calculated using the following formula:

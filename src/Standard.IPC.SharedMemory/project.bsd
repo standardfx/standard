@@ -1,8 +1,7 @@
-#include cslib,net462
+#include cslib,net45,net462,netstandard2_0
 assemblyDescription = 'Fast interprocess communication using shared memory.'
 clsCompliant = false
 allowPartialTrust = false
-
 compiler {
 	cslang = 7
 	allowUnsafe = true
@@ -10,12 +9,23 @@ compiler {
 	# CS0414: field is assigned but its value is never used
 	# CS0169: field is never used
 	# CS0649: field is never assigned to, and will always have its default value null
-	# CS1574: xml cref attribute cannot be resolved (SerializationException) -- netstandard1.3
-    #nowarn = ['CS0414', 'CS0169', 'CS0649', 'CS1574']
-    noWarn = ['CS0414', 'CS0169', 'CS0649']
+	noWarn = ['CS0414', 'CS0169', 'CS0649', ]
 }
-
+dependencies {
+	'Standard.Core' {
+		type = 'project'
+	}
+}
 frameworks {
+	net45 {
+		compiler {
+			configuration {
+				Release {
+					strongNameKey = ${strongNameKey.testsign}
+				}
+			}
+		}
+	}
 	net462 {
 		compiler {
 			configuration {
@@ -25,8 +35,37 @@ frameworks {
 			}
 		}
 	}
+	# Cannot port to netstandard1.3 -- lack UnmanagedMemoryAccessor.Write<T>(...) and various type properties
+	#'netstandard1.3' {
+	#	disableDefaultDependencyPackages = true
+	#	compiler {
+	#		# CS1574: xml cref attribute cannot be resolved -- SerializationException
+	#		noWarn = [ 'CS1574' ]
+	#	}
+	#	dependencies {
+	#		'System.Reflection.TypeExtensions' {
+	#			type = 'package'
+	#			version = '4.5.1'
+	#		}
+	#		'System.IO.MemoryMappedFiles' {
+	#			type = 'package'
+	#			version = '4.3.0'
+	#		}
+	#		'System.Reflection.Emit.Lightweight' {
+	#			type = 'package'
+	#			version = '4.3.0'
+	#		}
+	#	}
+	#}
+	'netstandard2.0' {
+		dependencies {
+			'System.Reflection.Emit.Lightweight' {
+				type = 'package'
+				version = '4.3.0'
+			}
+		}
+	}
 }
-
 internalsVisibleTo {
 	'Standard.IPC.SharedMemory.Tests' {
 		'DEBUG' = null
@@ -34,7 +73,6 @@ internalsVisibleTo {
 		'!DEBUG,!NETFX' = null
 	}
 }
-
 package {
 	output {
 		nuget {

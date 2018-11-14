@@ -15,7 +15,7 @@ using System.Security;
 // https://stackoverflow.com/questions/13956481/how-to-access-a-security-critical-field-from-an-anonymous-delegate-or-lambda
 //
 
-namespace DemoCli
+namespace SharedMemoryDemo
 {
     [SecuritySafeCritical]
     internal partial class Program

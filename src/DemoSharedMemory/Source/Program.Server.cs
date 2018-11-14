@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 using System.Security;
 using Standard.IPC.SharedMemory;
 
-namespace DemoCli
+namespace SharedMemoryDemo
 {
     partial class Program
     {
         [SecuritySafeCritical]
-        internal static void RunServer(int bufferSize, int count)
+        internal static void RunServer(int bufferSize = 1048576, int count = 50)
         {
             byte[] readData;
             int size = sizeof(byte) * bufferSize;
@@ -30,7 +30,7 @@ namespace DemoCli
             Console.WriteLine("Press <enter> to start Server");
             Console.ReadLine();
 
-            Console.WriteLine("Create shared memory circular buffer");
+            Console.WriteLine("Creating shared memory circular buffer");
             using (var theServer = new CircularBuffer("TEST", count, size))
             {
                 Console.WriteLine("Circular buffer producer created.");
@@ -71,7 +71,12 @@ namespace DemoCli
                         if (myThreadIndex < 3 && (finalLine || sw.ElapsedTicks - lastTick > 1000000))
                         {
                             lastTick = sw.ElapsedTicks;
-                            Console.WriteLine("Write: {0}, Wait: {1}, {2}MB/s", ((double)totalBytes / 1048576.0).ToString("F0"), skipCount, (((totalBytes / 1048576.0) / sw.ElapsedMilliseconds) * 1000).ToString("F2"));
+
+                            Console.WriteLine("Write: {0}, Wait: {1}, {2}MB/s", 
+                                ((double)totalBytes / 1048576.0).ToString("F0"), 
+                                skipCount, 
+                                (((totalBytes / 1048576.0) / sw.ElapsedMilliseconds) * 1000).ToString("F2"));
+
                             linesOut++;
                             if (finalLine || (myThreadIndex > 1 && linesOut > 10))
                             {
@@ -92,9 +97,14 @@ namespace DemoCli
                 sw.Start();
 
                 Console.WriteLine("Testing throughput...");
+#if NETFX
                 Task s1 = Task.Factory.StartNew(writer);
+#else
+                ThreadPool.QueueUserWorkItem((o) => { writer(); });
+#endif
                 //Task s2 = Task.Factory.StartNew(writer);
                 //Task s3 = Task.Factory.StartNew(writer);
+                Console.WriteLine("Press any key to exit...");
                 Console.ReadLine();
             }
         }
