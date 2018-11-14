@@ -1,0 +1,3 @@
+﻿BufferCannotBeNull = Unable to continue because the buffer is null (or Nothing in Visual Basic).
+CannotBeNegativeNumber = Expects a number that is greater to or equal to zero.
+OffsetOverflow = Invalid buffer boundaries. The sum of offset and length is greater than the size of the buffer.

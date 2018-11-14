@@ -1,0 +1,18 @@
+#include cslib,net462,xunit,xunit-net462,xunit-netcoreapp2
+clsCompliant = false
+allowPartialTrust = false
+compiler {
+	allowUnsafe = true
+}
+dependencies {
+	'Standard.Security.Cryptography.HashAlgorithms' {
+		type = 'project'
+	}
+	'System.Data.HashFunction.xxHash' {
+		type = 'package'
+		version = '2.0.0'
+	}
+}
+compiler {
+	noWarn = ['CS1591', 'CS0168']
+}

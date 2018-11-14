@@ -1,0 +1,71 @@
+#include cslib,net45,net462,netstandard1_3,netstandard2_0
+assemblyDescription = 'Implements various hash functions, such as xxHash.'
+#assemblyAlias
+#comGuid
+clsCompliant = true
+allowPartialTrust = false
+
+compiler {
+	allowUnsafe = true
+}
+
+dependencies {
+	'System.Memory' {
+		type = 'package'
+		version = '4.5.1'
+	}
+}
+
+frameworks {
+	net45 {
+		compiler {
+			configuration {
+				Release {
+					strongNameKey = ${strongNameKey.testsign}
+				}
+			}
+		}
+	}
+	net462 {
+		compiler {
+			configuration {
+				Release {
+					strongNameKey = ${strongNameKey.testsign}
+				}
+			}
+		}
+	}
+    'netstandard1.3' {
+        disableDefaultDependencyPackages = true
+        dependencies {
+        	'System.Security.Cryptography.Primitives' {
+        		type = 'package'
+        		version = '4.3.0'
+        	}
+        }
+    }
+}
+
+internalsVisibleTo {
+	'Standard.Security.Cryptography.Hash.Tests' {
+		'DEBUG' = null
+		'!DEBUG,NETFX' = 'PublicKey='${frameworks.net462.compiler.configuration.Release.strongNameKey.hash}
+		'!DEBUG,!NETFX' = null
+	}
+}
+
+package {
+	output {
+		nuget {
+			tags = ["standard", "security", "cryptography", "hash"]
+			summary = ${assemblyDescription}
+		}
+	}
+}
+
+#scripts {
+#	preCompile = []
+#	postCompile = []
+#	prePublish = []
+#	postPublish = []
+#}
