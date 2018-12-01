@@ -6,14 +6,12 @@ Full .NET framework
 -------------------
 The full .NET framework is mostly pre-installed with Windows. Projects in this repo will be interested in the following versions:
 
-|---------|-----------------|-----------------|
 | Version | Client OS       | Server OS       |
 |---------|-----------------|-----------------|
 | 4.6.2   | Windows 10.1607 | Windows 2016    | 
 | 4.5     | Windows 8       | Windows 2012    |
 | 4.5.1   | Windows 8.1     | Windows 2012 R2 |
 | 3.5     | (optional)      | (optional)      |
-|---------|-----------------|-----------------|
 
 The following targets are of lower priority. Many projects may not support them:
 
